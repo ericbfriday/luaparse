@@ -88,7 +88,50 @@
     , luaVersion: '5.1'
     // Encoding mode: how to interpret code units higher than U+007F in input
     , encodingMode: 'none'
+    , ast: 'legacy'
   };
+
+  var luastTypeMap = {
+      'LabelStatement': 'labelStatement'
+    , 'BreakStatement': 'breakStatement'
+    , 'GotoStatement': 'gotoStatement'
+    , 'ReturnStatement': 'returnStatement'
+    , 'IfStatement': 'ifStatement'
+    , 'IfClause': 'ifClause'
+    , 'ElseifClause': 'elseifClause'
+    , 'ElseClause': 'elseClause'
+    , 'WhileStatement': 'whileStatement'
+    , 'DoStatement': 'doStatement'
+    , 'RepeatStatement': 'repeatStatement'
+    , 'LocalStatement': 'localStatement'
+    , 'AssignmentStatement': 'assignmentStatement'
+    , 'CallStatement': 'callStatement'
+    , 'FunctionDeclaration': 'functionDeclaration'
+    , 'ForNumericStatement': 'forNumericStatement'
+    , 'ForGenericStatement': 'forGenericStatement'
+    , 'Chunk': 'root'
+    , 'Identifier': 'identifier'
+    , 'StringLiteral': 'stringLiteral'
+    , 'NumericLiteral': 'numericLiteral'
+    , 'BooleanLiteral': 'booleanLiteral'
+    , 'NilLiteral': 'nilLiteral'
+    , 'VarargLiteral': 'varargLiteral'
+    , 'BinaryExpression': 'binaryExpression'
+    , 'LogicalExpression': 'logicalExpression'
+    , 'UnaryExpression': 'unaryExpression'
+    , 'MemberExpression': 'memberExpression'
+    , 'IndexExpression': 'indexExpression'
+    , 'CallExpression': 'callExpression'
+    , 'TableCallExpression': 'tableCallExpression'
+    , 'StringCallExpression': 'stringCallExpression'
+    , 'TableConstructorExpression': 'tableConstructor'
+    , 'TableKey': 'tableKey'
+    , 'TableKeyString': 'tableKeyString'
+    , 'TableValue': 'tableValue'
+    , 'Comment': 'comment'
+  };
+
+  var luastMode;
 
   function encodeUTF8(codepoint, highMask) {
     highMask = highMask || 0;
@@ -327,13 +370,15 @@
     }
 
     , functionStatement: function(identifier, parameters, isLocal, body) {
-      return {
+      var node = {
           type: 'FunctionDeclaration'
         , identifier: identifier
-        , isLocal: isLocal
         , parameters: parameters
         , body: body
       };
+      if (luastMode) node.local = isLocal;
+      else node.isLocal = isLocal;
+      return node;
     }
 
     , forNumericStatement: function(variable, start, end, step, body) {
@@ -457,12 +502,13 @@
     }
 
     , tableCallExpression: function(base, args) {
-      return {
+      var node = {
           type: 'TableCallExpression'
         , base: base
-        , 'arguments': args
         , argument: args
       };
+      if (!luastMode) node['arguments'] = args;
+      return node;
     }
 
     , stringCallExpression: function(base, argument) {
@@ -490,6 +536,9 @@
       var location = locations.pop();
       location.complete();
       location.bless(node);
+    }
+    if (luastMode) {
+      node.type = luastTypeMap[node.type] || node.type;
     }
     if (options.onCreateNode) options.onCreateNode(node);
     return node;
@@ -1269,16 +1318,24 @@
     if (options.comments) {
       var node = ast.comment(content, input.slice(tokenStart, index));
 
-      // `Marker`s depend on tokens available in the parser and as comments are
-      // intercepted in the lexer all location data is set manually.
-      if (options.locations) {
-        node.loc = {
-            start: { line: lineComment, column: tokenStart - lineStartComment }
-          , end: { line: line, column: index - lineStart }
+      if (luastMode) {
+        node.type = 'comment';
+        node.position = {
+            start: { line: lineComment, column: tokenStart - lineStartComment + 1, offset: tokenStart }
+          , end: { line: line, column: index - lineStart + 1, offset: index }
         };
-      }
-      if (options.ranges) {
-        node.range = [tokenStart, index];
+      } else {
+        // `Marker`s depend on tokens available in the parser and as comments are
+        // intercepted in the lexer all location data is set manually.
+        if (options.locations) {
+          node.loc = {
+              start: { line: lineComment, column: tokenStart - lineStartComment }
+            , end: { line: line, column: index - lineStart }
+          };
+        }
+        if (options.ranges) {
+          node.range = [tokenStart, index];
+        }
       }
       if (options.onCreateNode) options.onCreateNode(node);
       comments.push(node);
@@ -1494,6 +1551,7 @@
   // Attach scope information to node. If the node is global, store it in the
   // globals array so we can return the information to the user.
   function attachScope(node, isLocal) {
+    if (luastMode) return;
     if (!isLocal && -1 === indexOfObject(globals, 'name', node.name))
       globals.push(node);
 
@@ -1548,24 +1606,41 @@
   };
 
   Marker.prototype.bless = function (node) {
-    if (this.loc) {
+    if (luastMode) {
       var loc = this.loc;
-      node.loc = {
+      var range = this.range;
+      node.position = {
         start: {
-          line: loc.start.line,
-          column: loc.start.column
-        },
-        end: {
-          line: loc.end.line,
-          column: loc.end.column
+            line: loc.start.line
+          , column: loc.start.column + 1
+          , offset: range[0]
+        }
+        , end: {
+            line: loc.end.line
+          , column: loc.end.column + 1
+          , offset: range[1]
         }
       };
-    }
-    if (this.range) {
-      node.range = [
-        this.range[0],
-        this.range[1]
-      ];
+    } else {
+      if (this.loc) {
+        var loc = this.loc;
+        node.loc = {
+          start: {
+            line: loc.start.line,
+            column: loc.start.column
+          },
+          end: {
+            line: loc.end.line,
+            column: loc.end.column
+          }
+        };
+      }
+      if (this.range) {
+        node.range = [
+          this.range[0],
+          this.range[1]
+        ];
+      }
     }
   };
 
@@ -2677,6 +2752,12 @@
 
     input = _input || '';
     options = assign({}, defaultOptions, _options);
+    luastMode = options.ast === 'luast';
+    if (luastMode) {
+      options.locations = true;
+      options.ranges = true;
+      options.comments = true;
+    }
 
     // Rewind the lexer
     index = 0;
@@ -2735,7 +2816,7 @@
 
     var chunk = parseChunk();
     if (options.comments) chunk.comments = comments;
-    if (options.scope) chunk.globals = globals;
+    if (options.scope && !luastMode) chunk.globals = globals;
 
     /* istanbul ignore if */
     if (locations.length > 0)

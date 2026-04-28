@@ -1,0 +1,38 @@
+{
+  "name": "unified-lua",
+  "version": "0.1.0",
+  "description": "unified parser plugin for Lua — produces luast syntax trees",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "luast": "file:../luast",
+    "luaparse": "file:../../"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^3.0.0",
+    "unified": "^11.0.0",
+    "unist-util-is": "^6.0.0",
+    "unist-util-position": "^5.0.0",
+    "luast-util-visit": "file:../luast-util-visit"
+  }
+}

@@ -4,8 +4,8 @@ A Lua parser and syntax tree ecosystem for JavaScript, built on [unist][].
 
 ## Packages
 
-This repository is the staging ground for porting [luaparse][] into the
-[unified][] / [syntax-tree][] ecosystem. The port produces several packages:
+This repository contains [luaparse][] and its ecosystem of packages for
+the [unified][] / [syntax-tree][] pipeline:
 
 | Package | Description | Status |
 | --- | --- | --- |
@@ -31,18 +31,43 @@ This repository is the staging ground for porting [luaparse][] into the
   what unist requires. Written before the spec and plan; superseded by them
   on any point of conflict.
 
+## Usage
+
+```js
+// ESM
+import luaparse from 'luaparse'
+
+// Emit a luast (unist-compliant) tree
+const tree = luaparse.parse('local x = 1', { ast: 'luast' })
+// tree.type === 'root', tree.body[0].type === 'localStatement'
+
+// Legacy mode (default, backwards compatible)
+const legacy = luaparse.parse('local x = 1')
+// legacy.type === 'Chunk', legacy.body[0].type === 'LocalStatement'
+```
+
+```js
+// unified pipeline
+import { unified } from 'unified'
+import luaParse from 'unified-lua'
+
+const tree = unified()
+  .use(luaParse, { luaVersion: '5.3' })
+  .parse('local x = 1')
+```
+
 ## Quick orientation
 
-**If you want to understand the target tree format**, read
+**If you want to understand the tree format**, read
 [LUAST-SPEC.md](./LUAST-SPEC.md).
 
-**If you want to understand how we get there**, read
+**If you want to understand the migration history**, read
 [MIGRATION-PLAN.md](./MIGRATION-PLAN.md).
 
-**If you want to understand where we started**, read
+**If you want the original gap analysis**, read
 [PORT-ANALYSIS.md](./PORT-ANALYSIS.md).
 
-**If you want to see the legacy v0.x documentation**, see
+**If you want the legacy v0.x documentation**, see
 [README.legacy.md](./README.legacy.md).
 
 ## Design summary

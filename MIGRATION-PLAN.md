@@ -316,12 +316,12 @@ Complete mapping from current luaparse types to luast types.
 **Deliverables:**
 
 - [x] `LUAST-SPEC.md` — the specification document (this repo)
-- [ ] `luast` package — TypeScript type definitions
+- [x] `luast` package — TypeScript type definitions
   - All node interfaces
   - Union types (`Statement`, `Expression`, `Clause`, `TableField`)
   - Child-field registry as a runtime export
   - Type guard functions
-- [ ] `luast-util-visit` — tree visitor
+- [x] `luast-util-visit` — tree visitor
   - `visit(tree, [type], callback)` with enter/exit support
   - Action constants: `SKIP`, `REMOVE`, `EXIT`
   - Type-narrowed callback parameters
@@ -342,13 +342,13 @@ incrementally.
 
 **Deliverables:**
 
-- [ ] `luast-util-from-luaparse` — adapter function
+- [x] `luast-util-from-luaparse` — adapter function
   - Recursive tree walk converting every node
   - Type rename (PascalCase → camelCase)
   - Position conversion (columns +1, loc/range → position)
   - Field renames (`isLocal` → `local`, strip scope annotations)
   - `TableCallExpression.arguments` deduplication
-- [ ] Test suite
+- [x] Test suite
   - Round-trip: `parse(code)` → `fromLuaparse(ast)` → verify full tree
   - Position accuracy: spot-check column offsets
   - All 33 node types covered
@@ -369,13 +369,13 @@ incrementally.
 
 **Deliverables:**
 
-- [ ] New parser option: `parse(code, { ast: 'luast' })`
+- [x] New parser option: `parse(code, { ast: 'luast' })`
   - Emits luast directly from the AST factory
   - Positions are 1-indexed columns from the start
   - Type names are camelCase from the start
   - No `isLocal`/`globals` on the tree
-- [ ] Legacy AST remains the default (`ast: 'legacy'` or omitted)
-- [ ] Performance benchmark: native emission vs. parse + adapter
+- [x] Legacy AST remains the default (`ast: 'legacy'` or omitted)
+- [ ] Performance benchmark: native emission vs. parse + adapter (deferred)
 
 **Changes to luaparse:**
 
@@ -396,16 +396,16 @@ incrementally.
 
 **Deliverables:**
 
-- [ ] `unified-lua` — parser plugin
+- [x] `unified-lua` — parser plugin
   - Accepts `luaVersion`, `encodingMode` options
   - Returns luast `root` from `processor.parse()`
   - Compatible with `VFile` input
-- [ ] Fixture suite proving compatibility with:
+- [x] Fixture suite proving compatibility with:
   - `luast-util-visit`
   - `unist-util-is`
   - `unist-util-position`
-  - `unist-util-stringify-position`
-  - `unist-util-generated`
+  - `unist-util-stringify-position` (not tested separately)
+  - `unist-util-generated` (not tested separately)
 
 **Acceptance criteria:**
 
@@ -419,7 +419,7 @@ ecosystem utilities.
 
 **Deliverables:**
 
-- [ ] `luast-util-scope` — scope analysis
+- [x] `luast-util-scope` — scope analysis
   - `analyzeScope(tree)` returns scope information
   - Identifies local/global identifiers
   - No tree mutation
@@ -440,12 +440,12 @@ ecosystem utilities.
 
 **Deliverables:**
 
-- [ ] Convert luaparse to ESM (with CJS wrapper for backwards compatibility)
-- [ ] Ship TypeScript source or `.d.ts` files
-- [ ] Modern `exports` field in `package.json`
-- [ ] Drop legacy browser build (or produce it as a build artifact)
-- [ ] Update Node.js engine target to current LTS
-- [ ] Replace gulp/jshint/testem toolchain with modern equivalents
+- [x] Convert luaparse to ESM (with CJS wrapper for backwards compatibility)
+- [x] Ship TypeScript source or `.d.ts` files
+- [x] Modern `exports` field in `package.json`
+- [ ] Drop legacy browser build (or produce it as a build artifact) (deferred)
+- [x] Update Node.js engine target to current LTS
+- [x] Replace gulp/jshint/testem toolchain with modern equivalents
 
 **This phase is a major version bump (2.0).**
 

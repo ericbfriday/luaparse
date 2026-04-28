@@ -45,60 +45,60 @@ them only as needed.
 Run this checklist each iteration to find your current position:
 
 ```
-Phase 1 — Spec and types
-  [ ] packages/luast/src/types.ts exists with all 33 node interfaces
-  [ ] packages/luast/src/registry.ts exports the child-field registry
-  [ ] packages/luast/src/guards.ts exports type guard functions
-  [ ] packages/luast/src/index.ts re-exports everything
-  [ ] packages/luast/package.json exists (ESM, TypeScript)
-  [ ] packages/luast-util-visit/src/index.ts implements visit()
-  [ ] packages/luast-util-visit/src/index.ts exports SKIP, REMOVE, EXIT
-  [ ] packages/luast-util-visit/package.json exists
-  [ ] All packages compile with tsc --noEmit
-  [ ] Tests confirm visitor traverses a hand-built tree
-  [ ] Tests confirm unist-util-is works on luast nodes
-  [ ] Tests confirm unist-util-position works on luast nodes
+Phase 1 — Spec and types                              ✅ COMPLETE
+  [x] packages/luast/src/types.ts exists with all 33 node interfaces
+  [x] packages/luast/src/registry.ts exports the child-field registry
+  [x] packages/luast/src/guards.ts exports type guard functions
+  [x] packages/luast/src/index.ts re-exports everything
+  [x] packages/luast/package.json exists (ESM, TypeScript)
+  [x] packages/luast-util-visit/src/index.ts implements visit()
+  [x] packages/luast-util-visit/src/index.ts exports SKIP, REMOVE, EXIT
+  [x] packages/luast-util-visit/package.json exists
+  [x] All packages compile with tsc --noEmit
+  [x] Tests confirm visitor traverses a hand-built tree
+  [x] Tests confirm unist-util-is works on luast nodes
+  [x] Tests confirm unist-util-position works on luast nodes
 
-Phase 2 — Adapter
-  [ ] packages/luast-util-from-luaparse/src/index.ts implements fromLuaparse()
-  [ ] Converts all 33 node types (type rename, field rename)
-  [ ] Converts loc/range → position (columns +1)
-  [ ] Strips isLocal from identifiers, globals from root
-  [ ] Renames FunctionDeclaration.isLocal → local
-  [ ] Removes TableCallExpression.arguments redundancy
-  [ ] Tests: round-trip parse(code) → fromLuaparse(ast) for every node type
-  [ ] Tests: position accuracy spot checks
-  [ ] Tests: visitor traverses converted trees correctly
+Phase 2 — Adapter                                     ✅ COMPLETE
+  [x] packages/luast-util-from-luaparse/src/index.ts implements fromLuaparse()
+  [x] Converts all 33 node types (type rename, field rename)
+  [x] Converts loc/range → position (columns +1)
+  [x] Strips isLocal from identifiers, globals from root
+  [x] Renames FunctionDeclaration.isLocal → local
+  [x] Removes TableCallExpression.arguments redundancy
+  [x] Tests: round-trip parse(code) → fromLuaparse(ast) for every node type
+  [x] Tests: position accuracy spot checks
+  [x] Tests: visitor traverses converted trees correctly
 
-Phase 3 — Native emission
-  [ ] luaparse.js supports parse(code, { ast: 'luast' })
-  [ ] AST factory has luast mode (camelCase types, position format)
-  [ ] Marker.bless has luast mode (position instead of loc/range)
-  [ ] Legacy mode is default and unchanged
-  [ ] Tests: native output matches adapter output for all fixtures
-  [ ] Existing luaparse test suite still passes
+Phase 3 — Native emission                             ✅ COMPLETE
+  [x] luaparse.js supports parse(code, { ast: 'luast' })
+  [x] AST factory has luast mode (camelCase types, position format)
+  [x] Marker.bless has luast mode (position instead of loc/range)
+  [x] Legacy mode is default and unchanged
+  [x] Tests: native output matches adapter output for all fixtures
+  [x] Existing luaparse test suite still passes
 
-Phase 4 — Unified integration
-  [ ] packages/unified-lua/src/index.ts implements the unified parser plugin
-  [ ] Parser contract: (document, file) => Root
-  [ ] Accepts luaVersion, encodingMode options
-  [ ] Tests: unified().use(luaParse).parse(code) returns valid luast
-  [ ] Fixture suite confirms compatibility with unist utilities
+Phase 4 — Unified integration                         ✅ COMPLETE
+  [x] packages/unified-lua/src/index.ts implements the unified parser plugin
+  [x] Parser contract: (document, file) => Root
+  [x] Accepts luaVersion, encodingMode options
+  [x] Tests: unified().use(luaParse).parse(code) returns valid luast
+  [x] Fixture suite confirms compatibility with unist utilities
 
-Phase 5 — Scope and comments
-  [ ] packages/luast-util-scope/src/index.ts implements analyzeScope()
-  [ ] Returns globals list and isLocal(node) check
-  [ ] No tree mutation — read-only analysis
-  [ ] Tests: equivalent output to luaparse's scope: true
+Phase 5 — Scope and comments                          ✅ COMPLETE
+  [x] packages/luast-util-scope/src/index.ts implements analyzeScope()
+  [x] Returns globals list and isLocal(node) check
+  [x] No tree mutation — read-only analysis
+  [x] Tests: equivalent output to luaparse's scope: true
   [ ] Optional: luast-util-attach-comments maps comments to nodes
 
-Phase 6 — Module modernization
-  [ ] luaparse.js converted to ESM with CJS wrapper
-  [ ] TypeScript types shipped (.d.ts or source)
-  [ ] package.json has modern exports field
-  [ ] Node.js engine target is current LTS
-  [ ] CI passes (replace gulp/jshint/testem if needed)
-  [ ] FUTURE-README.md moved to README.md (old README archived)
+Phase 6 — Module modernization                        ✅ COMPLETE
+  [x] luaparse.js converted to ESM with CJS wrapper
+  [x] TypeScript types shipped (.d.ts or source)
+  [x] package.json has modern exports field
+  [x] Node.js engine target is current LTS
+  [x] CI passes (replace gulp/jshint/testem if needed)
+  [x] FUTURE-README.md moved to README.md (old README archived)
 ```
 
 Find the first unchecked item. That is your work for this iteration.

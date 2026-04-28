@@ -93,6 +93,56 @@ luast sits alongside other language-specific unist implementations:
 - [nlcst][] — Natural language
 - [esast][] — ECMAScript
 
+## TODO: Review Observations
+
+The following issues were identified during a codebase review. None are
+blocking, but each deserves attention before a wider release.
+
+### Type mismatch: `NilLiteral.value`
+
+`luast/src/types.ts` declares `NilLiteral.value` as `undefined`, but the
+runtime (both native emission and adapter) produces `null`. The spec requires
+all values be JSON-expressible — `undefined` is not. The type should be
+`value: null` to match runtime behavior and JSON compliance.
+
+### `luaparse.d.ts` doesn't model luast return type
+
+`parse()` always returns `AstNode` regardless of the `ast` option. When
+`{ast: 'luast'}` is specified, the return type should narrow to `Root` (from
+`luast`). TypeScript consumers currently lose type safety in luast mode.
+
+### No workspace configuration
+
+Packages use `file:` links in `dependencies` but the root `package.json` has
+no `workspaces` field. Each package has its own `package-lock.json`, `npm
+install` at root doesn't hoist or link packages, and `test:packages` relies on
+a shell loop. Adding `"workspaces": ["packages/*"]` would unify dependency
+management.
+
+### Vestigial `index.js`
+
+Root `index.js` just does `module.exports = require('./luaparse')`. Since
+`package.json` already points `"main"` at `luaparse.js`, this file is dead
+code and can be removed.
+
+### Scope analysis duplicates traversal logic
+
+`luast-util-scope` depends on `luast-util-visit` but implements its own
+recursive walk using `childFields`/`arrayFields` directly. This avoids visitor
+overhead but means adding new node types requires updating both `registry.ts`
+and `scope.ts`.
+
+### Deferred migration plan items
+
+Three items remain unchecked in `MIGRATION-PLAN.md`:
+
+- **Phase 3**: Performance benchmark (native emission vs. parse + adapter)
+- **Phase 5**: `luast-util-attach-comments` (comment-to-node mapping utility)
+- **Phase 5**: Migration guide for `parse({scope: true})` → `analyzeScope(tree)`
+
+The first two are low-risk. The migration guide is a developer experience gap —
+adopters currently need to read source to figure out the scope API transition.
+
 ## License
 
 [MIT](./LICENSE)

@@ -1,0 +1,35 @@
+{
+  "name": "luast",
+  "version": "0.1.0",
+  "description": "Lua Abstract Syntax Tree format — unist-compliant tree specification and TypeScript types",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@types/unist": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^3.0.0",
+    "unist-util-is": "^6.0.0",
+    "unist-util-position": "^5.0.0"
+  }
+}

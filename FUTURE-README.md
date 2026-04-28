@@ -9,12 +9,12 @@ This repository is the staging ground for porting [luaparse][] into the
 
 | Package | Description | Status |
 | --- | --- | --- |
-| `luast` | Tree specification and TypeScript types | [Spec draft](./LUAST-SPEC.md) |
-| `luast-util-from-luaparse` | Convert legacy luaparse AST → luast | Planned |
-| `luast-util-visit` | Tree visitor for luast (named-field aware) | Planned |
-| `luast-util-scope` | Scope analysis over luast trees | Planned |
-| `unified-lua` | unified parser plugin for Lua | Planned |
-| `luaparse` | Lua parser (existing, to be modernized) | [Stable](./luaparse.js) |
+| `luast` | Tree specification and TypeScript types | [packages/luast](./packages/luast) |
+| `luast-util-from-luaparse` | Convert legacy luaparse AST → luast | [packages/luast-util-from-luaparse](./packages/luast-util-from-luaparse) |
+| `luast-util-visit` | Tree visitor for luast (named-field aware) | [packages/luast-util-visit](./packages/luast-util-visit) |
+| `luast-util-scope` | Scope analysis over luast trees | [packages/luast-util-scope](./packages/luast-util-scope) |
+| `unified-lua` | unified parser plugin for Lua | [packages/unified-lua](./packages/unified-lua) |
+| `luaparse` | Lua parser with native luast emission | [v2.0.0](./luaparse.js) |
 
 ## Documentation
 
@@ -42,8 +42,8 @@ This repository is the staging ground for porting [luaparse][] into the
 **If you want to understand where we started**, read
 [PORT-ANALYSIS.md](./PORT-ANALYSIS.md).
 
-**If you want to use the existing parser today**, see the current
-[README.md](./README.md).
+**If you want to see the legacy v0.x documentation**, see
+[README.legacy.md](./README.legacy.md).
 
 ## Design summary
 

@@ -1,12 +1,16 @@
 {
   "name": "luaparse",
-  "version": "0.3.1",
-  "description": "A Lua parser in JavaScript",
+  "version": "2.0.0",
+  "description": "A Lua parser in JavaScript with unist-compatible AST output",
   "keywords": [
     "ast",
     "lua",
+    "luast",
     "parser",
-    "parsing"
+    "parsing",
+    "unist",
+    "syntax-tree",
+    "unified"
   ],
   "homepage": "https://fstirlitz.github.io/luaparse/",
   "bugs": "https://github.com/fstirlitz/luaparse/issues",
@@ -16,9 +20,24 @@
     "README.md",
     "LICENSE",
     "luaparse.js",
+    "luaparse.mjs",
+    "luaparse.d.ts",
     "bin/luaparse"
   ],
   "main": "luaparse.js",
+  "types": "luaparse.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./luaparse.d.ts",
+        "default": "./luaparse.mjs"
+      },
+      "require": {
+        "types": "./luaparse.d.ts",
+        "default": "./luaparse.js"
+      }
+    }
+  },
   "bin": {
     "luaparse": "bin/luaparse"
   },
@@ -27,25 +46,15 @@
     "type": "git",
     "url": "https://github.com/fstirlitz/luaparse.git"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "test": "make qa",
-    "version": "make version-bump"
+    "test": "node test/runner.js --console",
+    "test:packages": "for d in packages/*/; do (cd \"$d\" && npx vitest run); done"
   },
   "devDependencies": {
     "benchmark": "~1.0.0",
-    "complexity-report": "~0.10.5",
-    "gulp": "^4.0.0",
-    "gulp-add-src": "^1.0.0",
-    "gulp-header": "^2.0.9",
-    "gulp-jshint": "^2.1.0",
-    "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^3.0.2",
-    "jshint": "^2.11.1",
-    "marked": "^4.0.10",
-    "nyc": "^15.1.0",
-    "plugin-error": "^1.0.1",
-    "spec": "1.0.1",
-    "testem": "^3.6.0",
-    "through2": "^4.0.2"
+    "spec": "1.0.1"
   }
 }

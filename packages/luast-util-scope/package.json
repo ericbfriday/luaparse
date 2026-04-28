@@ -1,0 +1,35 @@
+{
+  "name": "luast-util-scope",
+  "version": "0.1.0",
+  "description": "Scope analysis for luast trees — identify local and global identifiers",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "luast": "file:../luast",
+    "luast-util-visit": "file:../luast-util-visit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^3.0.0",
+    "luaparse": "file:../../"
+  }
+}

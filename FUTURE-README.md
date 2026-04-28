@@ -7,14 +7,14 @@ A Lua parser and syntax tree ecosystem for JavaScript, built on [unist][].
 This repository contains [luaparse][] and its ecosystem of packages for
 the [unified][] / [syntax-tree][] pipeline:
 
-| Package | Description | Status |
-| --- | --- | --- |
-| `luast` | Tree specification and TypeScript types | [packages/luast](./packages/luast) |
-| `luast-util-from-luaparse` | Convert legacy luaparse AST → luast | [packages/luast-util-from-luaparse](./packages/luast-util-from-luaparse) |
-| `luast-util-visit` | Tree visitor for luast (named-field aware) | [packages/luast-util-visit](./packages/luast-util-visit) |
-| `luast-util-scope` | Scope analysis over luast trees | [packages/luast-util-scope](./packages/luast-util-scope) |
-| `unified-lua` | unified parser plugin for Lua | [packages/unified-lua](./packages/unified-lua) |
-| `luaparse` | Lua parser with native luast emission | [v2.0.0](./luaparse.js) |
+| Package                    | Description                                | Status                                                                   |
+| -------------------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
+| `luast`                    | Tree specification and TypeScript types    | [packages/luast](./packages/luast)                                       |
+| `luast-util-from-luaparse` | Convert legacy luaparse AST → luast        | [packages/luast-util-from-luaparse](./packages/luast-util-from-luaparse) |
+| `luast-util-visit`         | Tree visitor for luast (named-field aware) | [packages/luast-util-visit](./packages/luast-util-visit)                 |
+| `luast-util-scope`         | Scope analysis over luast trees            | [packages/luast-util-scope](./packages/luast-util-scope)                 |
+| `unified-lua`              | unified parser plugin for Lua              | [packages/unified-lua](./packages/unified-lua)                           |
+| `luaparse`                 | Lua parser with native luast emission      | [v2.0.0](./luaparse.js)                                                  |
 
 ## Documentation
 
@@ -38,7 +38,7 @@ the [unified][] / [syntax-tree][] pipeline:
 import luaparse from 'luaparse'
 
 // Emit a luast (unist-compliant) tree
-const tree = luaparse.parse('local x = 1', { ast: 'luast' })
+const tree = luaparse.parse('local x = 1', {ast: 'luast'})
 // tree.type === 'root', tree.body[0].type === 'localStatement'
 
 // Legacy mode (default, backwards compatible)
@@ -48,12 +48,10 @@ const legacy = luaparse.parse('local x = 1')
 
 ```js
 // unified pipeline
-import { unified } from 'unified'
+import {unified} from 'unified'
 import luaParse from 'unified-lua'
 
-const tree = unified()
-  .use(luaParse, { luaVersion: '5.3' })
-  .parse('local x = 1')
+const tree = unified().use(luaParse, {luaVersion: '5.3'}).parse('local x = 1')
 ```
 
 ## Quick orientation

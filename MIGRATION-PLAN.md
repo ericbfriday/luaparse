@@ -194,7 +194,7 @@ Tree visitor modeled on `estree-util-visit`.
 **API:**
 
 ```ts
-import { visit, SKIP, REMOVE, EXIT } from 'luast-util-visit'
+import {visit, SKIP, REMOVE, EXIT} from 'luast-util-visit'
 
 visit(tree, (node, parent, field, index) => {
   // called for every node
@@ -221,11 +221,11 @@ Scope analysis over luast trees.
 **API:**
 
 ```ts
-import { analyzeScope } from 'luast-util-scope'
+import {analyzeScope} from 'luast-util-scope'
 
 const scope = analyzeScope(tree)
-scope.globals    // Identifier nodes referenced but not declared locally
-scope.isLocal(node)  // whether an identifier is locally scoped
+scope.globals // Identifier nodes referenced but not declared locally
+scope.isLocal(node) // whether an identifier is locally scoped
 ```
 
 **Dependencies:** `luast`, `luast-util-visit`
@@ -237,12 +237,10 @@ A unified parser plugin.
 **API:**
 
 ```ts
-import { unified } from 'unified'
+import {unified} from 'unified'
 import luaParse from 'unified-lua'
 
-const tree = unified()
-  .use(luaParse, { luaVersion: '5.3' })
-  .parse('local x = 1')
+const tree = unified().use(luaParse, {luaVersion: '5.3'}).parse('local x = 1')
 ```
 
 The parser contract is: `(document: string, file: VFile) => Root`.
@@ -254,58 +252,58 @@ The parser contract is: `(document: string, file: VFile) => Root`.
 
 Complete mapping from current luaparse types to luast types.
 
-| luaparse (PascalCase) | luast (camelCase) | Category |
-| --- | --- | --- |
-| `Chunk` | `root` | root |
-| `LabelStatement` | `labelStatement` | statement |
-| `BreakStatement` | `breakStatement` | statement |
-| `GotoStatement` | `gotoStatement` | statement |
-| `ReturnStatement` | `returnStatement` | statement |
-| `IfStatement` | `ifStatement` | statement |
-| `IfClause` | `ifClause` | clause |
-| `ElseifClause` | `elseifClause` | clause |
-| `ElseClause` | `elseClause` | clause |
-| `WhileStatement` | `whileStatement` | statement |
-| `DoStatement` | `doStatement` | statement |
-| `RepeatStatement` | `repeatStatement` | statement |
-| `LocalStatement` | `localStatement` | statement |
-| `AssignmentStatement` | `assignmentStatement` | statement |
-| `CallStatement` | `callStatement` | statement |
-| `FunctionDeclaration` | `functionDeclaration` | statement / expression |
-| `ForNumericStatement` | `forNumericStatement` | statement |
-| `ForGenericStatement` | `forGenericStatement` | statement |
-| `Identifier` | `identifier` | expression |
-| `StringLiteral` | `stringLiteral` | literal |
-| `NumericLiteral` | `numericLiteral` | literal |
-| `BooleanLiteral` | `booleanLiteral` | literal |
-| `NilLiteral` | `nilLiteral` | literal |
-| `VarargLiteral` | `varargLiteral` | literal |
-| `BinaryExpression` | `binaryExpression` | expression |
-| `LogicalExpression` | `logicalExpression` | expression |
-| `UnaryExpression` | `unaryExpression` | expression |
-| `MemberExpression` | `memberExpression` | expression |
-| `IndexExpression` | `indexExpression` | expression |
-| `CallExpression` | `callExpression` | expression |
-| `TableCallExpression` | `tableCallExpression` | expression |
-| `StringCallExpression` | `stringCallExpression` | expression |
-| `TableConstructorExpression` | `tableConstructor` | expression |
-| `TableKey` | `tableKey` | table field |
-| `TableKeyString` | `tableKeyString` | table field |
-| `TableValue` | `tableValue` | table field |
-| `Comment` | `comment` | comment |
+| luaparse (PascalCase)        | luast (camelCase)      | Category               |
+| ---------------------------- | ---------------------- | ---------------------- |
+| `Chunk`                      | `root`                 | root                   |
+| `LabelStatement`             | `labelStatement`       | statement              |
+| `BreakStatement`             | `breakStatement`       | statement              |
+| `GotoStatement`              | `gotoStatement`        | statement              |
+| `ReturnStatement`            | `returnStatement`      | statement              |
+| `IfStatement`                | `ifStatement`          | statement              |
+| `IfClause`                   | `ifClause`             | clause                 |
+| `ElseifClause`               | `elseifClause`         | clause                 |
+| `ElseClause`                 | `elseClause`           | clause                 |
+| `WhileStatement`             | `whileStatement`       | statement              |
+| `DoStatement`                | `doStatement`          | statement              |
+| `RepeatStatement`            | `repeatStatement`      | statement              |
+| `LocalStatement`             | `localStatement`       | statement              |
+| `AssignmentStatement`        | `assignmentStatement`  | statement              |
+| `CallStatement`              | `callStatement`        | statement              |
+| `FunctionDeclaration`        | `functionDeclaration`  | statement / expression |
+| `ForNumericStatement`        | `forNumericStatement`  | statement              |
+| `ForGenericStatement`        | `forGenericStatement`  | statement              |
+| `Identifier`                 | `identifier`           | expression             |
+| `StringLiteral`              | `stringLiteral`        | literal                |
+| `NumericLiteral`             | `numericLiteral`       | literal                |
+| `BooleanLiteral`             | `booleanLiteral`       | literal                |
+| `NilLiteral`                 | `nilLiteral`           | literal                |
+| `VarargLiteral`              | `varargLiteral`        | literal                |
+| `BinaryExpression`           | `binaryExpression`     | expression             |
+| `LogicalExpression`          | `logicalExpression`    | expression             |
+| `UnaryExpression`            | `unaryExpression`      | expression             |
+| `MemberExpression`           | `memberExpression`     | expression             |
+| `IndexExpression`            | `indexExpression`      | expression             |
+| `CallExpression`             | `callExpression`       | expression             |
+| `TableCallExpression`        | `tableCallExpression`  | expression             |
+| `StringCallExpression`       | `stringCallExpression` | expression             |
+| `TableConstructorExpression` | `tableConstructor`     | expression             |
+| `TableKey`                   | `tableKey`             | table field            |
+| `TableKeyString`             | `tableKeyString`       | table field            |
+| `TableValue`                 | `tableValue`           | table field            |
+| `Comment`                    | `comment`              | comment                |
 
 ### Field renames
 
-| luaparse | luast | Notes |
-| --- | --- | --- |
-| `FunctionDeclaration.isLocal` | `functionDeclaration.local` | Shorter, matches Lua keyword |
-| `Chunk.body` | `root.body` | Same field name, different parent type |
-| `Chunk.comments` | `root.comments` | Same field name, different parent type |
-| `Chunk.globals` | removed | Moved to `luast-util-scope` |
-| `Identifier.isLocal` | removed | Moved to `luast-util-scope` |
-| `node.loc` | `node.position` | Columns become 1-indexed |
-| `node.range` | `node.position.*.offset` | Folded into position |
-| `TableCallExpression.arguments` | removed | Redundant alias of `argument` |
+| luaparse                        | luast                       | Notes                                  |
+| ------------------------------- | --------------------------- | -------------------------------------- |
+| `FunctionDeclaration.isLocal`   | `functionDeclaration.local` | Shorter, matches Lua keyword           |
+| `Chunk.body`                    | `root.body`                 | Same field name, different parent type |
+| `Chunk.comments`                | `root.comments`             | Same field name, different parent type |
+| `Chunk.globals`                 | removed                     | Moved to `luast-util-scope`            |
+| `Identifier.isLocal`            | removed                     | Moved to `luast-util-scope`            |
+| `node.loc`                      | `node.position`             | Columns become 1-indexed               |
+| `node.range`                    | `node.position.*.offset`    | Folded into position                   |
+| `TableCallExpression.arguments` | removed                     | Redundant alias of `argument`          |
 
 ## Phased plan
 
@@ -427,7 +425,7 @@ ecosystem utilities.
   - Maps comments to their nearest/enclosing nodes
   - Attaches via `data.comments` on target nodes
 - [ ] Documentation on migrating from `parse({ scope: true })` to
-  `analyzeScope(tree)`
+      `analyzeScope(tree)`
 
 **Acceptance criteria:**
 
@@ -458,24 +456,24 @@ ecosystem utilities.
 
 ## Risk assessment
 
-| Risk | Likelihood | Impact | Mitigation |
-| --- | --- | --- | --- |
-| Spec design error discovered after Phase 2 | Medium | High | Phase 1 explicitly invites review; adapter is cheap to update |
-| `luast-util-visit` misses edge cases (nullable fields, cycles) | Low | Medium | Comprehensive test coverage; luast trees are acyclic by construction |
-| Confusion about generic `unist-util-visit` not working | High | Low | Document prominently in README and spec; provide clear error message or no-op |
-| Performance regression from native emission changes | Low | Medium | Benchmark in Phase 3; factory changes are localized |
-| Breaking downstream consumers of legacy AST | Low | High | Legacy AST is default until Phase 6 major bump; adapter enables incremental migration |
-| Child-field registry drifts from spec | Medium | High | Registry is generated from or co-located with type definitions; single source of truth |
+| Risk                                                           | Likelihood | Impact | Mitigation                                                                             |
+| -------------------------------------------------------------- | ---------- | ------ | -------------------------------------------------------------------------------------- |
+| Spec design error discovered after Phase 2                     | Medium     | High   | Phase 1 explicitly invites review; adapter is cheap to update                          |
+| `luast-util-visit` misses edge cases (nullable fields, cycles) | Low        | Medium | Comprehensive test coverage; luast trees are acyclic by construction                   |
+| Confusion about generic `unist-util-visit` not working         | High       | Low    | Document prominently in README and spec; provide clear error message or no-op          |
+| Performance regression from native emission changes            | Low        | Medium | Benchmark in Phase 3; factory changes are localized                                    |
+| Breaking downstream consumers of legacy AST                    | Low        | High   | Legacy AST is default until Phase 6 major bump; adapter enables incremental migration  |
+| Child-field registry drifts from spec                          | Medium     | High   | Registry is generated from or co-located with type definitions; single source of truth |
 
 ## Resolved design questions
 
 These questions were originally listed as open in PORT-ANALYSIS.md.
 All are now resolved.
 
-| Question | Decision | Rationale |
-| --- | --- | --- |
-| Should the root type be `Chunk` or `root`? | `root` | All unist specs except esast use `root`; esast's `Program` was forced by ESTree |
-| Should comments be first-class nodes, side metadata, or a separate tree? | Root-level array (`root.comments`) | Matches esast recommendation and current luaparse behavior |
-| Should labels and identifiers be node objects or scalars? | Node objects | Preserves position information; consistent with esast's `Identifier` |
-| Should named fields be preserved in parallel with `children`? | Named fields only, no `children` | esast precedent; avoids dual-representation sync risk |
-| Should scope analysis remain a parser option? | Separate utility (`luast-util-scope`) | Semantic analysis is not syntax; unist `data` is the metadata space |
+| Question                                                                 | Decision                              | Rationale                                                                       |
+| ------------------------------------------------------------------------ | ------------------------------------- | ------------------------------------------------------------------------------- |
+| Should the root type be `Chunk` or `root`?                               | `root`                                | All unist specs except esast use `root`; esast's `Program` was forced by ESTree |
+| Should comments be first-class nodes, side metadata, or a separate tree? | Root-level array (`root.comments`)    | Matches esast recommendation and current luaparse behavior                      |
+| Should labels and identifiers be node objects or scalars?                | Node objects                          | Preserves position information; consistent with esast's `Identifier`            |
+| Should named fields be preserved in parallel with `children`?            | Named fields only, no `children`      | esast precedent; avoids dual-representation sync risk                           |
+| Should scope analysis remain a parser option?                            | Separate utility (`luast-util-scope`) | Semantic analysis is not syntax; unist `data` is the metadata space             |

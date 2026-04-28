@@ -1,10 +1,10 @@
-import type { Data, Position } from 'unist'
+import type {Data, Position} from 'unist'
 
 // ---------------------------------------------------------------------------
 // Base
 // ---------------------------------------------------------------------------
 
-export interface LuastNode {
+export type LuastNode = {
   type: string
   data?: Data
   position?: Position
@@ -14,255 +14,271 @@ export interface LuastNode {
 // Root
 // ---------------------------------------------------------------------------
 
-export interface Root extends LuastNode {
+export type Root = {
   type: 'root'
   body: Statement[]
   comments?: Comment[]
-}
+} & LuastNode
 
 // ---------------------------------------------------------------------------
 // Statements
 // ---------------------------------------------------------------------------
 
-export interface LabelStatement extends LuastNode {
+export type LabelStatement = {
   type: 'labelStatement'
   label: Identifier
-}
+} & LuastNode
 
-export interface BreakStatement extends LuastNode {
+export type BreakStatement = {
   type: 'breakStatement'
-}
+} & LuastNode
 
-export interface GotoStatement extends LuastNode {
+export type GotoStatement = {
   type: 'gotoStatement'
   label: Identifier
-}
+} & LuastNode
 
-export interface ReturnStatement extends LuastNode {
+export type ReturnStatement = {
   type: 'returnStatement'
   arguments: Expression[]
-}
+} & LuastNode
 
-export interface IfStatement extends LuastNode {
+export type IfStatement = {
   type: 'ifStatement'
-  clauses: (IfClause | ElseifClause | ElseClause)[]
-}
+  clauses: Array<IfClause | ElseifClause | ElseClause>
+} & LuastNode
 
-export interface WhileStatement extends LuastNode {
+export type WhileStatement = {
   type: 'whileStatement'
   condition: Expression
   body: Statement[]
-}
+} & LuastNode
 
-export interface DoStatement extends LuastNode {
+export type DoStatement = {
   type: 'doStatement'
   body: Statement[]
-}
+} & LuastNode
 
-export interface RepeatStatement extends LuastNode {
+export type RepeatStatement = {
   type: 'repeatStatement'
   condition: Expression
   body: Statement[]
-}
+} & LuastNode
 
-export interface LocalStatement extends LuastNode {
+export type LocalStatement = {
   type: 'localStatement'
   variables: Identifier[]
   init: Expression[]
-}
+} & LuastNode
 
-export interface AssignmentStatement extends LuastNode {
+export type AssignmentStatement = {
   type: 'assignmentStatement'
-  variables: (Identifier | MemberExpression | IndexExpression)[]
+  variables: Array<Identifier | MemberExpression | IndexExpression>
   init: Expression[]
-}
+} & LuastNode
 
-export interface CallStatement extends LuastNode {
+export type CallStatement = {
   type: 'callStatement'
   expression: CallExpression | TableCallExpression | StringCallExpression
-}
+} & LuastNode
 
-export interface FunctionDeclaration extends LuastNode {
+export type FunctionDeclaration = {
   type: 'functionDeclaration'
-  identifier: Identifier | MemberExpression | null
-  parameters: (Identifier | VarargLiteral)[]
+  identifier: Identifier | MemberExpression | undefined
+  parameters: Array<Identifier | VarargLiteral>
   body: Statement[]
   local: boolean
-}
+} & LuastNode
 
-export interface ForNumericStatement extends LuastNode {
+export type ForNumericStatement = {
   type: 'forNumericStatement'
   variable: Identifier
   start: Expression
   end: Expression
-  step: Expression | null
+  step: Expression | undefined
   body: Statement[]
-}
+} & LuastNode
 
-export interface ForGenericStatement extends LuastNode {
+export type ForGenericStatement = {
   type: 'forGenericStatement'
   variables: Identifier[]
   iterators: Expression[]
   body: Statement[]
-}
+} & LuastNode
 
 // ---------------------------------------------------------------------------
 // Clauses
 // ---------------------------------------------------------------------------
 
-export interface IfClause extends LuastNode {
+export type IfClause = {
   type: 'ifClause'
   condition: Expression
   body: Statement[]
-}
+} & LuastNode
 
-export interface ElseifClause extends LuastNode {
+export type ElseifClause = {
   type: 'elseifClause'
   condition: Expression
   body: Statement[]
-}
+} & LuastNode
 
-export interface ElseClause extends LuastNode {
+export type ElseClause = {
   type: 'elseClause'
   body: Statement[]
-}
+} & LuastNode
 
 // ---------------------------------------------------------------------------
 // Expressions
 // ---------------------------------------------------------------------------
 
-export interface Identifier extends LuastNode {
+export type Identifier = {
   type: 'identifier'
   name: string
-}
+} & LuastNode
 
 export type BinaryOperator =
-  | '+' | '-' | '*' | '/' | '//' | '%' | '^' | '..'
-  | '==' | '~=' | '<' | '>' | '<=' | '>='
-  | '&' | '|' | '~' | '<<' | '>>'
+  | '+'
+  | '-'
+  | '*'
+  | '/'
+  | '//'
+  | '%'
+  | '^'
+  | '..'
+  | '=='
+  | '~='
+  | '<'
+  | '>'
+  | '<='
+  | '>='
+  | '&'
+  | '|'
+  | '~'
+  | '<<'
+  | '>>'
 
-export interface BinaryExpression extends LuastNode {
+export type BinaryExpression = {
   type: 'binaryExpression'
   operator: BinaryOperator
   left: Expression
   right: Expression
-}
+} & LuastNode
 
-export interface LogicalExpression extends LuastNode {
+export type LogicalExpression = {
   type: 'logicalExpression'
   operator: 'and' | 'or'
   left: Expression
   right: Expression
-}
+} & LuastNode
 
 export type UnaryOperator = 'not' | '-' | '#' | '~'
 
-export interface UnaryExpression extends LuastNode {
+export type UnaryExpression = {
   type: 'unaryExpression'
   operator: UnaryOperator
   argument: Expression
-}
+} & LuastNode
 
-export interface MemberExpression extends LuastNode {
+export type MemberExpression = {
   type: 'memberExpression'
   base: Expression
   indexer: '.' | ':'
   identifier: Identifier
-}
+} & LuastNode
 
-export interface IndexExpression extends LuastNode {
+export type IndexExpression = {
   type: 'indexExpression'
   base: Expression
   index: Expression
-}
+} & LuastNode
 
-export interface CallExpression extends LuastNode {
+export type CallExpression = {
   type: 'callExpression'
   base: Expression
   arguments: Expression[]
-}
+} & LuastNode
 
-export interface TableCallExpression extends LuastNode {
+export type TableCallExpression = {
   type: 'tableCallExpression'
   base: Expression
   argument: TableConstructor
-}
+} & LuastNode
 
-export interface StringCallExpression extends LuastNode {
+export type StringCallExpression = {
   type: 'stringCallExpression'
   base: Expression
   argument: StringLiteral
-}
+} & LuastNode
 
-export interface TableConstructor extends LuastNode {
+export type TableConstructor = {
   type: 'tableConstructor'
   fields: TableField[]
-}
+} & LuastNode
 
 // ---------------------------------------------------------------------------
 // Literals
 // ---------------------------------------------------------------------------
 
-export interface StringLiteral extends LuastNode {
+export type StringLiteral = {
   type: 'stringLiteral'
-  value: string | null
+  value: string | undefined
   raw: string
-}
+} & LuastNode
 
-export interface NumericLiteral extends LuastNode {
+export type NumericLiteral = {
   type: 'numericLiteral'
   value: number
   raw: string
-}
+} & LuastNode
 
-export interface BooleanLiteral extends LuastNode {
+export type BooleanLiteral = {
   type: 'booleanLiteral'
   value: boolean
   raw: string
-}
+} & LuastNode
 
-export interface NilLiteral extends LuastNode {
+export type NilLiteral = {
   type: 'nilLiteral'
-  value: null
+  value: undefined
   raw: string
-}
+} & LuastNode
 
-export interface VarargLiteral extends LuastNode {
+export type VarargLiteral = {
   type: 'varargLiteral'
   value: string
   raw: string
-}
+} & LuastNode
 
 // ---------------------------------------------------------------------------
 // Table fields
 // ---------------------------------------------------------------------------
 
-export interface TableKey extends LuastNode {
+export type TableKey = {
   type: 'tableKey'
   key: Expression
   value: Expression
-}
+} & LuastNode
 
-export interface TableKeyString extends LuastNode {
+export type TableKeyString = {
   type: 'tableKeyString'
   key: Identifier
   value: Expression
-}
+} & LuastNode
 
-export interface TableValue extends LuastNode {
+export type TableValue = {
   type: 'tableValue'
   value: Expression
-}
+} & LuastNode
 
 // ---------------------------------------------------------------------------
 // Comments
 // ---------------------------------------------------------------------------
 
-export interface Comment extends LuastNode {
+export type Comment = {
   type: 'comment'
   value: string
   raw: string
-}
+} & LuastNode
 
 // ---------------------------------------------------------------------------
 // Content model — union types
@@ -284,10 +300,7 @@ export type Statement =
   | ForNumericStatement
   | ForGenericStatement
 
-export type Clause =
-  | IfClause
-  | ElseifClause
-  | ElseClause
+export type Clause = IfClause | ElseifClause | ElseClause
 
 export type Expression =
   | Identifier
@@ -307,10 +320,7 @@ export type Expression =
   | TableConstructor
   | FunctionDeclaration
 
-export type TableField =
-  | TableKey
-  | TableKeyString
-  | TableValue
+export type TableField = TableKey | TableKeyString | TableValue
 
 export type LuastContent =
   | Statement

@@ -20,8 +20,8 @@ export interface AstNode {
 }
 
 export interface LocationInfo {
-  start: { line: number; column: number }
-  end: { line: number; column: number }
+  start: {line: number; column: number}
+  end: {line: number; column: number}
 }
 
 export interface ChunkNode extends AstNode {
@@ -56,7 +56,7 @@ export const tokenTypes: TokenType
 export const ast: Record<string, (...args: unknown[]) => AstNode>
 
 export function parse(input: string, options?: ParseOptions): AstNode
-export function parse(options: ParseOptions & { wait: true }): {
+export function parse(options: ParseOptions & {wait: true}): {
   write(input: string): void
   end(input?: string): AstNode
   lex(): Token

@@ -44,7 +44,7 @@ export type {
   Expression,
   TableField,
   LuastContent,
-  LuastAnyNode,
+  LuastAnyNode
 } from './types.js'
 
 export {
@@ -53,7 +53,7 @@ export {
   arrayFields,
   getChildFields,
   isArrayField,
-  isNullableField,
+  isNullableField
 } from './registry.js'
 
 export {
@@ -62,5 +62,5 @@ export {
   isClause,
   isTableField,
   isComment,
-  isRoot,
+  isRoot
 } from './guards.js'

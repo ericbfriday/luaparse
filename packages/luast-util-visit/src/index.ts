@@ -1,5 +1,4 @@
-import type { LuastNode } from 'luast'
-import { childFields, arrayFields } from 'luast'
+import {type LuastNode, childFields, arrayFields} from 'luast'
 
 export const SKIP: unique symbol = Symbol('skip')
 export const REMOVE: unique symbol = Symbol('remove')
@@ -9,9 +8,9 @@ export type VisitorAction = typeof SKIP | typeof REMOVE | typeof EXIT | void
 
 export type Visitor = (
   node: LuastNode,
-  parent: LuastNode | null,
-  field: string | null,
-  index: number | null
+  parent: LuastNode | undefined,
+  field: string | undefined,
+  index: number | undefined
 ) => VisitorAction
 
 export function visit(tree: LuastNode, visitor: Visitor): void
@@ -21,7 +20,7 @@ export function visit(
   visitorOrType: Visitor | string,
   maybeVisitor?: Visitor
 ): void {
-  let typeFilter: string | null = null
+  let typeFilter: string | undefined
   let visitor: Visitor
 
   if (typeof visitorOrType === 'string') {
@@ -31,15 +30,15 @@ export function visit(
     visitor = visitorOrType
   }
 
-  walk(tree, null, null, null)
+  walk(tree, undefined, undefined, undefined)
 
   function walk(
     node: LuastNode,
-    parent: LuastNode | null,
-    field: string | null,
-    index: number | null
+    parent: LuastNode | undefined,
+    field: string | undefined,
+    index: number | undefined
   ): VisitorAction {
-    if (typeFilter === null || node.type === typeFilter) {
+    if (typeFilter === undefined || node.type === typeFilter) {
       const action = visitor(node, parent, field, index)
       if (action === EXIT || action === REMOVE || action === SKIP) {
         return action
@@ -47,15 +46,15 @@ export function visit(
     }
 
     const fields = childFields[node.type]
-    if (fields == null) return undefined
+    if (fields === undefined) return undefined
 
     const nodeArrayFields = arrayFields[node.type]
 
     for (const childField of fields) {
       const child = (node as unknown as Record<string, unknown>)[childField]
-      if (child == null) continue
+      if (child === null || child === undefined) continue
 
-      const isArray = nodeArrayFields != null && nodeArrayFields.includes(childField)
+      const isArray = nodeArrayFields?.includes(childField)
 
       if (isArray && Array.isArray(child)) {
         for (let i = 0; i < child.length; i++) {
@@ -69,8 +68,8 @@ export function visit(
             return EXIT
           }
         }
-      } else if (!isArray && typeof child === 'object' && 'type' in (child as object)) {
-        const action = walk(child as LuastNode, node, childField, null)
+      } else if (!isArray && typeof child === 'object' && 'type' in child) {
+        const action = walk(child as LuastNode, node, childField, undefined)
         if (action === REMOVE) {
           ;(node as unknown as Record<string, unknown>)[childField] = null
         } else if (action === EXIT) {

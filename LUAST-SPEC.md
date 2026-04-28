@@ -637,52 +637,52 @@ single node or `null`.
 
 ```js
 const childFields = {
-  root:                  ['body'],               // body: Statement[]
-  labelStatement:        ['label'],              // label: Identifier
-  breakStatement:        [],
-  gotoStatement:         ['label'],              // label: Identifier
-  returnStatement:       ['arguments'],          // arguments: Expression[]
-  ifStatement:           ['clauses'],            // clauses: Clause[]
-  ifClause:              ['condition', 'body'],   // condition: Expression, body: Statement[]
-  elseifClause:          ['condition', 'body'],   // condition: Expression, body: Statement[]
-  elseClause:            ['body'],               // body: Statement[]
-  whileStatement:        ['condition', 'body'],   // condition: Expression, body: Statement[]
-  doStatement:           ['body'],               // body: Statement[]
-  repeatStatement:       ['condition', 'body'],   // condition: Expression, body: Statement[]
-  localStatement:        ['variables', 'init'],   // variables: Identifier[], init: Expression[]
-  assignmentStatement:   ['variables', 'init'],   // variables: Expression[], init: Expression[]
-  callStatement:         ['expression'],          // expression: CallExpression
-  functionDeclaration:   ['identifier', 'parameters', 'body'],
-                          // identifier: Identifier | MemberExpression | null
-                          // parameters: (Identifier | VarargLiteral)[]
-                          // body: Statement[]
-  forNumericStatement:   ['variable', 'start', 'end', 'step', 'body'],
-                          // variable: Identifier
-                          // start: Expression, end: Expression
-                          // step: Expression | null
-                          // body: Statement[]
-  forGenericStatement:   ['variables', 'iterators', 'body'],
-                          // variables: Identifier[], iterators: Expression[]
-                          // body: Statement[]
-  identifier:            [],
-  stringLiteral:         [],
-  numericLiteral:        [],
-  booleanLiteral:        [],
-  nilLiteral:            [],
-  varargLiteral:         [],
-  binaryExpression:      ['left', 'right'],       // left: Expression, right: Expression
-  logicalExpression:     ['left', 'right'],       // left: Expression, right: Expression
-  unaryExpression:       ['argument'],            // argument: Expression
-  memberExpression:      ['base', 'identifier'],  // base: Expression, identifier: Identifier
-  indexExpression:       ['base', 'index'],        // base: Expression, index: Expression
-  callExpression:        ['base', 'arguments'],    // base: Expression, arguments: Expression[]
-  tableCallExpression:   ['base', 'argument'],     // base: Expression, argument: TableConstructor
-  stringCallExpression:  ['base', 'argument'],     // base: Expression, argument: StringLiteral
-  tableConstructor:      ['fields'],              // fields: TableField[]
-  tableKey:              ['key', 'value'],         // key: Expression, value: Expression
-  tableKeyString:        ['key', 'value'],         // key: Identifier, value: Expression
-  tableValue:            ['value'],               // value: Expression
-  comment:               [],
+  root: ['body'], // body: Statement[]
+  labelStatement: ['label'], // label: Identifier
+  breakStatement: [],
+  gotoStatement: ['label'], // label: Identifier
+  returnStatement: ['arguments'], // arguments: Expression[]
+  ifStatement: ['clauses'], // clauses: Clause[]
+  ifClause: ['condition', 'body'], // condition: Expression, body: Statement[]
+  elseifClause: ['condition', 'body'], // condition: Expression, body: Statement[]
+  elseClause: ['body'], // body: Statement[]
+  whileStatement: ['condition', 'body'], // condition: Expression, body: Statement[]
+  doStatement: ['body'], // body: Statement[]
+  repeatStatement: ['condition', 'body'], // condition: Expression, body: Statement[]
+  localStatement: ['variables', 'init'], // variables: Identifier[], init: Expression[]
+  assignmentStatement: ['variables', 'init'], // variables: Expression[], init: Expression[]
+  callStatement: ['expression'], // expression: CallExpression
+  functionDeclaration: ['identifier', 'parameters', 'body'],
+  // identifier: Identifier | MemberExpression | null
+  // parameters: (Identifier | VarargLiteral)[]
+  // body: Statement[]
+  forNumericStatement: ['variable', 'start', 'end', 'step', 'body'],
+  // variable: Identifier
+  // start: Expression, end: Expression
+  // step: Expression | null
+  // body: Statement[]
+  forGenericStatement: ['variables', 'iterators', 'body'],
+  // variables: Identifier[], iterators: Expression[]
+  // body: Statement[]
+  identifier: [],
+  stringLiteral: [],
+  numericLiteral: [],
+  booleanLiteral: [],
+  nilLiteral: [],
+  varargLiteral: [],
+  binaryExpression: ['left', 'right'], // left: Expression, right: Expression
+  logicalExpression: ['left', 'right'], // left: Expression, right: Expression
+  unaryExpression: ['argument'], // argument: Expression
+  memberExpression: ['base', 'identifier'], // base: Expression, identifier: Identifier
+  indexExpression: ['base', 'index'], // base: Expression, index: Expression
+  callExpression: ['base', 'arguments'], // base: Expression, arguments: Expression[]
+  tableCallExpression: ['base', 'argument'], // base: Expression, argument: TableConstructor
+  stringCallExpression: ['base', 'argument'], // base: Expression, argument: StringLiteral
+  tableConstructor: ['fields'], // fields: TableField[]
+  tableKey: ['key', 'value'], // key: Expression, value: Expression
+  tableKeyString: ['key', 'value'], // key: Identifier, value: Expression
+  tableValue: ['value'], // value: Expression
+  comment: []
 }
 ```
 
@@ -739,14 +739,14 @@ Generated nodes (not present in source) must not have a `position` field.
 
 ### Mapping from luaparse positions
 
-| luaparse | luast |
-| --- | --- |
-| `loc.start.line` | `position.start.line` (same — already 1-based) |
+| luaparse           | luast                                                   |
+| ------------------ | ------------------------------------------------------- |
+| `loc.start.line`   | `position.start.line` (same — already 1-based)          |
 | `loc.start.column` | `position.start.column` (**add 1** — 0-based → 1-based) |
-| `loc.end.line` | `position.end.line` (same) |
-| `loc.end.column` | `position.end.column` (**add 1**) |
-| `range[0]` | `position.start.offset` |
-| `range[1]` | `position.end.offset` |
+| `loc.end.line`     | `position.end.line` (same)                              |
+| `loc.end.column`   | `position.end.column` (**add 1**)                       |
+| `range[0]`         | `position.start.offset`                                 |
+| `range[1]`         | `position.end.offset`                                   |
 
 ## Recommendations
 

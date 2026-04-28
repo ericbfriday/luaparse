@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Tree visitor for luast (named-field aware) — walk Lua ASTs using the child-field registry",
   "license": "MIT",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
@@ -19,15 +20,51 @@
     "src"
   ],
   "scripts": {
-    "build": "tsc",
-    "check": "tsc --noEmit",
-    "test": "vitest run"
+    "build": "tsc --build --clean && tsc --build",
+    "format": "prettier . -w --log-level warn && xo --fix",
+    "test-api": "vitest run",
+    "test": "npm run build && npm run format && npm run test-api"
   },
   "dependencies": {
     "luast": "file:../luast"
   },
   "devDependencies": {
+    "prettier": "^3.0.0",
     "typescript": "^5.4.0",
-    "vitest": "^3.0.0"
+    "vitest": "^3.0.0",
+    "xo": "^0.60.0"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": "variable",
+          "format": ["strictCamelCase"],
+          "filter": {
+            "regex": "^(SKIP|REMOVE|EXIT)$",
+            "match": false
+          }
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": "test/**",
+        "rules": {
+          "@typescript-eslint/consistent-type-assertions": "off",
+          "@typescript-eslint/naming-convention": "off"
+        }
+      }
+    ]
   }
 }

@@ -1,43 +1,48 @@
-import { describe, it, expect } from 'vitest'
-import { is } from 'unist-util-is'
-import { position, pointStart, pointEnd } from 'unist-util-position'
-import type { Root, Identifier, NumericLiteral, AssignmentStatement } from '../src/index.js'
+import {describe, it, expect} from 'vitest'
+import {is} from 'unist-util-is'
+import {position, pointStart, pointEnd} from 'unist-util-position'
+import type {
+  Root,
+  Identifier,
+  NumericLiteral,
+  AssignmentStatement
+} from '../src/index.js'
 
 function makeTree(): Root {
   const ident: Identifier = {
     type: 'identifier',
     name: 'x',
     position: {
-      start: { line: 1, column: 1, offset: 0 },
-      end: { line: 1, column: 2, offset: 1 },
-    },
+      start: {line: 1, column: 1, offset: 0},
+      end: {line: 1, column: 2, offset: 1}
+    }
   }
-  const num: NumericLiteral = {
+  const number_: NumericLiteral = {
     type: 'numericLiteral',
     value: 42,
     raw: '42',
     position: {
-      start: { line: 1, column: 5, offset: 4 },
-      end: { line: 1, column: 7, offset: 6 },
-    },
+      start: {line: 1, column: 5, offset: 4},
+      end: {line: 1, column: 7, offset: 6}
+    }
   }
   const assign: AssignmentStatement = {
     type: 'assignmentStatement',
     variables: [ident],
-    init: [num],
+    init: [number_],
     position: {
-      start: { line: 1, column: 1, offset: 0 },
-      end: { line: 1, column: 7, offset: 6 },
-    },
+      start: {line: 1, column: 1, offset: 0},
+      end: {line: 1, column: 7, offset: 6}
+    }
   }
   return {
     type: 'root',
     body: [assign],
     comments: [],
     position: {
-      start: { line: 1, column: 1, offset: 0 },
-      end: { line: 1, column: 7, offset: 6 },
-    },
+      start: {line: 1, column: 1, offset: 0},
+      end: {line: 1, column: 7, offset: 6}
+    }
   }
 }
 
@@ -87,7 +92,7 @@ describe('unist-util-position interop', () => {
   })
 
   it('handles nodes without position', () => {
-    const bare: Identifier = { type: 'identifier', name: 'y' }
+    const bare: Identifier = {type: 'identifier', name: 'y'}
     const pos = position(bare)
     expect(pos).toBeUndefined()
   })

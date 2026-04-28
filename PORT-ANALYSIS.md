@@ -160,18 +160,18 @@ That package surface is usable, but it is behind current `syntax-tree` /
 
 ## Gap Analysis
 
-| Area | Current `luaparse` | Unist-aligned target | Impact |
-| --- | --- | --- | --- |
-| Root node | `Chunk` with `body` | usually `root` with `children` | high |
-| Traversal | many bespoke child keys | canonical `children` | high |
-| Positions | `loc` + `range` | `position` with `line`, `column`, `offset` | high |
-| Metadata | `comments`, `globals`, `isLocal` ad hoc | `data` or separate utility output | medium-high |
-| Comments | root-level side array | decide AST metadata vs first-class nodes | medium |
-| Scope | parser mutates syntax nodes | likely separate semantic pass or `data` | medium |
-| Node naming | ESTree-like / PascalCase | usually lower camel case in syntax-tree specs | medium |
-| Types | no published tree types | first-class TS type package | medium |
-| Module format | legacy CJS | modern ESM package surface | medium |
-| Unified integration | none | parser wrapper returning a `unist` tree | low after tree exists |
+| Area                | Current `luaparse`                      | Unist-aligned target                          | Impact                |
+| ------------------- | --------------------------------------- | --------------------------------------------- | --------------------- |
+| Root node           | `Chunk` with `body`                     | usually `root` with `children`                | high                  |
+| Traversal           | many bespoke child keys                 | canonical `children`                          | high                  |
+| Positions           | `loc` + `range`                         | `position` with `line`, `column`, `offset`    | high                  |
+| Metadata            | `comments`, `globals`, `isLocal` ad hoc | `data` or separate utility output             | medium-high           |
+| Comments            | root-level side array                   | decide AST metadata vs first-class nodes      | medium                |
+| Scope               | parser mutates syntax nodes             | likely separate semantic pass or `data`       | medium                |
+| Node naming         | ESTree-like / PascalCase                | usually lower camel case in syntax-tree specs | medium                |
+| Types               | no published tree types                 | first-class TS type package                   | medium                |
+| Module format       | legacy CJS                              | modern ESM package surface                    | medium                |
+| Unified integration | none                                    | parser wrapper returning a `unist` tree       | low after tree exists |
 
 ## What Would Be Required
 

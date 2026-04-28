@@ -7,10 +7,18 @@
 */
 
 body {
-  font: 13px 'Helvetica Neue Light', 'HelveticaNeue-Light', 'Helvetica Neue', Calibri, Helvetica, Arial;
+  font:
+    13px 'Helvetica Neue Light',
+    'HelveticaNeue-Light',
+    'Helvetica Neue',
+    Calibri,
+    Helvetica,
+    Arial;
 }
 
-p, ol, .suiteStatus {
+p,
+ol,
+.suiteStatus {
   margin: 0;
   padding: 0;
 }
@@ -25,21 +33,24 @@ a {
   text-decoration: underline;
 }
 
-a:hover, a:focus {
+a:hover,
+a:focus {
   text-decoration: none;
 }
 
 p a {
-  color: #FF7F00;
+  color: #ff7f00;
 }
 
 li {
   list-style-position: inside;
 }
 
-p, .testRunning, .testPassed {
-  color: #913D00;
-  background-color: #FDEBDC;
+p,
+.testRunning,
+.testPassed {
+  color: #913d00;
+  background-color: #fdebdc;
 }
 
 .testFailed {
@@ -47,7 +58,9 @@ p, .testRunning, .testPassed {
   color: #000;
 }
 
-.assertionList, .suiteHeader, .suiteSummary {
+.assertionList,
+.suiteHeader,
+.suiteSummary {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
@@ -55,7 +68,7 @@ p, .testRunning, .testPassed {
 
 .suiteHeader {
   color: #fff;
-  background-color: #FF7F00;
+  background-color: #ff7f00;
   margin: 0;
   padding: 0.5em 1em;
   font-size: 24px;
@@ -72,7 +85,7 @@ p, .testRunning, .testPassed {
 }
 
 .suiteRunning {
-  background-color: #913D00;
+  background-color: #913d00;
 }
 
 .suitePassed {
@@ -101,7 +114,8 @@ p, .testRunning, .testPassed {
   box-shadow: inset 0px 1px 8px #ccc;
 }
 
-.assertionPassed, .assertionFailed {
+.assertionPassed,
+.assertionFailed {
   border-bottom: none;
   margin: 0.5em;
   background-color: #fff;
@@ -121,13 +135,14 @@ p, .testRunning, .testPassed {
   color: #f00;
 }
 
-.failureActual, .failureExpected {
+.failureActual,
+.failureExpected {
   display: block;
   font-weight: bold;
 }
 
 .failureActual {
-  color: #EE5757;
+  color: #ee5757;
 }
 
 .failureExpected {
@@ -140,8 +155,8 @@ p, .testRunning, .testPassed {
 
 .suiteSummary {
   margin: 0;
-  color: #913D00;
-  background-color: #FDEBDC;
+  color: #913d00;
+  background-color: #fdebdc;
   padding: 0.5em 0.5em 0.5em 2.5em;
   -moz-border-radius-topright: 0;
   -moz-border-radius-topleft: 0;

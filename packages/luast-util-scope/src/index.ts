@@ -1,7 +1,12 @@
-import type { Root, Identifier, LuastNode } from 'luast'
-import { childFields, arrayFields } from 'luast'
+import {
+  type Root,
+  type Identifier,
+  type LuastNode,
+  childFields,
+  arrayFields
+} from 'luast'
 
-export interface ScopeInfo {
+export type ScopeInfo = {
   globals: Identifier[]
   isLocal(node: Identifier): boolean
 }
@@ -10,10 +15,10 @@ export function analyzeScope(tree: Root): ScopeInfo {
   const localIdentifiers = new Set<Identifier>()
   const globalIdentifiers: Identifier[] = []
   const globalNames = new Set<string>()
-  const scopeStack: Set<string>[] = [new Set()]
+  const scopeStack: Array<Set<string>> = [new Set()]
 
   function currentScope(): Set<string> {
-    return scopeStack[scopeStack.length - 1]!
+    return scopeStack.at(-1)!
   }
 
   function pushScope(): void {
@@ -30,20 +35,24 @@ export function analyzeScope(tree: Root): ScopeInfo {
 
   function isNameLocal(name: string): boolean {
     for (let i = scopeStack.length - 1; i >= 0; i--) {
-      if (scopeStack[i]!.has(name)) return true
+      if (scopeStack[i].has(name)) return true
     }
+
     return false
   }
 
+  // eslint-disable-next-line complexity
   function walkNode(node: LuastNode): void {
     const rec = node as unknown as Record<string, unknown>
 
     switch (node.type) {
       case 'functionDeclaration': {
-        const identifier = rec['identifier'] as (Identifier | LuastNode) | null
-        const isLocal = rec['local'] as boolean
-        const params = rec['parameters'] as Array<Identifier | LuastNode>
-        const body = rec['body'] as LuastNode[]
+        const identifier = rec.identifier as
+          | (Identifier | LuastNode)
+          | undefined
+        const isLocal = rec.local as boolean
+        const parameters = rec.parameters as Array<Identifier | LuastNode>
+        const body = rec.body as LuastNode[]
 
         if (identifier) {
           if (isLocal && identifier.type === 'identifier') {
@@ -55,34 +64,36 @@ export function analyzeScope(tree: Root): ScopeInfo {
         }
 
         pushScope()
-        for (const param of params) {
-          if (param.type === 'identifier') {
-            declareLocal((param as Identifier).name)
-            localIdentifiers.add(param as Identifier)
+        for (const parameter of parameters) {
+          if (parameter.type === 'identifier') {
+            declareLocal((parameter as Identifier).name)
+            localIdentifiers.add(parameter as Identifier)
           }
         }
+
         for (const stmt of body) walkNode(stmt)
         popScope()
         return
       }
 
       case 'localStatement': {
-        const variables = rec['variables'] as Identifier[]
-        const init = rec['init'] as LuastNode[]
+        const variables = rec.variables as Identifier[]
+        const init = rec.init as LuastNode[]
         for (const expr of init) walkNode(expr)
         for (const v of variables) {
           declareLocal(v.name)
           localIdentifiers.add(v)
         }
+
         return
       }
 
       case 'forNumericStatement': {
-        const variable = rec['variable'] as Identifier
-        const start = rec['start'] as LuastNode
-        const end = rec['end'] as LuastNode
-        const step = rec['step'] as LuastNode | null
-        const body = rec['body'] as LuastNode[]
+        const variable = rec.variable as Identifier
+        const start = rec.start as LuastNode
+        const end = rec.end as LuastNode
+        const step = rec.step as LuastNode | undefined
+        const body = rec.body as LuastNode[]
 
         walkNode(start)
         walkNode(end)
@@ -97,17 +108,18 @@ export function analyzeScope(tree: Root): ScopeInfo {
       }
 
       case 'forGenericStatement': {
-        const variables = rec['variables'] as Identifier[]
-        const iterators = rec['iterators'] as LuastNode[]
-        const body = rec['body'] as LuastNode[]
+        const variables = rec.variables as Identifier[]
+        const iterators = rec.iterators as LuastNode[]
+        const body = rec.body as LuastNode[]
 
-        for (const iter of iterators) walkNode(iter)
+        for (const iterator of iterators) walkNode(iterator)
 
         pushScope()
         for (const v of variables) {
           declareLocal(v.name)
           localIdentifiers.add(v)
         }
+
         for (const stmt of body) walkNode(stmt)
         popScope()
         return
@@ -115,23 +127,23 @@ export function analyzeScope(tree: Root): ScopeInfo {
 
       case 'doStatement': {
         pushScope()
-        for (const stmt of (rec['body'] as LuastNode[])) walkNode(stmt)
+        for (const stmt of rec.body as LuastNode[]) walkNode(stmt)
         popScope()
         return
       }
 
       case 'whileStatement': {
-        walkNode(rec['condition'] as LuastNode)
+        walkNode(rec.condition as LuastNode)
         pushScope()
-        for (const stmt of (rec['body'] as LuastNode[])) walkNode(stmt)
+        for (const stmt of rec.body as LuastNode[]) walkNode(stmt)
         popScope()
         return
       }
 
       case 'repeatStatement': {
         pushScope()
-        for (const stmt of (rec['body'] as LuastNode[])) walkNode(stmt)
-        walkNode(rec['condition'] as LuastNode)
+        for (const stmt of rec.body as LuastNode[]) walkNode(stmt)
+        walkNode(rec.condition as LuastNode)
         popScope()
         return
       }
@@ -144,26 +156,31 @@ export function analyzeScope(tree: Root): ScopeInfo {
           globalNames.add(ident.name)
           globalIdentifiers.push(ident)
         }
+
         return
+      }
+
+      default: {
+        break
       }
     }
 
     const fields = childFields[node.type]
-    if (fields == null) return
+    if (fields === undefined) return
 
     const nodeArrayFields = arrayFields[node.type]
 
     for (const field of fields) {
       const child = rec[field]
-      if (child == null) continue
+      if (child === null || child === undefined) continue
 
-      const isArray = nodeArrayFields != null && nodeArrayFields.includes(field)
+      const isArray = nodeArrayFields?.includes(field)
 
       if (isArray && Array.isArray(child)) {
-        for (const elem of child) {
-          walkNode(elem as LuastNode)
+        for (const element of child) {
+          walkNode(element as LuastNode)
         }
-      } else if (typeof child === 'object' && 'type' in (child as object)) {
+      } else if (typeof child === 'object' && 'type' in child) {
         walkNode(child as LuastNode)
       }
     }
@@ -177,6 +194,6 @@ export function analyzeScope(tree: Root): ScopeInfo {
     globals: globalIdentifiers,
     isLocal(node: Identifier): boolean {
       return localIdentifiers.has(node)
-    },
+    }
   }
 }

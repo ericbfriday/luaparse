@@ -34,8 +34,7 @@ them only as needed.
   Superseded by the spec and plan on any conflict.
 - **`FUTURE-README.md`** — The future README. Update the package table's
   Status column as packages are completed.
-- **`luaparse.js`** — The existing parser. The AST factory starts at line
-  228. Position handling is in `Marker`/`finishNode`. Do not break its
+- **`luaparse.js`** — The existing parser. The AST factory starts at line 228. Position handling is in `Marker`/`finishNode`. Do not break its
   existing public API until Phase 6.
 
 ---
@@ -141,7 +140,7 @@ packages/
 Derive every interface from `LUAST-SPEC.md` § Nodes. The root interface:
 
 ```ts
-import type { Data, Position } from 'unist'
+import type {Data, Position} from 'unist'
 
 interface LuastNode {
   type: string
@@ -194,6 +193,7 @@ export const EXIT: unique symbol
 ```
 
 The visitor iterates `childFields[node.type]` for each node. For each field:
+
 - If the field value is an array, visit each element in order
 - If the field value is a single node, visit it
 - If the field value is `null`, skip it (nullable fields)
@@ -288,8 +288,8 @@ Implement `unified-lua` in `packages/unified-lua/`.
 This is a thin wrapper. The unified parser contract is a function:
 
 ```ts
-import type { Plugin } from 'unified'
-import type { Root } from 'luast'
+import type {Plugin} from 'unified'
+import type {Root} from 'luast'
 
 const luaParse: Plugin<[Options?], string, Root>
 ```
@@ -298,8 +298,14 @@ const luaParse: Plugin<[Options?], string, Root>
 
 ```ts
 export default function luaParse(options) {
-  const settings = { ...options, ast: 'luast', locations: true, ranges: true, comments: true }
-  Object.assign(this, { Parser: (doc) => parse(doc, settings) })
+  const settings = {
+    ...options,
+    ast: 'luast',
+    locations: true,
+    ranges: true,
+    comments: true
+  }
+  Object.assign(this, {Parser: (doc) => parse(doc, settings)})
 }
 ```
 
@@ -383,6 +389,7 @@ Convert the parser to modern package standards. **This is a major version.**
 ## Completion
 
 All phases complete means:
+
 - 6 packages exist under `packages/` and compile
 - All tests pass
 - Legacy luaparse tests still pass

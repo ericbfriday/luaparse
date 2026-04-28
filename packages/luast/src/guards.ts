@@ -5,7 +5,7 @@ import type {
   Clause,
   TableField,
   Comment,
-  Root,
+  Root
 } from './types.js'
 
 const statementTypes = new Set([
@@ -22,7 +22,7 @@ const statementTypes = new Set([
   'callStatement',
   'functionDeclaration',
   'forNumericStatement',
-  'forGenericStatement',
+  'forGenericStatement'
 ])
 
 const expressionTypes = new Set([
@@ -41,20 +41,12 @@ const expressionTypes = new Set([
   'tableCallExpression',
   'stringCallExpression',
   'tableConstructor',
-  'functionDeclaration',
+  'functionDeclaration'
 ])
 
-const clauseTypes = new Set([
-  'ifClause',
-  'elseifClause',
-  'elseClause',
-])
+const clauseTypes = new Set(['ifClause', 'elseifClause', 'elseClause'])
 
-const tableFieldTypes = new Set([
-  'tableKey',
-  'tableKeyString',
-  'tableValue',
-])
+const tableFieldTypes = new Set(['tableKey', 'tableKeyString', 'tableValue'])
 
 export function isStatement(node: LuastNode): node is Statement {
   return statementTypes.has(node.type)

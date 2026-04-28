@@ -11,18 +11,18 @@ Install through `npm install luaparse`.
 CommonJS
 
 ```js
-var parser = require('luaparse');
-var ast = parser.parse('i = 0');
-console.log(JSON.stringify(ast));
+var parser = require('luaparse')
+var ast = parser.parse('i = 0')
+console.log(JSON.stringify(ast))
 ```
 
 AMD
 
 ```js
-require(['luaparse'], function(parser) {
-  var ast = parser.parse('i = 0');
-  console.log(JSON.stringify(ast));
-});
+require(['luaparse'], function (parser) {
+  var ast = parser.parse('i = 0')
+  console.log(JSON.stringify(ast))
+})
 ```
 
 Browser
@@ -30,8 +30,8 @@ Browser
 ```html
 <script src="luaparse.js"></script>
 <script>
-var ast = luaparse.parse('i = 0');
-console.log(JSON.stringify(ast));
+  var ast = luaparse.parse('i = 0')
+  console.log(JSON.stringify(ast))
 </script>
 ```
 
@@ -40,7 +40,7 @@ console.log(JSON.stringify(ast));
 Basic usage:
 
 ```js
-luaparse.parse(code, options);
+luaparse.parse(code, options)
 ```
 
 The output of the parser is an Abstract Syntax Tree (AST) formatted in JSON.
@@ -66,7 +66,7 @@ The available options are:
   values are `'5.1'`, `'5.2'`, `'5.3'` and `'LuaJIT'`.
 - `extendedIdentifiers: false` Whether to allow code points ≥ U+0080 in
   identifiers, like LuaJIT does. **Note:** setting `luaVersion: 'LuaJIT'`
-  currently does *not* enable this option; this may change in the future.
+  currently does _not_ enable this option; this may change in the future.
 - `encodingMode: 'none'` Defines the relation between code points ≥ U+0080
   appearing in parser input and raw bytes in source code, and how Lua escape
   sequences in JavaScript strings should be interpreted. See the
@@ -79,16 +79,16 @@ There is a second interface which might be preferable when using the `wait`
 option.
 
 ```js
-var parser = luaparse.parse({ wait: true });
-parser.write('foo = "');
-parser.write('bar');
-var ast = parser.end('"');
+var parser = luaparse.parse({wait: true})
+parser.write('foo = "')
+parser.write('bar')
+var ast = parser.end('"')
 ```
 
 This would be identical to:
 
 ```js
-var ast = luaparse.parse('foo = "bar"');
+var ast = luaparse.parse('foo = "bar"')
 ```
 
 ### AST format
@@ -96,7 +96,7 @@ var ast = luaparse.parse('foo = "bar"');
 If the following code is executed:
 
 ```js
-luaparse.parse('foo = "bar"');
+luaparse.parse('foo = "bar"')
 ```
 
 then the returned value will be:
@@ -162,25 +162,26 @@ following:
 
 ```js
 var luaparse = require('luaparse'),
-    events = new (require('events').EventEmitter);
+  events = new (require('events').EventEmitter)()
 
-Object.keys(luaparse.ast).forEach(function(type) {
-  var original = luaparse.ast[type];
-  luaparse.ast[type] = function() {
-    var node = original.apply(null, arguments);
-    events.emit(node.type, node);
-    return node;
-  };
-});
-events.on('Identifier', function(node) { console.log(node); });
-luaparse.parse('i = "foo"');
+Object.keys(luaparse.ast).forEach(function (type) {
+  var original = luaparse.ast[type]
+  luaparse.ast[type] = function () {
+    var node = original.apply(null, arguments)
+    events.emit(node.type, node)
+    return node
+  }
+})
+events.on('Identifier', function (node) {
+  console.log(node)
+})
+luaparse.parse('i = "foo"')
 ```
 
 _this is only an example to illustrate what is possible and this particular
 example might not suit your needs as the end location of the node has not been
 determined yet. If you desire events you should use the `onCreateNode` callback
 instead)._
-
 
 ### Lexer
 
@@ -194,16 +195,16 @@ Each token consists of:
 - `value`
 - `line`, `lineStart`
 - `range` can be used to slice out raw values, eg. `foo = "bar"` will return a
-`StringLiteral` token with the value `bar`. Slicing out the range on the other
-hand will return `"bar"`.
+  `StringLiteral` token with the value `bar`. Slicing out the range on the other
+  hand will return `"bar"`.
 
 ```js
-var parser = luaparse.parse('foo = "bar"', { wait: true });
-parser.lex(); // { type: 8, value: "foo", line: 1, lineStart: 0, range: [0, 3] }
-parser.lex(); // { type: 32, value: "=", line: 1, lineStart: 0, range: [4, 5]}
-parser.lex(); // { type: 2, value: "bar", line: 1, lineStart: 0, range: [6, 11] }
-parser.lex(); // { type: 1, value: "<eof>", line: 1, lineStart: 0, range: [11 11] }
-parser.lex(); // { type: 1, value: "<eof>", line: 1, lineStart: 0, range: [11 11] }
+var parser = luaparse.parse('foo = "bar"', {wait: true})
+parser.lex() // { type: 8, value: "foo", line: 1, lineStart: 0, range: [0, 3] }
+parser.lex() // { type: 32, value: "=", line: 1, lineStart: 0, range: [4, 5]}
+parser.lex() // { type: 2, value: "bar", line: 1, lineStart: 0, range: [6, 11] }
+parser.lex() // { type: 1, value: "<eof>", line: 1, lineStart: 0, range: [11 11] }
+parser.lex() // { type: 1, value: "<eof>", line: 1, lineStart: 0, range: [11 11] }
 ```
 
 ## Examples
@@ -268,18 +269,18 @@ different javascript engines or even on locally installed browsers.
 
 - `make test` uses node.
 - `make testem-engines` uses node, ringo and rhino
-1.7R5. This requires that you have the engines installed.
+  1.7R5. This requires that you have the engines installed.
 - `make test-node` uses a custom command line reporter to make the output
-easier on the eyes while practicing TDD.
+  easier on the eyes while practicing TDD.
 - By installing `testem` globally you can also run the tests in a locally
-installed browser.
+  installed browser.
 
 ### Other quality assurance measures
 
 - You can check the function complexity using [complexity-report](https://github.com/philbooth/complexityReport.js)
-using `make complexity-analysis`
+  using `make complexity-analysis`
 - Running `make coverage` will generate the [coverage report](https://fstirlitz.github.io/luaparse/coverage.html).
-To simply check that all code has coverage you can run `make coverage-analysis`.
+  To simply check that all code has coverage you can run `make coverage-analysis`.
 - `make lint`, `make benchmark`, `make profile`.
 
 ### Documentation
@@ -294,8 +295,8 @@ will be generated.
 
 ## Acknowledgements
 
-* Initial tests are scaffolded from [yueliang][yueliang] and then manually checked for error.
-* Much of the code is based on [LuaMinify][luaminify], the [Lua][lua] source and [Esprima][esprima]. All awesome projects.
+- Initial tests are scaffolded from [yueliang][yueliang] and then manually checked for error.
+- Much of the code is based on [LuaMinify][luaminify], the [Lua][lua] source and [Esprima][esprima]. All awesome projects.
 
 ## License
 

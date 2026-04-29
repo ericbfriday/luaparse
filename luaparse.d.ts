@@ -1,3 +1,5 @@
+import type {Root} from '@friday-friday/luast'
+
 export interface ParseOptions {
   wait?: boolean
   comments?: boolean
@@ -55,12 +57,16 @@ export const defaultOptions: ParseOptions
 export const tokenTypes: TokenType
 export const ast: Record<string, (...args: unknown[]) => AstNode>
 
-export function parse(input: string, options?: ParseOptions): AstNode
+export function parse(
+  input: string,
+  options: ParseOptions & {ast: 'luast'}
+): Root
 export function parse(options: ParseOptions & {wait: true}): {
   write(input: string): void
   end(input?: string): AstNode
   lex(): Token
 }
+export function parse(input: string, options?: ParseOptions): AstNode
 
 export function write(input: string): void
 export function end(input?: string): AstNode

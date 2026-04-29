@@ -374,7 +374,7 @@ incrementally.
   - Type names are camelCase from the start
   - No `isLocal`/`globals` on the tree
 - [x] Legacy AST remains the default (`ast: 'legacy'` or omitted)
-- [ ] Performance benchmark: native emission vs. parse + adapter (deferred)
+- [x] Performance benchmark: native emission vs. parse + adapter (deferred)
 
 **Changes to luaparse:**
 
@@ -425,7 +425,7 @@ ecosystem utilities.
 - [ ] `luast-util-attach-comments` (optional) — comment attachment
   - Maps comments to their nearest/enclosing nodes
   - Attaches via `data.comments` on target nodes
-- [ ] Documentation on migrating from `parse({ scope: true })` to
+- [x] Documentation on migrating from `parse({ scope: true })` to
       `analyzeScope(tree)`
 
 **Acceptance criteria:**
@@ -478,3 +478,83 @@ All are now resolved.
 | Should labels and identifiers be node objects or scalars?                | Node objects                          | Preserves position information; consistent with esast's `Identifier`            |
 | Should named fields be preserved in parallel with `children`?            | Named fields only, no `children`      | esast precedent; avoids dual-representation sync risk                           |
 | Should scope analysis remain a parser option?                            | Separate utility (`luast-util-scope`) | Semantic analysis is not syntax; unist `data` is the metadata space             |
+
+## Appendix: Scope migration guide
+
+The `luast` ecosystem moves scope analysis from a parser option to a separate utility.
+This decouples syntax parsing from semantic analysis and follows the unist `data` metadata pattern.
+
+### API comparison
+
+| Feature | Legacy API (`luaparse`) | New API (`luast-util-scope`) |
+| :--- | :--- | :--- |
+| **Activation** | `parse(code, { scope: true })` | `analyzeScope(tree)` |
+| **Global list** | `chunk.globals` | `scope.globals` |
+| **Local check** | `identifier.isLocal` | `scope.isLocal(identifier)` |
+
+### Basic usage
+
+#### Before (Legacy)
+
+```ts
+import luaparse from 'luaparse'
+
+const ast = luaparse.parse('local x = 1; y = x', { scope: true })
+
+// Globals are attached to the root node
+const globals = ast.globals // [Identifier { name: 'y' }]
+
+// Scope info is attached to every identifier node
+const isLocal = ast.body[0].variables[0].isLocal // true
+```
+
+#### After (luast)
+
+```ts
+import luaparse from '@friday-friday/luaparse'
+import { analyzeScope } from '@friday-friday/luast-util-scope'
+
+// 1. Parse using the luast format
+const tree = luaparse.parse('local x = 1; y = x', { ast: 'luast' })
+
+// 2. Run scope analysis on the tree
+const scope = analyzeScope(tree)
+
+// 3. Access results via the scope object
+const globals = scope.globals // [Identifier { name: 'y' }]
+const isLocal = scope.isLocal(tree.body[0].variables[0]) // true
+```
+
+### Key differences
+
+1. **Tree format**: `analyzeScope` requires a `luast` tree. You must use `{ ast: 'luast' }` in `luaparse.parse()` or convert a legacy AST using `fromLuaparse()`.
+2. **Immutability**: The new utility does not mutate the tree. It returns a separate `ScopeInfo` object containing the results.
+3. **Identifier identity**: `scope.isLocal(node)` relies on the object identity of the identifier node. If you clone or recreate nodes, you must re-run analysis.
+
+### Complete migration example
+
+```ts
+import luaparse from '@friday-friday/luaparse'
+import { analyzeScope } from '@friday-friday/luast-util-scope'
+import { visit } from '@friday-friday/luast-util-visit'
+
+const code = `
+  local x = 10
+  function print_x()
+    print(x)
+    print(y)
+  end
+`
+
+const tree = luaparse.parse(code, { ast: 'luast' })
+const scope = analyzeScope(tree)
+
+visit(tree, 'identifier', (node) => {
+  const type = scope.isLocal(node) ? 'local' : 'global'
+  console.log(`Identifier "${node.name}" is ${type}`)
+})
+
+console.log('All globals:', scope.globals.map(g => g.name))
+// Output: ['print', 'y']
+```
+

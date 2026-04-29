@@ -84,7 +84,7 @@ export type CallStatement = {
 
 export type FunctionDeclaration = {
   type: 'functionDeclaration'
-  identifier: Identifier | MemberExpression | undefined
+  identifier: Identifier | MemberExpression | null
   parameters: Array<Identifier | VarargLiteral>
   body: Statement[]
   local: boolean
@@ -95,7 +95,7 @@ export type ForNumericStatement = {
   variable: Identifier
   start: Expression
   end: Expression
-  step: Expression | undefined
+  step: Expression | null
   body: Statement[]
 } & LuastNode
 
@@ -221,7 +221,7 @@ export type TableConstructor = {
 
 export type StringLiteral = {
   type: 'stringLiteral'
-  value: string | undefined
+  value: string | null
   raw: string
 } & LuastNode
 
@@ -239,7 +239,7 @@ export type BooleanLiteral = {
 
 export type NilLiteral = {
   type: 'nilLiteral'
-  value: undefined
+  value: null
   raw: string
 } & LuastNode
 

@@ -1,8 +1,11 @@
 {
-  "name": "luast-util-scope",
+  "name": "@friday-friday/luast-util-scope",
   "version": "0.1.0",
   "description": "Scope analysis for luast trees — identify local and global identifiers",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -26,11 +29,11 @@
     "test": "npm run build && npm run format && npm run test-api"
   },
   "dependencies": {
-    "luast": "file:../luast",
-    "luast-util-visit": "file:../luast-util-visit"
+    "@friday-friday/luast": "file:../luast",
+    "@friday-friday/luast-util-visit": "file:../luast-util-visit"
   },
   "devDependencies": {
-    "luaparse": "file:../../",
+    "@friday-friday/luaparse": "file:../../",
     "prettier": "^3.0.0",
     "typescript": "^5.4.0",
     "vitest": "^3.0.0",

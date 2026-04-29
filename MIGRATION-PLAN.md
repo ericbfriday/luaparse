@@ -150,11 +150,11 @@ The migration produces a small family of packages, following the
 `{spec}-util-{purpose}` naming convention used by the syntax-tree ecosystem.
 
 ```
-luast                          Spec + TypeScript types
-luast-util-from-luaparse       Adapter: legacy AST → luast
-luast-util-visit               Tree visitor (enter/exit/skip/remove)
-luast-util-scope               Scope analysis utility
-unified-lua                    unified parser plugin
+@friday-friday/luast                          Spec + TypeScript types
+@friday-friday/luast-util-from-luaparse       Adapter: legacy AST → luast
+@friday-friday/luast-util-visit               Tree visitor (enter/exit/skip/remove)
+@friday-friday/luast-util-scope               Scope analysis utility
+@friday-friday/unified-lua                    unified parser plugin
 ```
 
 ### `luast`
@@ -185,7 +185,7 @@ Converts a legacy `luaparse` AST to a luast tree.
 - Strip `globals` from root (move to `data.scope` if present)
 - Normalize `TableCallExpression` (remove the redundant `arguments` alias)
 
-**Dependencies:** `luast`, `luaparse`
+**Dependencies:** `@friday-friday/luast`, `@friday-friday/luaparse`
 
 ### `luast-util-visit`
 
@@ -194,7 +194,7 @@ Tree visitor modeled on `estree-util-visit`.
 **API:**
 
 ```ts
-import {visit, SKIP, REMOVE, EXIT} from 'luast-util-visit'
+import {visit, SKIP, REMOVE, EXIT} from '@friday-friday/luast-util-visit'
 
 visit(tree, (node, parent, field, index) => {
   // called for every node
@@ -206,13 +206,13 @@ visit(tree, 'ifStatement', (node, parent, field, index) => {
 })
 ```
 
-**Implementation:** Uses the child-field registry from `luast` to determine
-which fields to recurse into.
+**Implementation:** Uses the child-field registry from
+`@friday-friday/luast` to determine which fields to recurse into.
 Handles single-node fields, array fields, and nullable fields.
 
 **Size:** ~100–150 lines.
 
-**Dependencies:** `luast`
+**Dependencies:** `@friday-friday/luast`
 
 ### `luast-util-scope`
 
@@ -221,14 +221,15 @@ Scope analysis over luast trees.
 **API:**
 
 ```ts
-import {analyzeScope} from 'luast-util-scope'
+import {analyzeScope} from '@friday-friday/luast-util-scope'
 
 const scope = analyzeScope(tree)
 scope.globals // Identifier nodes referenced but not declared locally
 scope.isLocal(node) // whether an identifier is locally scoped
 ```
 
-**Dependencies:** `luast`, `luast-util-visit`
+**Dependencies:** `@friday-friday/luast`,
+`@friday-friday/luast-util-visit`
 
 ### `unified-lua`
 
@@ -238,15 +239,15 @@ A unified parser plugin.
 
 ```ts
 import {unified} from 'unified'
-import luaParse from 'unified-lua'
+import luaParse from '@friday-friday/unified-lua'
 
 const tree = unified().use(luaParse, {luaVersion: '5.3'}).parse('local x = 1')
 ```
 
 The parser contract is: `(document: string, file: VFile) => Root`.
 
-**Dependencies:** `luast`, `luaparse`, `luast-util-from-luaparse`, `unified`,
-`vfile`
+**Dependencies:** `@friday-friday/luast`, `@friday-friday/luaparse`,
+`@friday-friday/luast-util-from-luaparse`, `unified`, `vfile`
 
 ## Type-name mapping
 
@@ -449,8 +450,8 @@ ecosystem utilities.
 
 **Acceptance criteria:**
 
-- `import luaparse from 'luaparse'` works in ESM
-- `require('luaparse')` still works in CJS
+- `import luaparse from '@friday-friday/luaparse'` works in ESM
+- `require('@friday-friday/luaparse')` still works in CJS
 - TypeScript users get types without `@types/luaparse`
 - CI passes on current Node.js LTS
 

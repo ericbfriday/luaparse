@@ -4,7 +4,7 @@ import {
   type LuastNode,
   childFields,
   arrayFields
-} from 'luast'
+} from '@friday-friday/luast'
 
 export type ScopeInfo = {
   globals: Identifier[]

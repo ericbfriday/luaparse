@@ -289,7 +289,7 @@ This is a thin wrapper. The unified parser contract is a function:
 
 ```ts
 import type {Plugin} from 'unified'
-import type {Root} from 'luast'
+import type {Root} from '@friday-friday/luast'
 
 const luaParse: Plugin<[Options?], string, Root>
 ```

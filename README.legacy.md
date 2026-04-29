@@ -4,14 +4,14 @@ A Lua parser written in JavaScript, originally written by Oskar Schöldström fo
 
 ## Installation
 
-Install through `npm install luaparse`.
+Install through `npm install @friday-friday/luaparse`.
 
 ## Usage
 
 CommonJS
 
 ```js
-var parser = require('luaparse')
+var parser = require('@friday-friday/luaparse')
 var ast = parser.parse('i = 0')
 console.log(JSON.stringify(ast))
 ```
@@ -19,7 +19,7 @@ console.log(JSON.stringify(ast))
 AMD
 
 ```js
-require(['luaparse'], function (parser) {
+require(['@friday-friday/luaparse'], function (parser) {
   var ast = parser.parse('i = 0')
   console.log(JSON.stringify(ast))
 })
@@ -161,7 +161,7 @@ you for example wanted to trigger an event on node creations you could use the
 following:
 
 ```js
-var luaparse = require('luaparse'),
+var luaparse = require('@friday-friday/luaparse'),
   events = new (require('events').EventEmitter)()
 
 Object.keys(luaparse.ast).forEach(function (type) {
@@ -214,10 +214,10 @@ of the repository for some code examples or check them out [live](https://fstirl
 
 ## luaparse(1)
 
-The `luaparse` executable can be used in your shell by installing `luaparse` globally using npm:
+The `luaparse` executable can be used in your shell by installing `@friday-friday/luaparse` globally using npm:
 
 ```bash
-$ npm install -g luaparse
+$ npm install -g @friday-friday/luaparse
 $ luaparse --help
 
 Usage: luaparse [option]... [file|code]...

@@ -1,8 +1,11 @@
 {
-  "name": "unified-lua",
+  "name": "@friday-friday/unified-lua",
   "version": "0.1.0",
   "description": "unified parser plugin for Lua — produces luast syntax trees",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -26,11 +29,11 @@
     "test": "npm run build && npm run format && npm run test-api"
   },
   "dependencies": {
-    "luast": "file:../luast",
-    "luaparse": "file:../../"
+    "@friday-friday/luast": "file:../luast",
+    "@friday-friday/luaparse": "file:../../"
   },
   "devDependencies": {
-    "luast-util-visit": "file:../luast-util-visit",
+    "@friday-friday/luast-util-visit": "file:../luast-util-visit",
     "prettier": "^3.0.0",
     "typescript": "^5.4.0",
     "unified": "^11.0.0",

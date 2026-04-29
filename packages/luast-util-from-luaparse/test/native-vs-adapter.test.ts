@@ -1,7 +1,7 @@
 import {describe, it, expect} from 'vitest'
 // @ts-expect-error -- luaparse is CJS without type declarations
-import * as luaparse from 'luaparse'
-import type {Root} from 'luast'
+import * as luaparse from '@friday-friday/luaparse'
+import type {Root} from '@friday-friday/luast'
 import {fromLuaparse} from '../src/index.js'
 
 function parseNative(code: string, version = '5.3'): Root {

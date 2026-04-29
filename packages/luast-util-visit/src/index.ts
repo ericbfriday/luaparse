@@ -1,4 +1,8 @@
-import {type LuastNode, childFields, arrayFields} from 'luast'
+import {
+  type LuastNode,
+  childFields,
+  arrayFields
+} from '@friday-friday/luast'
 
 export const SKIP: unique symbol = Symbol('skip')
 export const REMOVE: unique symbol = Symbol('remove')

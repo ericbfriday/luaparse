@@ -1,8 +1,11 @@
 {
-  "name": "luast-util-visit",
+  "name": "@friday-friday/luast-util-visit",
   "version": "0.1.0",
   "description": "Tree visitor for luast (named-field aware) — walk Lua ASTs using the child-field registry",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -26,7 +29,7 @@
     "test": "npm run build && npm run format && npm run test-api"
   },
   "dependencies": {
-    "luast": "file:../luast"
+    "@friday-friday/luast": "file:../luast"
   },
   "devDependencies": {
     "prettier": "^3.0.0",

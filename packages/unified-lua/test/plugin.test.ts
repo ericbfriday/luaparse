@@ -2,8 +2,8 @@ import {describe, it, expect} from 'vitest'
 import {unified} from 'unified'
 import {is} from 'unist-util-is'
 import {position} from 'unist-util-position'
-import {visit} from 'luast-util-visit'
-import type {Root, LuastNode} from 'luast'
+import {visit} from '@friday-friday/luast-util-visit'
+import type {Root, LuastNode} from '@friday-friday/luast'
 import luaParse from '../src/index.js'
 
 describe('unified-lua plugin', () => {

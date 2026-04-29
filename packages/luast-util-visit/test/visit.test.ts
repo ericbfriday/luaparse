@@ -16,7 +16,7 @@ import type {
   TableConstructor,
   TableKeyString,
   LuastNode
-} from 'luast'
+} from '@friday-friday/luast'
 import {visit, SKIP, REMOVE, EXIT} from '../src/index.js'
 
 function id(name: string): Identifier {

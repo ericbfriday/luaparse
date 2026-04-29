@@ -1,5 +1,5 @@
-import type {Root} from 'luast'
-import * as luaparse from 'luaparse'
+import type {Root} from '@friday-friday/luast'
+import * as luaparse from '@friday-friday/luaparse'
 
 export type Options = {
   luaVersion?: '5.1' | '5.2' | '5.3' | 'LuaJIT'

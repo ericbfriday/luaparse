@@ -1,8 +1,11 @@
 {
-  "name": "luast-util-from-luaparse",
+  "name": "@friday-friday/luast-util-from-luaparse",
   "version": "0.1.0",
   "description": "Convert legacy luaparse AST to luast format",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -26,11 +29,11 @@
     "test": "npm run build && npm run format && npm run test-api"
   },
   "dependencies": {
-    "luast": "file:../luast"
+    "@friday-friday/luast": "file:../luast"
   },
   "devDependencies": {
-    "luaparse": "file:../../",
-    "luast-util-visit": "file:../luast-util-visit",
+    "@friday-friday/luaparse": "file:../../",
+    "@friday-friday/luast-util-visit": "file:../luast-util-visit",
     "prettier": "^3.0.0",
     "typescript": "^5.4.0",
     "unist-util-position": "^5.0.0",

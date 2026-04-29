@@ -1,9 +1,9 @@
 import {describe, it, expect} from 'vitest'
 // @ts-expect-error -- luaparse is CJS without type declarations
-import * as luaparse from 'luaparse'
-import {visit} from 'luast-util-visit'
+import * as luaparse from '@friday-friday/luaparse'
+import {visit} from '@friday-friday/luast-util-visit'
 import {position as getPosition} from 'unist-util-position'
-import type {Root, LuastNode} from 'luast'
+import type {Root, LuastNode} from '@friday-friday/luast'
 import {fromLuaparse} from '../src/index.js'
 
 function parse(code: string): unknown {

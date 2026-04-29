@@ -4,7 +4,7 @@ import {
   type Comment,
   childFields,
   arrayFields
-} from 'luast'
+} from '@friday-friday/luast'
 
 type LegacyNode = Record<string, unknown>
 

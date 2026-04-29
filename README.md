@@ -9,12 +9,12 @@ the [unified][] / [syntax-tree][] pipeline:
 
 | Package                    | Description                                | Status                                                                   |
 | -------------------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
-| `luast`                    | Tree specification and TypeScript types    | [packages/luast](./packages/luast)                                       |
-| `luast-util-from-luaparse` | Convert legacy luaparse AST → luast        | [packages/luast-util-from-luaparse](./packages/luast-util-from-luaparse) |
-| `luast-util-visit`         | Tree visitor for luast (named-field aware) | [packages/luast-util-visit](./packages/luast-util-visit)                 |
-| `luast-util-scope`         | Scope analysis over luast trees            | [packages/luast-util-scope](./packages/luast-util-scope)                 |
-| `unified-lua`              | unified parser plugin for Lua              | [packages/unified-lua](./packages/unified-lua)                           |
-| `luaparse`                 | Lua parser with native luast emission      | [v2.0.0](./luaparse.js)                                                  |
+| `@friday-friday/luast`                    | Tree specification and TypeScript types    | [packages/luast](./packages/luast)                                       |
+| `@friday-friday/luast-util-from-luaparse` | Convert legacy luaparse AST → luast        | [packages/luast-util-from-luaparse](./packages/luast-util-from-luaparse) |
+| `@friday-friday/luast-util-visit`         | Tree visitor for luast (named-field aware) | [packages/luast-util-visit](./packages/luast-util-visit)                 |
+| `@friday-friday/luast-util-scope`         | Scope analysis over luast trees            | [packages/luast-util-scope](./packages/luast-util-scope)                 |
+| `@friday-friday/unified-lua`              | unified parser plugin for Lua              | [packages/unified-lua](./packages/unified-lua)                           |
+| `@friday-friday/luaparse`                 | Lua parser with native luast emission      | [v0.1.0](./luaparse.js)                                                  |
 
 ## Documentation
 
@@ -35,7 +35,7 @@ the [unified][] / [syntax-tree][] pipeline:
 
 ```js
 // ESM
-import luaparse from 'luaparse'
+import luaparse from '@friday-friday/luaparse'
 
 // Emit a luast (unist-compliant) tree
 const tree = luaparse.parse('local x = 1', {ast: 'luast'})
@@ -49,7 +49,7 @@ const legacy = luaparse.parse('local x = 1')
 ```js
 // unified pipeline
 import {unified} from 'unified'
-import luaParse from 'unified-lua'
+import luaParse from '@friday-friday/unified-lua'
 
 const tree = unified().use(luaParse, {luaVersion: '5.3'}).parse('local x = 1')
 ```
@@ -109,7 +109,8 @@ all values be JSON-expressible — `undefined` is not. The type should be
 
 `parse()` always returns `AstNode` regardless of the `ast` option. When
 `{ast: 'luast'}` is specified, the return type should narrow to `Root` (from
-`luast`). TypeScript consumers currently lose type safety in luast mode.
+`@friday-friday/luast`). TypeScript consumers currently lose type safety in
+luast mode.
 
 ### No workspace configuration
 
@@ -127,10 +128,10 @@ code and can be removed.
 
 ### Scope analysis duplicates traversal logic
 
-`luast-util-scope` depends on `luast-util-visit` but implements its own
-recursive walk using `childFields`/`arrayFields` directly. This avoids visitor
-overhead but means adding new node types requires updating both `registry.ts`
-and `scope.ts`.
+`@friday-friday/luast-util-scope` depends on
+`@friday-friday/luast-util-visit` but implements its own recursive walk using
+`childFields`/`arrayFields` directly. This avoids visitor overhead but means
+adding new node types requires updating both `registry.ts` and `scope.ts`.
 
 ### Deferred migration plan items
 

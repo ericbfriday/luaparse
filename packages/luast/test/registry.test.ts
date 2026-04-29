@@ -4,6 +4,7 @@ import {
   nullableFields,
   arrayFields,
   getChildFields,
+  forEachChild,
   isArrayField,
   isNullableField
 } from '../src/index.js'
@@ -119,6 +120,56 @@ describe('getChildFields', () => {
 
   it('returns empty array for unknown types', () => {
     expect(getChildFields({type: 'unknownNode'})).toEqual([])
+  })
+})
+
+describe('forEachChild', () => {
+  it('iterates array, single-node, and leaf node children correctly', () => {
+    const arrayVisits: Array<[string, string, number | undefined]> = []
+    forEachChild(
+      {
+        type: 'callExpression',
+        base: {type: 'identifier', name: 'fn'},
+        arguments: [
+          {type: 'numericLiteral', value: 1, raw: '1'},
+          {type: 'stringLiteral', value: 'x', raw: '"x"'}
+        ]
+      },
+      (child, field, index) => {
+        arrayVisits.push([child.type, field, index])
+      }
+    )
+
+    expect(arrayVisits).toEqual([
+      ['identifier', 'base', undefined],
+      ['numericLiteral', 'arguments', 0],
+      ['stringLiteral', 'arguments', 1]
+    ])
+
+    const singleVisits: Array<[string, string, number | undefined]> = []
+    forEachChild(
+      {
+        type: 'binaryExpression',
+        operator: '+',
+        left: {type: 'identifier', name: 'a'},
+        right: {type: 'identifier', name: 'b'}
+      },
+      (child, field, index) => {
+        singleVisits.push([child.type, field, index])
+      }
+    )
+
+    expect(singleVisits).toEqual([
+      ['identifier', 'left', undefined],
+      ['identifier', 'right', undefined]
+    ])
+
+    const leafVisits: Array<[string, string, number | undefined]> = []
+    forEachChild({type: 'identifier', name: 'leaf'}, (child, field, index) => {
+      leafVisits.push([child.type, field, index])
+    })
+
+    expect(leafVisits).toEqual([])
   })
 })
 

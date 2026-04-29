@@ -52,6 +52,7 @@ export {
   nullableFields,
   arrayFields,
   getChildFields,
+  forEachChild,
   isArrayField,
   isNullableField
 } from './registry.js'

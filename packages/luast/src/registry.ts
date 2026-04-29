@@ -68,6 +68,31 @@ export function getChildFields(node: LuastAnyNode): readonly string[] {
   return childFields[node.type] ?? []
 }
 
+export function forEachChild(
+  node: LuastAnyNode,
+  callback: (child: LuastAnyNode, field: string, index: number | undefined) => void
+): void {
+  const fields = childFields[node.type]
+  if (fields === undefined) return
+
+  const nodeArrayFields = arrayFields[node.type]
+
+  for (const field of fields) {
+    const child = (node as unknown as Record<string, unknown>)[field]
+    if (child === null || child === undefined) continue
+
+    const isArray = nodeArrayFields?.includes(field)
+
+    if (isArray && Array.isArray(child)) {
+      for (let i = 0; i < child.length; i++) {
+        callback(child[i] as LuastAnyNode, field, i)
+      }
+    } else if (typeof child === 'object' && 'type' in child) {
+      callback(child as LuastAnyNode, field, undefined)
+    }
+  }
+}
+
 export function isArrayField(nodeType: string, field: string): boolean {
   return arrayFields[nodeType]?.includes(field) ?? false
 }

@@ -1,9 +1,11 @@
 import {
   type Root,
   type Identifier,
+  type LuastAnyNode,
   type LuastNode,
   childFields,
-  arrayFields
+  arrayFields,
+  forEachChild
 } from '@friday-friday/luast'
 
 export type ScopeInfo = {
@@ -49,7 +51,7 @@ export function analyzeScope(tree: Root): ScopeInfo {
       case 'functionDeclaration': {
         const identifier = rec.identifier as
           | (Identifier | LuastNode)
-          | undefined
+          | null
         const isLocal = rec.local as boolean
         const parameters = rec.parameters as Array<Identifier | LuastNode>
         const body = rec.body as LuastNode[]
@@ -92,7 +94,7 @@ export function analyzeScope(tree: Root): ScopeInfo {
         const variable = rec.variable as Identifier
         const start = rec.start as LuastNode
         const end = rec.end as LuastNode
-        const step = rec.step as LuastNode | undefined
+        const step = rec.step as LuastNode | null
         const body = rec.body as LuastNode[]
 
         walkNode(start)
@@ -165,25 +167,7 @@ export function analyzeScope(tree: Root): ScopeInfo {
       }
     }
 
-    const fields = childFields[node.type]
-    if (fields === undefined) return
-
-    const nodeArrayFields = arrayFields[node.type]
-
-    for (const field of fields) {
-      const child = rec[field]
-      if (child === null || child === undefined) continue
-
-      const isArray = nodeArrayFields?.includes(field)
-
-      if (isArray && Array.isArray(child)) {
-        for (const element of child) {
-          walkNode(element as LuastNode)
-        }
-      } else if (typeof child === 'object' && 'type' in child) {
-        walkNode(child as LuastNode)
-      }
-    }
+    forEachChild(node as LuastAnyNode, (child) => walkNode(child as LuastNode))
   }
 
   for (const stmt of tree.body) {

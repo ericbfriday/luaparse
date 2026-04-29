@@ -1,6 +1,6 @@
 {
   "name": "@friday-friday/luast-util-scope",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Scope analysis for luast trees — identify local and global identifiers",
   "license": "MIT",
   "publishConfig": {

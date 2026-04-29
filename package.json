@@ -1,6 +1,6 @@
 {
   "name": "@friday-friday/luaparse",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Lua parser in JavaScript with unist-compatible AST output",
   "keywords": [
     "ast",
@@ -50,13 +50,20 @@
     "type": "git",
     "url": "https://github.com/fstirlitz/luaparse.git"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
     "format": "remark . -qfo && prettier . -w --log-level warn",
     "test": "node test/runner.js --console",
-    "test:packages": "for d in packages/*/; do (cd \"$d\" && npx vitest run); done"
+    "test:packages": "npm run test-api --workspaces --if-present",
+    "bench:luast": "node benchmarks/luast-emission.js"
+  },
+  "dependencies": {
+    "@friday-friday/luast": "^0.2.0"
   },
   "devDependencies": {
     "benchmark": "~1.0.0",

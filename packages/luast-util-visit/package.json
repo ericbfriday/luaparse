@@ -1,6 +1,6 @@
 {
   "name": "@friday-friday/luast-util-visit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tree visitor for luast (named-field aware) — walk Lua ASTs using the child-field registry",
   "license": "MIT",
   "publishConfig": {

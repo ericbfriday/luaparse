@@ -2455,31 +2455,22 @@
   // the expensive CompareICStub which took ~8% of the parse time.
 
   function binaryPrecedence(operator) {
-    var charCode = operator.charCodeAt(0)
-      , length = operator.length;
-
-    if (1 === length) {
-      switch (charCode) {
-        case 94: return 12; // ^
-        case 42: case 47: case 37: return 10; // * / %
-        case 43: case 45: return 9; // + -
-        case 38: return 6; // &
-        case 126: return 5; // ~
-        case 124: return 4; // |
-        case 60: case 62: return 3; // < >
-      }
-    } else if (2 === length) {
-      switch (charCode) {
-        case 47: return 10; // //
-        case 46: return 8; // ..
-        case 60: case 62:
-            if('<<' === operator || '>>' === operator) return 7; // << >>
-            return 3; // <= >=
-        case 61: case 126: return 3; // == ~=
-        case 111: return 1; // or
-      }
-    } else if (97 === charCode && 'and' === operator) return 2;
-    return 0;
+    // ⚡ Bolt optimization: V8 optimizes string switches extremely well.
+    // Explicit length/charCodeAt checks are slower in modern JS engines.
+    switch (operator) {
+      case '^': return 12;
+      case '*': case '/': case '%': case '//': return 10;
+      case '+': case '-': return 9;
+      case '..': return 8;
+      case '<<': case '>>': return 7;
+      case '&': return 6;
+      case '~': return 5;
+      case '|': return 4;
+      case '<': case '>': case '<=': case '>=': case '==': case '~=': return 3;
+      case 'and': return 2;
+      case 'or': return 1;
+      default: return 0;
+    }
   }
 
   // Implement an operator-precedence parser to handle binary operator

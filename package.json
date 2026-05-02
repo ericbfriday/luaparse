@@ -1,6 +1,6 @@
 {
   "name": "@friday-friday/luaparse",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A Lua parser in JavaScript with unist-compatible AST output",
   "keywords": [
     "ast",
@@ -12,13 +12,16 @@
     "syntax-tree",
     "unified"
   ],
-  "homepage": "https://fstirlitz.github.io/luaparse/",
-  "bugs": "https://github.com/fstirlitz/luaparse/issues",
+  "homepage": "https://github.com/ericbfriday/luaparse#readme",
+  "bugs": "https://github.com/ericbfriday/luaparse/issues",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "author": "Oskar Schöldström <public@oxy.fi> (http://www.oxy.fi/)",
+  "contributors": [
+    "Eric Friday <ericfriday@gmail.com>"
+  ],
   "sideEffects": false,
   "files": [
     "README.md",
@@ -48,7 +51,7 @@
   "man": "./docs/luaparse.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fstirlitz/luaparse.git"
+    "url": "https://github.com/ericbfriday/luaparse.git"
   },
   "workspaces": [
     "packages/*"
@@ -63,7 +66,7 @@
     "bench:luast": "node benchmarks/luast-emission.js"
   },
   "dependencies": {
-    "@friday-friday/luast": "^0.2.0"
+    "@friday-friday/luast": "^0.3.0"
   },
   "devDependencies": {
     "benchmark": "~1.0.0",

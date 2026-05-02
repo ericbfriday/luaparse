@@ -1,8 +1,23 @@
 {
   "name": "@friday-friday/luast",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Lua Abstract Syntax Tree format — unist-compliant tree specification and TypeScript types",
+  "author": "Eric Friday <ericfriday@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "lua",
+    "luast",
+    "ast",
+    "unist",
+    "syntax-tree",
+    "types",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ericbfriday/luaparse.git",
+    "directory": "packages/luast"
+  },
   "publishConfig": {
     "access": "public"
   },

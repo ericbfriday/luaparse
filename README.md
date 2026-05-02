@@ -101,9 +101,37 @@ The following items from `MIGRATION-PLAN.md` are deferred:
   (optional, low priority)
 - **Phase 6**: Drop legacy browser build — or produce it as a build artifact
 
+## Acknowledgements
+
+This project is a rewrite and ecosystem extension of
+[luaparse](https://github.com/fstirlitz/luaparse), originally created by
+**Oskar Schöldström** ([oxy.fi](http://www.oxy.fi/)) as part of his
+bachelor's thesis at Arcada University of Applied Sciences.
+
+The core parser (`luaparse.js`) retains substantial portions of the original
+luaparse codebase. The unist-compliant luast ecosystem — the tree
+specification, utilities, and unified plugin — is new work by
+**Eric Friday**.
+
+For the original luaparse documentation, see
+[README.legacy.md](./README.legacy.md).
+
+### Original acknowledgements
+
+The original luaparse project acknowledged the following:
+
+- Initial tests scaffolded from [yueliang](http://yueliang.luaforge.net/) and
+  manually checked for errors.
+- Much of the code based on [LuaMinify](https://github.com/stravant/LuaMinify),
+  the [Lua](https://www.lua.org) source, and
+  [Esprima](http://esprima.org).
+- [luamin](http://mths.be/luamin), a Lua minifier by Mathias Bynens.
+- [Ace](https://github.com/ajaxorg/ace), an online code editor.
+
 ## License
 
-[MIT](./LICENSE)
+[MIT](./LICENSE) — Copyright (c) Oskar Schöldström 2012–2014 (original
+luaparse). Copyright (c) Eric Friday 2025 (luast ecosystem and rewrite).
 
 <!-- Definitions -->
 

@@ -1,8 +1,23 @@
 {
   "name": "@friday-friday/luast-util-scope",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Scope analysis for luast trees — identify local and global identifiers",
+  "author": "Eric Friday <ericfriday@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "lua",
+    "luast",
+    "ast",
+    "unist",
+    "scope",
+    "analysis",
+    "syntax-tree"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ericbfriday/luaparse.git",
+    "directory": "packages/luast-util-scope"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -29,11 +44,11 @@
     "test": "npm run build && npm run format && npm run test-api"
   },
   "dependencies": {
-    "@friday-friday/luast": "file:../luast",
-    "@friday-friday/luast-util-visit": "file:../luast-util-visit"
+    "@friday-friday/luast": "^0.3.0",
+    "@friday-friday/luast-util-visit": "^0.3.0"
   },
   "devDependencies": {
-    "@friday-friday/luaparse": "file:../../",
+    "@friday-friday/luaparse": "^0.3.0",
     "prettier": "^3.0.0",
     "typescript": "^5.4.0",
     "vitest": "^3.0.0",

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "ericbfriday/luaparse" }
+  ],
+  "commit": false,
+  "fixed": [["@friday-friday/luast", "@friday-friday/luast-util-from-luaparse", "@friday-friday/luast-util-visit", "@friday-friday/luast-util-scope", "@friday-friday/unified-lua"]],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "master",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

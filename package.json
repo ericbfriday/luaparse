@@ -60,6 +60,10 @@
     "node": ">=18.0.0"
   },
   "scripts": {
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build:packages && changeset publish",
+    "build:packages": "npm run build --workspaces --if-present",
     "format": "remark . -qfo && prettier . -w --log-level warn",
     "test": "node test/runner.js --console",
     "test:packages": "npm run test-api --workspaces --if-present",
@@ -69,6 +73,8 @@
     "@friday-friday/luast": "^0.3.0"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.31.0",
     "benchmark": "~1.0.0",
     "prettier": "^3.0.0",
     "remark-cli": "^12.0.0",

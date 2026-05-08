@@ -2,7 +2,7 @@
 
 **Lu**a **A**bstract **S**yntax **T**ree format.
 
----
+***
 
 **luast** is a specification for representing [Lua][] as an abstract
 [syntax tree][syntax-tree].
@@ -10,25 +10,31 @@ It implements the **[unist][]** spec.
 
 ## Contents
 
-- [Introduction](#introduction)
-  - [Where this specification fits](#where-this-specification-fits)
-  - [Relationship to unist](#relationship-to-unist)
-  - [Relationship to luaparse](#relationship-to-luaparse)
-- [Nodes](#nodes)
-  - [`Node`](#node)
-  - [`Root`](#root)
-  - [Statements](#statements)
-  - [Clauses](#clauses)
-  - [Expressions](#expressions)
-  - [Literals](#literals)
-  - [Table fields](#table-fields)
-  - [Comments](#comments)
-- [Content model](#content-model)
-- [Child-field registry](#child-field-registry)
-- [Position](#position)
-- [Recommendations](#recommendations)
-- [Glossary](#glossary)
-- [References](#references)
+* [Introduction](#introduction)
+  * [Where this specification fits](#where-this-specification-fits)
+  * [Relationship to unist](#relationship-to-unist)
+  * [Relationship to luaparse](#relationship-to-luaparse)
+* [Nodes](#nodes)
+  * [`Node`](#node)
+  * [`Root`](#root)
+  * [Statements](#statements)
+  * [Clauses](#clauses)
+  * [Expressions](#expressions)
+  * [Literals](#literals)
+  * [Table fields](#table-fields)
+  * [Comments](#comments)
+* [Content model](#content-model)
+* [Child-field registry](#child-field-registry)
+  * [Field metadata](#field-metadata)
+* [Position](#position)
+  * [Mapping from luaparse positions](#mapping-from-luaparse-positions)
+* [Recommendations](#recommendations)
+  * [Scope analysis](#scope-analysis)
+  * [Raw values](#raw-values)
+  * [Cloning](#cloning)
+  * [Type names](#type-names)
+* [Glossary](#glossary)
+* [References](#references)
 
 ## Introduction
 
@@ -75,24 +81,24 @@ Instead, use `luast-util-visit`, which understands the named-field structure.
 
 The following generic unist utilities **do** work with luast trees unchanged:
 
-- `unist-util-is` — type-driven node testing
-- `unist-util-position` — reading positional info
-- `unist-util-generated` — checking if a node is generated
-- `unist-util-stringify-position` — stringifying positions
-- `unist-util-remove-position` — removing positional info
+* `unist-util-is` — type-driven node testing
+* `unist-util-position` — reading positional info
+* `unist-util-generated` — checking if a node is generated
+* `unist-util-stringify-position` — stringifying positions
+* `unist-util-remove-position` — removing positional info
 
 ### Relationship to luaparse
 
 luaparse is the reference parser implementation.
 The legacy luaparse AST format differs from luast in several ways:
 
-- type names are PascalCase (`IfStatement`), luast uses camelCase
+* type names are PascalCase (`IfStatement`), luast uses camelCase
   (`ifStatement`)
-- positions use `loc`/`range`, luast uses unist `position`
-- the root node is `Chunk`, luast uses `root`
-- scope annotations (`isLocal`, `globals`) are inline, luast moves them to
+* positions use `loc`/`range`, luast uses unist `position`
+* the root node is `Chunk`, luast uses `root`
+* scope annotations (`isLocal`, `globals`) are inline, luast moves them to
   `data` or a separate utility
-- `FunctionDeclaration.isLocal` becomes `functionDeclaration.local`
+* `FunctionDeclaration.isLocal` becomes `functionDeclaration.local`
 
 A `luast-util-from-luaparse` adapter handles the conversion.
 
@@ -124,8 +130,8 @@ interface Root <: Node {
 
 **Root** represents a complete Lua chunk (source file or string).
 
-- `body` contains the top-level statements
-- `comments` is an optional array of all comments in the source, in document
+* `body` contains the top-level statements
+* `comments` is an optional array of all comments in the source, in document
   order (following esast's recommendation to only attach comments at the root)
 
 The `root` type name follows unist convention (all unist specs use `root` for
@@ -277,10 +283,10 @@ interface FunctionDeclaration <: Node {
 Represents both `function name(...) ... end` and
 `local function name(...) ... end`.
 
-- `identifier` is `null` for anonymous function expressions
+* `identifier` is `null` for anonymous function expressions
   (`function(...) ... end`)
-- `local` is `true` for `local function` declarations
-- `parameters` may include a `varargLiteral` as the last element
+* `local` is `true` for `local function` declarations
+* `parameters` may include a `varargLiteral` as the last element
 
 #### `forNumericStatement`
 
@@ -691,24 +697,24 @@ const childFields = {
 For visitor implementations, the following fields are **nullable** (may be
 `null` instead of a node):
 
-- `functionDeclaration.identifier` — `null` for anonymous functions
-- `forNumericStatement.step` — `null` when step is omitted
+* `functionDeclaration.identifier` — `null` for anonymous functions
+* `forNumericStatement.step` — `null` when step is omitted
 
 The following fields are **always arrays** (even when empty):
 
-- `root.body`, `root.comments`
-- `returnStatement.arguments`
-- `ifStatement.clauses`
-- `ifClause.body`, `elseifClause.body`, `elseClause.body`
-- `whileStatement.body`, `doStatement.body`, `repeatStatement.body`
-- `localStatement.variables`, `localStatement.init`
-- `assignmentStatement.variables`, `assignmentStatement.init`
-- `functionDeclaration.parameters`, `functionDeclaration.body`
-- `forNumericStatement.body`
-- `forGenericStatement.variables`, `forGenericStatement.iterators`,
+* `root.body`, `root.comments`
+* `returnStatement.arguments`
+* `ifStatement.clauses`
+* `ifClause.body`, `elseifClause.body`, `elseClause.body`
+* `whileStatement.body`, `doStatement.body`, `repeatStatement.body`
+* `localStatement.variables`, `localStatement.init`
+* `assignmentStatement.variables`, `assignmentStatement.init`
+* `functionDeclaration.parameters`, `functionDeclaration.body`
+* `forNumericStatement.body`
+* `forGenericStatement.variables`, `forGenericStatement.iterators`,
   `forGenericStatement.body`
-- `callExpression.arguments`
-- `tableConstructor.fields`
+* `callExpression.arguments`
+* `tableConstructor.fields`
 
 All other child-bearing fields are **single nodes** (never arrays).
 
@@ -730,10 +736,10 @@ interface Point {
 }
 ```
 
-- `line` is 1-indexed
-- `column` is 1-indexed
-- `offset` is 0-indexed and optional
-- `position.end` points to the first character **after** the node
+* `line` is 1-indexed
+* `column` is 1-indexed
+* `offset` is 0-indexed and optional
+* `position.end` points to the first character **after** the node
 
 Generated nodes (not present in source) must not have a `position` field.
 
@@ -795,35 +801,48 @@ and X and Y are both referenced in an array at a field on node Y.
 
 ## References
 
-- **unist**:
+* **unist**:
   [Universal Syntax Tree][unist].
   T. Wormer; et al.
-- **esast**:
+* **esast**:
   [ECMAScript Abstract Syntax Tree format][esast].
   T. Wormer; et al.
-- **Lua**:
+* **Lua**:
   [The Programming Language Lua][lua].
   Lua.org, PUC-Rio.
-- **JSON**:
+* **JSON**:
   [The JavaScript Object Notation (JSON) Data Interchange Format][json].
   T. Bray. IETF.
-- **Web IDL**:
+* **Web IDL**:
   [Web IDL][webidl].
   C. McCormack. W3C.
 
 <!-- Definitions -->
 
 [unist]: https://github.com/syntax-tree/unist
+
 [unist-node]: https://github.com/syntax-tree/unist#node
+
 [unist-literal]: https://github.com/syntax-tree/unist#literal
+
 [unist-position]: https://github.com/syntax-tree/unist#position
+
 [unist-point]: https://github.com/syntax-tree/unist#point
+
 [unist-glossary]: https://github.com/syntax-tree/unist#glossary
+
 [unist-utilities]: https://github.com/syntax-tree/unist#list-of-utilities
+
 [esast]: https://github.com/syntax-tree/esast
+
 [syntax-tree]: https://github.com/syntax-tree/unist#syntax-tree
+
 [unified]: https://github.com/unifiedjs/unified
+
 [luaparse]: https://github.com/fstirlitz/luaparse
+
 [lua]: https://www.lua.org
+
 [json]: https://datatracker.ietf.org/doc/html/rfc7159
+
 [webidl]: https://webidl.spec.whatwg.org

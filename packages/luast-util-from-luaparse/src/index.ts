@@ -48,14 +48,7 @@ const typeMap: Record<string, string> = {
   Comment: 'comment'
 }
 
-const scalarFields = new Set([
-  'operator',
-  'name',
-  'indexer',
-  'raw',
-  'value',
-  'local'
-])
+// Inlined scalar fields
 
 export function fromLuaparse(legacy: unknown): Root {
   return convertNode(legacy as LegacyNode) as Root
@@ -76,7 +69,8 @@ function convertNode(node: LegacyNode): LuastNode {
   if (fields !== undefined) {
     const nodeArrayFields = arrayFields[luastType]
 
-    for (const field of fields) {
+    for (let i = 0; i < fields.length; i++) {
+      const field = fields[i]
       const legacyValue = node[field]
 
       if (legacyValue === null || legacyValue === undefined) {
@@ -87,29 +81,37 @@ function convertNode(node: LegacyNode): LuastNode {
       const isArray = nodeArrayFields?.includes(field)
 
       if (isArray && Array.isArray(legacyValue)) {
-        result[field] = legacyValue.map((child: LegacyNode) =>
-          convertNode(child)
-        )
+        const len = legacyValue.length;
+        const mapped = new Array(len);
+        for (let j = 0; j < len; j++) {
+          mapped[j] = convertNode(legacyValue[j] as LegacyNode);
+        }
+        result[field] = mapped
       } else if (!isArray && typeof legacyValue === 'object') {
         result[field] = convertNode(legacyValue as LegacyNode)
       }
     }
   }
 
-  for (const key of scalarFields) {
-    if (key in node && !(key in result)) {
-      result[key] = node[key]
-    }
-  }
+  if (node.operator !== undefined && result.operator === undefined) result.operator = node.operator
+  if (node.name !== undefined && result.name === undefined) result.name = node.name
+  if (node.indexer !== undefined && result.indexer === undefined) result.indexer = node.indexer
+  if (node.raw !== undefined && result.raw === undefined) result.raw = node.raw
+  if (node.value !== undefined && result.value === undefined) result.value = node.value
+  if (node.local !== undefined && result.local === undefined) result.local = node.local
 
   if (legacyType === 'FunctionDeclaration') {
     result.local = node.isLocal === true
   }
 
   if (luastType === 'root' && Array.isArray(node.comments)) {
-    result.comments = (node.comments as LegacyNode[]).map((c) =>
-      convertNode(c)
-    ) as Comment[]
+    const comments = node.comments as LegacyNode[];
+    const len = comments.length;
+    const mapped = new Array(len);
+    for (let i = 0; i < len; i++) {
+      mapped[i] = convertNode(comments[i]);
+    }
+    result.comments = mapped as Comment[];
   }
 
   return result as unknown as LuastNode
@@ -129,18 +131,19 @@ function convertPosition(
 
   if (loc === undefined) return
 
-  const position: Record<string, unknown> = {
-    start: {
-      line: loc.start.line,
-      column: loc.start.column + 1,
-      ...(range === undefined ? {} : {offset: range[0]})
-    },
-    end: {
-      line: loc.end.line,
-      column: loc.end.column + 1,
-      ...(range === undefined ? {} : {offset: range[1]})
-    }
+  const start: Record<string, number> = {
+    line: loc.start.line,
+    column: loc.start.column + 1
+  }
+  const end: Record<string, number> = {
+    line: loc.end.line,
+    column: loc.end.column + 1
   }
 
-  result.position = position
+  if (range !== undefined) {
+    start.offset = range[0]
+    end.offset = range[1]
+  }
+
+  result.position = { start, end }
 }

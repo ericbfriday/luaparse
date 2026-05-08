@@ -39,14 +39,14 @@ Analyze scopes in a luast `Root` tree.
 
 Returns a `ScopeInfo` object:
 
-- `globals` — array of `Identifier` nodes that are global
-- `isLocal(node)` — returns `true` if the given `Identifier` node is local
+* `globals` — array of `Identifier` nodes that are global
+* `isLocal(node)` — returns `true` if the given `Identifier` node is local
 
 ## Related
 
-- [`@friday-friday/luast`](../luast) — tree specification and types
-- [`@friday-friday/luast-util-visit`](../luast-util-visit) — tree visitor
-- [`@friday-friday/luaparse`](../../) — Lua parser
+* [`@friday-friday/luast`](../luast) — tree specification and types
+* [`@friday-friday/luast-util-visit`](../luast-util-visit) — tree visitor
+* [`@friday-friday/luaparse`](../../) — Lua parser
 
 ## License
 

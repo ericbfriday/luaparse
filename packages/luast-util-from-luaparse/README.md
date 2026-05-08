@@ -41,20 +41,23 @@ const tree = fromLuaparse(legacy)
 Convert a legacy luaparse AST node (typically a `Chunk`) into a luast `Root`.
 
 **Parameters:**
-- `legacy` — the legacy AST object from `luaparse.parse()`
+
+* `legacy` — the legacy AST object from `luaparse.parse()`
 
 **Returns:** a luast `Root` node
 
 ## Related
 
-- [`@friday-friday/luast`](../luast) — tree specification and types
-- [`@friday-friday/luast-util-visit`](../luast-util-visit) — tree visitor
-- [`@friday-friday/luaparse`](../../) — Lua parser
+* [`@friday-friday/luast`](../luast) — tree specification and types
+* [`@friday-friday/luast-util-visit`](../luast-util-visit) — tree visitor
+* [`@friday-friday/luaparse`](../../) — Lua parser
 
 ## License
 
 [MIT](./LICENSE)
 
 [luaparse]: ../../
+
 [luast]: ../luast
+
 [unist]: https://github.com/syntax-tree/unist

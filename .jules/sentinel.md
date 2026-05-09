@@ -1,0 +1,4 @@
+## 2024-05-30 - Prototype Pollution via `__proto__` in Object.assign Polyfill
+**Vulnerability:** The `assign` function in `luaparse.js` is a polyfill for `Object.assign` that does not properly prevent copying the `__proto__` property.
+**Learning:** Even well-known polyfills for `Object.assign` can be vulnerable to prototype pollution if they don't explicitly check and skip the `__proto__` property when copying properties from source objects to the destination object. This is critical because an attacker can pass an object with a malicious `__proto__` payload, polluting the global prototype and potentially leading to remote code execution or denial of service.
+**Prevention:** Explicitly filter out `__proto__` (and optionally `constructor` and `prototype` for safety) when iterating over keys in `Object.assign` polyfills.

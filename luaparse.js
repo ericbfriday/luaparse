@@ -602,6 +602,7 @@
       for (prop in src)
         /* istanbul ignore else */
         if (Object.prototype.hasOwnProperty.call(src, prop)) {
+          if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') continue;
           dest[prop] = src[prop];
         }
     }

@@ -1,0 +1,4 @@
+
+## 2024-05-10 - Optimizing AST Conversion Iteration
+**Learning:** Object spread syntax (`...{}`) to dynamically populate object shapes (like range offsets in `convertPosition`), mapping arrays (`.map`), and iterating Sets (`Set.has`) are significantly slower than direct assignment, pre-allocated array assignment (`new Array(len)` + `for` loop), and explicit property extraction. In hot loops like an AST conversion that touches every node in the graph, this overhead becomes a primary bottleneck.
+**Action:** When working on critical paths processing large object graphs (like ASTs), use pre-allocated arrays with indexed `for` loops instead of array mapping functions. Avoid Sets for small static collections of allowed keys, favouring hardcoded explicit checks instead. Construct objects via explicit property assignment rather than spread syntax or `Object.assign`.

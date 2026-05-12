@@ -7,8 +7,8 @@ A Lua parser and syntax tree ecosystem for JavaScript, built on [unist][].
 This repository contains [luaparse][] and its ecosystem of packages for
 the [unified][] / [syntax-tree][] pipeline:
 
-| Package                    | Description                                | Status                                                                   |
-| -------------------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
+| Package                                   | Description                                | Status                                                                   |
+| ----------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
 | `@friday-friday/luast`                    | Tree specification and TypeScript types    | [packages/luast](./packages/luast)                                       |
 | `@friday-friday/luast-util-from-luaparse` | Convert legacy luaparse AST → luast        | [packages/luast-util-from-luaparse](./packages/luast-util-from-luaparse) |
 | `@friday-friday/luast-util-visit`         | Tree visitor for luast (named-field aware) | [packages/luast-util-visit](./packages/luast-util-visit)                 |
@@ -18,15 +18,15 @@ the [unified][] / [syntax-tree][] pipeline:
 
 ## Documentation
 
-- **[LUAST-SPEC.md](./LUAST-SPEC.md)** — The luast tree specification.
+* **[LUAST-SPEC.md](./LUAST-SPEC.md)** — The luast tree specification.
   Defines every node type, the content model, the child-field registry, and
   the position format. This is the primary contract for the ecosystem.
 
-- **[MIGRATION-PLAN.md](./MIGRATION-PLAN.md)** — The phased migration plan.
+* **[MIGRATION-PLAN.md](./MIGRATION-PLAN.md)** — The phased migration plan.
   Covers design decisions with rationale, package architecture, the six
   implementation phases, risk assessment, and resolved design questions.
 
-- **[PORT-ANALYSIS.md](./PORT-ANALYSIS.md)** — The original gap analysis.
+* **[PORT-ANALYSIS.md](./PORT-ANALYSIS.md)** — The original gap analysis.
   Documents the structural differences between the current luaparse AST and
   what unist requires. Written before the spec and plan; superseded by them
   on any point of conflict.
@@ -73,33 +73,33 @@ const tree = unified().use(luaParse, {luaVersion: '5.3'}).parse('local x = 1')
 luast follows the [esast][] precedent — the only programming-language AST in
 the unist ecosystem. Key choices:
 
-- **Named fields, not `children`** — `condition`, `body`, `left`, `right`
+* **Named fields, not `children`** — `condition`, `body`, `left`, `right`
   etc. are the canonical structural fields. A dedicated `luast-util-visit`
   handles traversal. Generic `unist-util-is` and `unist-util-position` work
   unchanged.
-- **`root` as root type** — not `Chunk`, for unist consistency.
-- **camelCase type names** — `ifStatement`, `binaryExpression`, matching the
+* **`root` as root type** — not `Chunk`, for unist consistency.
+* **camelCase type names** — `ifStatement`, `binaryExpression`, matching the
   ecosystem majority.
-- **Scope analysis as a separate utility** — not baked into the parser.
-- **Comments on root only** — in `root.comments`, following esast convention.
+* **Scope analysis as a separate utility** — not baked into the parser.
+* **Comments on root only** — in `root.comments`, following esast convention.
 
 ## Ecosystem context
 
 luast sits alongside other language-specific unist implementations:
 
-- [mdast][] — Markdown
-- [hast][] — HTML
-- [xast][] — XML
-- [nlcst][] — Natural language
-- [esast][] — ECMAScript
+* [mdast][] — Markdown
+* [hast][] — HTML
+* [xast][] — XML
+* [nlcst][] — Natural language
+* [esast][] — ECMAScript
 
 ## Remaining work
 
 The following items from `MIGRATION-PLAN.md` are deferred:
 
-- **Phase 5**: `luast-util-attach-comments` — comment-to-node mapping utility
+* **Phase 5**: `luast-util-attach-comments` — comment-to-node mapping utility
   (optional, low priority)
-- **Phase 6**: Drop legacy browser build — or produce it as a build artifact
+* **Phase 6**: Drop legacy browser build — or produce it as a build artifact
 
 ## Acknowledgements
 
@@ -120,13 +120,13 @@ For the original luaparse documentation, see
 
 The original luaparse project acknowledged the following:
 
-- Initial tests scaffolded from [yueliang](http://yueliang.luaforge.net/) and
+* Initial tests scaffolded from [yueliang](http://yueliang.luaforge.net/) and
   manually checked for errors.
-- Much of the code based on [LuaMinify](https://github.com/stravant/LuaMinify),
+* Much of the code based on [LuaMinify](https://github.com/stravant/LuaMinify),
   the [Lua](https://www.lua.org) source, and
   [Esprima](http://esprima.org).
-- [luamin](http://mths.be/luamin), a Lua minifier by Mathias Bynens.
-- [Ace](https://github.com/ajaxorg/ace), an online code editor.
+* [luamin](http://mths.be/luamin), a Lua minifier by Mathias Bynens.
+* [Ace](https://github.com/ajaxorg/ace), an online code editor.
 
 ## License
 
@@ -136,11 +136,19 @@ luaparse). Copyright (c) Eric Friday 2025 (luast ecosystem and rewrite).
 <!-- Definitions -->
 
 [unist]: https://github.com/syntax-tree/unist
+
 [unified]: https://github.com/unifiedjs/unified
+
 [syntax-tree]: https://github.com/syntax-tree
+
 [esast]: https://github.com/syntax-tree/esast
+
 [mdast]: https://github.com/syntax-tree/mdast
+
 [hast]: https://github.com/syntax-tree/hast
+
 [xast]: https://github.com/syntax-tree/xast
+
 [nlcst]: https://github.com/syntax-tree/nlcst
+
 [luaparse]: https://github.com/fstirlitz/luaparse

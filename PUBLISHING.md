@@ -4,14 +4,14 @@ This monorepo uses [Changesets][] to manage versioning and publishing for all pa
 
 ## Packages
 
-| Package                              | Directory                              |
-| ------------------------------------ | -------------------------------------- |
-| `@friday-friday/luaparse`           | root                                   |
-| `@friday-friday/luast`              | `packages/luast`                       |
+| Package                                   | Directory                           |
+| ----------------------------------------- | ----------------------------------- |
+| `@friday-friday/luaparse`                 | root                                |
+| `@friday-friday/luast`                    | `packages/luast`                    |
 | `@friday-friday/luast-util-from-luaparse` | `packages/luast-util-from-luaparse` |
-| `@friday-friday/luast-util-visit`   | `packages/luast-util-visit`            |
-| `@friday-friday/luast-util-scope`   | `packages/luast-util-scope`            |
-| `@friday-friday/unified-lua`        | `packages/unified-lua`                 |
+| `@friday-friday/luast-util-visit`         | `packages/luast-util-visit`         |
+| `@friday-friday/luast-util-scope`         | `packages/luast-util-scope`         |
+| `@friday-friday/unified-lua`              | `packages/unified-lua`              |
 
 All packages are versioned together as a **fixed** group — they always share the same version number.
 
@@ -26,9 +26,10 @@ npm run changeset
 ```
 
 This prompts you to select:
-- Which packages changed
-- Bump type (`patch` / `minor` / `major`)
-- A changelog message
+
+* Which packages changed
+* Bump type (`patch` / `minor` / `major`)
+* A changelog message
 
 A markdown file is created under `.changeset/`. Commit it alongside your code changes.
 
@@ -39,10 +40,11 @@ npm run version
 ```
 
 This:
-- Consumes all pending `.changeset/*.md` files
-- Bumps `version` in the affected `package.json` files
-- Updates `CHANGELOG.md` in each package (using GitHub changelog)
-- Deletes the consumed changeset files
+
+* Consumes all pending `.changeset/*.md` files
+* Bumps `version` in the affected `package.json` files
+* Updates `CHANGELOG.md` in each package (using GitHub changelog)
+* Deletes the consumed changeset files
 
 Review the resulting diff, then commit and push.
 
@@ -53,6 +55,7 @@ npm run release
 ```
 
 This:
+
 1. Builds all workspace packages (`npm run build --workspaces`)
 2. Runs `changeset publish` to publish each package to npm
 3. Creates git tags for each published version (e.g. `@friday-friday/luast@0.3.0`)
@@ -69,12 +72,13 @@ The [release workflow](.github/workflows/release.yml) runs on every push to `mai
 
 1. Installs, builds, and tests
 2. Uses `changesets/action` to:
-   - If pending changesets exist → open a "Version Packages" PR that bumps versions and updates changelogs
-   - If no pending changesets but the PR just merged → publish to npm and create GitHub tags
+   * If pending changesets exist → open a "Version Packages" PR that bumps versions and updates changelogs
+   * If no pending changesets but the PR just merged → publish to npm and create GitHub tags
 
 **Required secrets:**
-- `NPM_TOKEN` — npm publish token (automation or granular access token)
-- `GITHUB_TOKEN` — automatically provided by Actions
+
+* `NPM_TOKEN` — npm publish token (automation or granular access token)
+* `GITHUB_TOKEN` — automatically provided by Actions
 
 ### First-time CI setup
 
@@ -110,9 +114,9 @@ git push --follow-tags
 
 ## Notes
 
-- All packages use `publishConfig.access: "public"` for scoped public packages
-- The root `.npmrc` sets `ignore-scripts=true` to prevent lifecycle script issues during install
-- The fixed versioning group in `.changeset/config.json` ensures all packages stay in sync
-- The changelog uses `@changesets/changelog-github` which links to GitHub PRs and authors
+* All packages use `publishConfig.access: "public"` for scoped public packages
+* The root `.npmrc` sets `ignore-scripts=true` to prevent lifecycle script issues during install
+* The fixed versioning group in `.changeset/config.json` ensures all packages stay in sync
+* The changelog uses `@changesets/changelog-github` which links to GitHub PRs and authors
 
 [Changesets]: https://github.com/changesets/changesets

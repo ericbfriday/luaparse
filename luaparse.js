@@ -881,7 +881,16 @@
 
     // Slicing the input string is prefered before string concatenation in a
     // loop for performance reasons.
-    while (isIdentifierPart(input.charCodeAt(++index)));
+    while (true) {
+      var charCode = input.charCodeAt(++index);
+      if ((charCode >= 97 && charCode <= 122) || (charCode >= 65 && charCode <= 90) || 95 === charCode || (charCode >= 48 && charCode <= 57)) {
+        continue;
+      }
+      if (features.extendedIdentifiers && charCode >= 128) {
+        continue;
+      }
+      break;
+    }
     value = encodingMode.fixup(input.slice(tokenStart, index));
 
     // Decide on the token type and possibly cast the value.

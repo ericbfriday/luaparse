@@ -1,0 +1,3 @@
+## 2024-06-25 - [Replaced String.prototype.indexOf with inline strict equality checks in Lexer]
+**Learning:** `String.prototype.indexOf` is significantly slower than using `charAt` or `charCodeAt` with inline strict equality checks (`===`) for matching single characters in JavaScript. This is especially impactful in hot paths like token parsing and lexing in `luaparse.js`.
+**Action:** Always prefer inline strict equality checks (`===`) or `charCodeAt` when checking if a character matches a small, fixed set of characters (e.g. `'xX'`, `'+-'`, `',;'`) in high-frequency execution paths rather than `indexOf`.

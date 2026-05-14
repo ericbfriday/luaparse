@@ -1591,3 +1591,10 @@
     }
   ]
 })
+    it('should allow __proto__ as a label without polluting prototype', function () {
+      var ast = luaparse.parse('::__proto__:: \n goto __proto__', {luaVersion: '5.2'});
+      expect(ast.body[0].type).to.equal('LabelStatement');
+      expect(ast.body[1].type).to.equal('GotoStatement');
+      expect(ast.body[0].label.name).to.equal('__proto__');
+      expect(ast.body[1].label.name).to.equal('__proto__');
+    });

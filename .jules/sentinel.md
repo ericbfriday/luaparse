@@ -1,0 +1,4 @@
+## 2024-05-24 - [Fix Prototype Pollution in Lua labels dictionary]
+**Vulnerability:** Dictionary objects storing user-supplied string keys (e.g., Lua labels) were initialized using object literals `{}`. This allowed properties on `Object.prototype` (like `__proto__`, `toString`, `hasOwnProperty`) to interfere with standard logic, enabling potential prototype injection attacks or unexpected control flow.
+**Learning:** In parsers tracking user-supplied identifiers (labels, variable names, etc.), relying on standard objects allows malicious overlap with inherited JS object properties.
+**Prevention:** To prevent prototype pollution in dictionary objects, always use `Object.create ? Object.create(null) : {}` for safer initialization. This effectively creates pure dictionaries isolated from `Object.prototype`.

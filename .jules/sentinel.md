@@ -1,0 +1,4 @@
+## 2025-02-23 - Prototype Pollution in Lua labels dictionary
+**Vulnerability:** Prototype pollution vulnerability found in how `luaparse.js` handles labels. Lua label nodes were collected into a plain JavaScript object (`{}`) dictionary. When parsed, Lua labels with the name `__proto__` can be abused to poison the global `Object.prototype`.
+**Learning:** Dictionaries storing user-supplied string keys must not be instantiated as plain object literals (`{}`) since it allows accessing and modifying the object prototype via `__proto__`.
+**Prevention:** In environments where we store user-supplied string keys as dictionary keys, objects must be initialized securely. Use `Object.create ? Object.create(null) : {}` as a safer fallback to create a dictionary without a prototype chain, preventing prototype pollution.

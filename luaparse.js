@@ -1674,7 +1674,8 @@
 
   FullFlowContext.prototype.pushScope = function (isLoop) {
     var scope = {
-      labels: {},
+      // Securely initialize the labels dictionary to prevent prototype pollution via user-supplied Lua labels (e.g., `::__proto__::`)
+      labels: Object.create ? Object.create(null) : {},
       locals: [],
       deferredGotos: [],
       isLoop: !!isLoop

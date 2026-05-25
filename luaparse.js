@@ -1011,7 +1011,7 @@
     var character = input.charAt(index)
       , next = input.charAt(index + 1);
 
-    var literal = ('0' === character && 'xX'.indexOf(next || null) >= 0) ?
+    var literal = ('0' === character && (next === 'x' || next === 'X')) ?
       readHexLiteral() : readDecLiteral();
 
     var foundImaginaryUnit = readImaginaryUnitSuffix()
@@ -1035,7 +1035,8 @@
 
     // Imaginary unit number suffix is optional.
     // See http://luajit.org/ext_ffi_api.html#literals
-    if ('iI'.indexOf(input.charAt(index) || null) >= 0) {
+    var c = input.charCodeAt(index);
+    if (c === 105 || c === 73) {
       ++index;
       return true;
     } else {
@@ -1049,11 +1050,14 @@
     // Int64/uint64 number suffix is optional.
     // See http://luajit.org/ext_ffi_api.html#literals
 
-    if ('uU'.indexOf(input.charAt(index) || null) >= 0) {
+    var c1 = input.charCodeAt(index);
+    if (c1 === 117 || c1 === 85) {
       ++index;
-      if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+      var c2 = input.charCodeAt(index);
+      if (c2 === 108 || c2 === 76) {
         ++index;
-        if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+        var c3 = input.charCodeAt(index);
+        if (c3 === 108 || c3 === 76) {
           ++index;
           return 'ULL';
         } else {
@@ -1064,9 +1068,10 @@
         // U but no L
         raise(null, errors.malformedNumber, input.slice(tokenStart, index));
       }
-    } else if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+    } else if (c1 === 108 || c1 === 76) {
         ++index;
-        if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+        var c2 = input.charCodeAt(index);
+        if (c2 === 108 || c2 === 76) {
           ++index;
           return 'LL';
         } else {
@@ -1119,13 +1124,17 @@
 
     // Binary exponents are optional
     var foundBinaryExponent = false;
-    if ('pP'.indexOf(input.charAt(index) || null) >= 0) {
+    var c = input.charCodeAt(index);
+    if (c === 112 || c === 80) {
       foundBinaryExponent = true;
       ++index;
 
       // Sign part is optional and defaults to 1 (positive).
-      if ('+-'.indexOf(input.charAt(index) || null) >= 0)
-        binarySign = ('+' === input.charAt(index++)) ? 1 : -1;
+      var signC = input.charCodeAt(index);
+      if (signC === 43 || signC === 45) {
+        binarySign = (signC === 43) ? 1 : -1;
+        ++index;
+      }
 
       exponentStart = index;
 
@@ -1163,11 +1172,15 @@
 
     // Exponent part is optional.
     var foundExponent = false;
-    if ('eE'.indexOf(input.charAt(index) || null) >= 0) {
+    var c = input.charCodeAt(index);
+    if (c === 101 || c === 69) {
       foundExponent = true;
       ++index;
       // Sign part is optional.
-      if ('+-'.indexOf(input.charAt(index) || null) >= 0) ++index;
+      var signC = input.charCodeAt(index);
+      if (signC === 43 || signC === 45) {
+        ++index;
+      }
       // An exponent is required to contain at least one decimal digit.
       if (!isDecDigit(input.charCodeAt(index)))
         raise(null, errors.malformedNumber, input.slice(tokenStart, index));
@@ -1491,7 +1504,7 @@
   }
 
   function isUnary(token) {
-    if (Punctuator === token.type) return '#-~'.indexOf(token.value) >= 0;
+    if (Punctuator === token.type) return token.value === '#' || token.value === '-' || token.value === '~';
     if (Keyword === token.type) return 'not' === token.value;
     return false;
   }

@@ -1,0 +1,3 @@
+## 2024-05-25 - Replace indexOf with charCodeAt for Parsing Performance
+**Learning:** In the core parsing loops (e.g. `luaparse.js`), using `String.prototype.indexOf` to check if a character matches a small set of options (like checking if a character is 'e' or 'E') creates significant overhead because it is executed millions of times. Inline checking using `charCodeAt` or direct equality (`===`) is much faster and avoids function call and string operations overhead.
+**Action:** When working on lexer/parser performance optimizations under "Bolt" persona, prioritize converting single-character `indexOf` string checks into inline strict equality operations (`charCodeAt` or `===`) for parsing tight loops.

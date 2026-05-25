@@ -47,27 +47,27 @@ The output of the parser is an Abstract Syntax Tree (AST) formatted in JSON.
 
 The available options are:
 
-- `wait: false` Explicitly tell the parser when the input ends.
-- `comments: true` Store comments as an array in the chunk object.
-- `scope: false` Track identifier scopes.
-- `locations: false` Store location information on each syntax node.
-- `ranges: false` Store the start and end character locations on each syntax
+* `wait: false` Explicitly tell the parser when the input ends.
+* `comments: true` Store comments as an array in the chunk object.
+* `scope: false` Track identifier scopes.
+* `locations: false` Store location information on each syntax node.
+* `ranges: false` Store the start and end character locations on each syntax
   node.
-- `onCreateNode: null` A callback which will be invoked when a syntax node
+* `onCreateNode: null` A callback which will be invoked when a syntax node
   has been completed. The node which has been created will be passed as the
   only parameter.
-- `onCreateScope: null` A callback which will be invoked when a new scope is
+* `onCreateScope: null` A callback which will be invoked when a new scope is
   created.
-- `onDestroyScope: null` A callback which will be invoked when the current
+* `onDestroyScope: null` A callback which will be invoked when the current
   scope is destroyed.
-- `onLocalDeclaration: null` A callback which will be invoked when a local
+* `onLocalDeclaration: null` A callback which will be invoked when a local
   variable is declared. The identifier will be passed as the only parameter.
-- `luaVersion: '5.1'` The version of Lua the parser will target; supported
+* `luaVersion: '5.1'` The version of Lua the parser will target; supported
   values are `'5.1'`, `'5.2'`, `'5.3'` and `'LuaJIT'`.
-- `extendedIdentifiers: false` Whether to allow code points ≥ U+0080 in
+* `extendedIdentifiers: false` Whether to allow code points ≥ U+0080 in
   identifiers, like LuaJIT does. **Note:** setting `luaVersion: 'LuaJIT'`
-  currently does _not_ enable this option; this may change in the future.
-- `encodingMode: 'none'` Defines the relation between code points ≥ U+0080
+  currently does *not* enable this option; this may change in the future.
+* `encodingMode: 'none'` Defines the relation between code points ≥ U+0080
   appearing in parser input and raw bytes in source code, and how Lua escape
   sequences in JavaScript strings should be interpreted. See the
   [Encoding modes](#encoding-modes) section below for more information.
@@ -139,13 +139,13 @@ Latin block ('ASCII').
 The `encodingMode` option specifies how these issues should be handled.
 Possible values are as follows:
 
-- `'none'`: Source code characters all pass through as-is and string
+* `'none'`: Source code characters all pass through as-is and string
   literals are not interpreted at all; the string literal nodes contain
   the value `null`. This is the default mode.
-- `'x-user-defined'`: Source code has been decoded with the WHATWG
+* `'x-user-defined'`: Source code has been decoded with the WHATWG
   `x-user-defined` encoding; escapes of bytes in the range \[0x80, 0xff]
   are mapped to the Unicode range \[U+F780, U+F7FF].
-- `'pseudo-latin1'`: Source code has been decoded with the IANA
+* `'pseudo-latin1'`: Source code has been decoded with the IANA
   `iso-8859-1` encoding; escapes of bytes in the range \[0x80, 0xff]
   are mapped to Unicode range \[U+0080, U+00FF]. Note that this is
   **not** the same as how WHATWG standards define the `iso-8859-1`
@@ -178,10 +178,10 @@ events.on('Identifier', function (node) {
 luaparse.parse('i = "foo"')
 ```
 
-_this is only an example to illustrate what is possible and this particular
+*this is only an example to illustrate what is possible and this particular
 example might not suit your needs as the end location of the node has not been
 determined yet. If you desire events you should use the `onCreateNode` callback
-instead)._
+instead).*
 
 ### Lexer
 
@@ -191,10 +191,10 @@ next token up until `EOF` is reached.
 
 Each token consists of:
 
-- `type` expressed as an enum flag which can be matched with `luaparse.tokenTypes`.
-- `value`
-- `line`, `lineStart`
-- `range` can be used to slice out raw values, eg. `foo = "bar"` will return a
+* `type` expressed as an enum flag which can be matched with `luaparse.tokenTypes`.
+* `value`
+* `line`, `lineStart`
+* `range` can be used to slice out raw values, eg. `foo = "bar"` will return a
   `StringLiteral` token with the value `bar`. Slicing out the range on the other
   hand will return `"bar"`.
 
@@ -255,8 +255,8 @@ Node 0.4.0+, RingoJS 0.8-0.9, Rhino 1.7R4-1.7R5, Nashorn 1.8.0.
 
 ## Quality Assurance
 
-_TL;DR simply run `make qa`. This will run all quality assurance scripts but
-assumes you have it set up correctly._
+*TL;DR simply run `make qa`. This will run all quality assurance scripts but
+assumes you have it set up correctly.*
 
 Begin by cloning the repository and installing the development dependencies
 with `npm install`.
@@ -267,21 +267,21 @@ different javascript engines or even on locally installed browsers.
 
 ### Test runners
 
-- `make test` uses node.
-- `make testem-engines` uses node, ringo and rhino
+* `make test` uses node.
+* `make testem-engines` uses node, ringo and rhino
   1.7R5. This requires that you have the engines installed.
-- `make test-node` uses a custom command line reporter to make the output
+* `make test-node` uses a custom command line reporter to make the output
   easier on the eyes while practicing TDD.
-- By installing `testem` globally you can also run the tests in a locally
+* By installing `testem` globally you can also run the tests in a locally
   installed browser.
 
 ### Other quality assurance measures
 
-- You can check the function complexity using [complexity-report](https://github.com/philbooth/complexityReport.js)
+* You can check the function complexity using [complexity-report](https://github.com/philbooth/complexityReport.js)
   using `make complexity-analysis`
-- Running `make coverage` will generate the [coverage report](https://fstirlitz.github.io/luaparse/coverage.html).
+* Running `make coverage` will generate the [coverage report](https://fstirlitz.github.io/luaparse/coverage.html).
   To simply check that all code has coverage you can run `make coverage-analysis`.
-- `make lint`, `make benchmark`, `make profile`.
+* `make lint`, `make benchmark`, `make profile`.
 
 ### Documentation
 
@@ -290,20 +290,24 @@ will be generated.
 
 ## Projects using/extending luaparse
 
-- [luamin](http://mths.be/luamin), a Lua minifier written by Mathias Bynens.
-- [Ace](https://github.com/ajaxorg/ace), an online code editor.
+* [luamin](http://mths.be/luamin), a Lua minifier written by Mathias Bynens.
+* [Ace](https://github.com/ajaxorg/ace), an online code editor.
 
 ## Acknowledgements
 
-- Initial tests are scaffolded from [yueliang][yueliang] and then manually checked for error.
-- Much of the code is based on [LuaMinify][luaminify], the [Lua][lua] source and [Esprima][esprima]. All awesome projects.
+* Initial tests are scaffolded from [yueliang][yueliang] and then manually checked for error.
+* Much of the code is based on [LuaMinify][luaminify], the [Lua][lua] source and [Esprima][esprima]. All awesome projects.
 
 ## License
 
 MIT
 
 [luaminify]: https://github.com/stravant/LuaMinify
+
 [yueliang]: http://yueliang.luaforge.net/
+
 [lua]: https://www.lua.org
+
 [esprima]: http://esprima.org
+
 [wtf8]: https://simonsapin.github.io/wtf-8/

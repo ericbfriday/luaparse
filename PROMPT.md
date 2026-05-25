@@ -17,27 +17,27 @@ When **all six phases are complete and verified**, output:
 
 Do not output the promise tag until every phase's acceptance criteria is met.
 
----
+***
 
 ## Reference documents
 
 Read these before your first unit of work. On subsequent iterations, refer to
 them only as needed.
 
-- **`LUAST-SPEC.md`** — The tree specification. Defines all 33 node types,
+* **`LUAST-SPEC.md`** — The tree specification. Defines all 33 node types,
   the content model, the child-field registry, position format, and the
   esast-aligned design (named fields, no `children`). This is the contract.
-- **`MIGRATION-PLAN.md`** — The phased plan. Defines the six phases, package
+* **`MIGRATION-PLAN.md`** — The phased plan. Defines the six phases, package
   architecture, type-name mapping, field renames, acceptance criteria, and
   risk assessment.
-- **`PORT-ANALYSIS.md`** — The original gap analysis. Background context.
+* **`PORT-ANALYSIS.md`** — The original gap analysis. Background context.
   Superseded by the spec and plan on any conflict.
-- **`FUTURE-README.md`** — The future README. Update the package table's
+* **`FUTURE-README.md`** — The future README. Update the package table's
   Status column as packages are completed.
-- **`luaparse.js`** — The existing parser. The AST factory starts at line 228. Position handling is in `Marker`/`finishNode`. Do not break its
+* **`luaparse.js`** — The existing parser. The AST factory starts at line 228. Position handling is in `Marker`/`finishNode`. Do not break its
   existing public API until Phase 6.
 
----
+***
 
 ## How to orient
 
@@ -102,7 +102,7 @@ Phase 6 — Module modernization                        ✅ COMPLETE
 
 Find the first unchecked item. That is your work for this iteration.
 
----
+***
 
 ## Phase instructions
 
@@ -194,26 +194,26 @@ export const EXIT: unique symbol
 
 The visitor iterates `childFields[node.type]` for each node. For each field:
 
-- If the field value is an array, visit each element in order
-- If the field value is a single node, visit it
-- If the field value is `null`, skip it (nullable fields)
+* If the field value is an array, visit each element in order
+* If the field value is a single node, visit it
+* If the field value is `null`, skip it (nullable fields)
 
 **Monorepo setup:**
 
-- Use a root `package.json` with `workspaces: ["packages/*"]`
-- Use a root `tsconfig.json` with project references
-- Each package is ESM (`"type": "module"` in package.json)
-- Test runner: `vitest` (or `node:test` — pick one and stick with it)
-- Do NOT add workspace config to the existing root `package.json` — create a
+* Use a root `package.json` with `workspaces: ["packages/*"]`
+* Use a root `tsconfig.json` with project references
+* Each package is ESM (`"type": "module"` in package.json)
+* Test runner: `vitest` (or `node:test` — pick one and stick with it)
+* Do NOT add workspace config to the existing root `package.json` — create a
   `packages/` directory and give each package its own `package.json`
 
 **Dependencies to install:**
 
-- `@types/unist` — unist type definitions
-- `unist-util-is` — for interop tests
-- `unist-util-position` — for interop tests
-- `vitest` or `@types/node` — for tests
-- `typescript` — for compilation
+* `@types/unist` — unist type definitions
+* `unist-util-is` — for interop tests
+* `unist-util-position` — for interop tests
+* `vitest` or `@types/node` — for tests
+* `typescript` — for compilation
 
 ### Phase 2: Adapter
 
@@ -233,19 +233,19 @@ Implement `luast-util-from-luaparse` in `packages/luast-util-from-luaparse/`.
 
 **Critical edge cases:**
 
-- `functionDeclaration.identifier` can be `null` — preserve it
-- `forNumericStatement.step` can be `null` — preserve it
-- `stringLiteral.value` can be `null` (encoding mode 'none') — preserve it
-- When `loc` or `range` is absent (locations/ranges not enabled), do NOT add
+* `functionDeclaration.identifier` can be `null` — preserve it
+* `forNumericStatement.step` can be `null` — preserve it
+* `stringLiteral.value` can be `null` (encoding mode 'none') — preserve it
+* When `loc` or `range` is absent (locations/ranges not enabled), do NOT add
   a `position` field
 
 **Testing strategy:**
 
-- Parse every Lua construct with luaparse (locations + ranges + comments on)
-- Convert with `fromLuaparse()`
-- Assert the output matches a hand-written expected tree
-- Verify `visit()` from `luast-util-visit` reaches every node
-- Verify `unist-util-position` reads positions correctly
+* Parse every Lua construct with luaparse (locations + ranges + comments on)
+* Convert with `fromLuaparse()`
+* Assert the output matches a hand-written expected tree
+* Verify `visit()` from `luast-util-visit` reaches every node
+* Verify `unist-util-position` reads positions correctly
 
 ### Phase 3: Native emission
 
@@ -253,33 +253,33 @@ Modify `luaparse.js` to optionally emit luast directly.
 
 **Changes to the AST factory (line 228+):**
 
-- Add a boolean flag `luastMode` derived from `options.ast === 'luast'`
-- When `luastMode` is true, the factory functions return camelCase types and
+* Add a boolean flag `luastMode` derived from `options.ast === 'luast'`
+* When `luastMode` is true, the factory functions return camelCase types and
   luast field names
-- `FunctionDeclaration` → `functionDeclaration` with `local` instead of
+* `FunctionDeclaration` → `functionDeclaration` with `local` instead of
   `isLocal`
-- `TableConstructorExpression` → `tableConstructor`
-- `TableCallExpression` omits the redundant `arguments` field
+* `TableConstructorExpression` → `tableConstructor`
+* `TableCallExpression` omits the redundant `arguments` field
 
 **Changes to Marker.bless (line 1550+):**
 
-- When `luastMode` is true, emit `position` (1-indexed columns, offsets)
+* When `luastMode` is true, emit `position` (1-indexed columns, offsets)
   instead of `loc`/`range`
-- Always emit both `start.offset` and `end.offset` in luast mode
+* Always emit both `start.offset` and `end.offset` in luast mode
 
 **Changes to parser finalization (line 2736+):**
 
-- When `luastMode` is true, do NOT add `globals` to root
-- Do NOT add `isLocal` to identifiers (skip `attachScope` mutations)
-- Root type is `root` instead of `Chunk`
+* When `luastMode` is true, do NOT add `globals` to root
+* Do NOT add `isLocal` to identifiers (skip `attachScope` mutations)
+* Root type is `root` instead of `Chunk`
 
 **Testing:**
 
-- For every existing test fixture, verify:
+* For every existing test fixture, verify:
   `parse(code, { ast: 'luast', locations: true, ranges: true, comments: true })`
   produces the same tree as
   `fromLuaparse(parse(code, { locations: true, ranges: true, comments: true }))`
-- Verify the existing test suite passes unchanged (legacy mode)
+* Verify the existing test suite passes unchanged (legacy mode)
 
 ### Phase 4: Unified integration
 
@@ -294,7 +294,7 @@ import type {Root} from '@friday-friday/luast'
 const luaParse: Plugin<[Options?], string, Root>
 ```
 
-**Implementation:** ~20 lines.
+**Implementation:** \~20 lines.
 
 ```ts
 export default function luaParse(options) {
@@ -311,9 +311,9 @@ export default function luaParse(options) {
 
 **Tests:**
 
-- `unified().use(luaParse).parse(code)` returns a `Root`
-- The tree passes `unist-util-is(tree, 'root')` → true
-- `unist-util-position(tree)` returns valid positions
+* `unified().use(luaParse).parse(code)` returns a `Root`
+* The tree passes `unist-util-is(tree, 'root')` → true
+* `unist-util-position(tree)` returns valid positions
 
 ### Phase 5: Scope and comments
 
@@ -328,8 +328,8 @@ Implement `luast-util-scope` in `packages/luast-util-scope/`.
 4. `localStatement` variables are added to the current scope
 5. `functionDeclaration` parameters are added to its inner scope
 6. `identifier` references are checked against the scope stack:
-   - If found in any enclosing scope → local
-   - If not found → global
+   * If found in any enclosing scope → local
+   * If not found → global
 
 **API:**
 
@@ -343,7 +343,7 @@ export function analyzeScope(tree: Root): ScopeInfo
 
 **Tests:**
 
-- Compare output to luaparse's `parse(code, { scope: true })` for a suite
+* Compare output to luaparse's `parse(code, { scope: true })` for a suite
   of Lua programs covering: local variables, globals, function params,
   nested scopes, for-loop variables, shadowing
 
@@ -361,7 +361,7 @@ Convert the parser to modern package standards. **This is a major version.**
 8. Update `FUTURE-README.md` package table statuses to reflect completion
 9. Bump version to 2.0.0
 
----
+***
 
 ## Rules
 
@@ -384,16 +384,16 @@ Convert the parser to modern package standards. **This is a major version.**
 9. **Update FUTURE-README.md** as packages are completed (change Status from
    "Planned" to a link to the package).
 
----
+***
 
 ## Completion
 
 All phases complete means:
 
-- 6 packages exist under `packages/` and compile
-- All tests pass
-- Legacy luaparse tests still pass
-- `FUTURE-README.md` reflects all completed packages
+* 6 packages exist under `packages/` and compile
+* All tests pass
+* Legacy luaparse tests still pass
+* `FUTURE-README.md` reflects all completed packages
 
 Then and only then:
 

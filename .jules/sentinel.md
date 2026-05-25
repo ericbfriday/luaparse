@@ -1,0 +1,4 @@
+## 2024-03-24 - [Fix Prototype Pollution in Lua Labels]
+**Vulnerability:** The parser used an object literal (`{}`) to store user-defined Lua labels. This exposes the parser to prototype pollution if a malicious script uses label names that conflict with `Object.prototype` properties (like `__proto__`, `toString`, etc.), potentially causing unexpected behavior or crashes during parsing.
+**Learning:** In parsers and environments where user-supplied string identifiers are used as keys in a dictionary map, relying on plain object literals is a security risk because it inherits from `Object.prototype`.
+**Prevention:** Always initialize dictionaries meant to store arbitrary user strings with a null prototype using `Object.create ? Object.create(null) : {}`. This provides a safer fallback while mitigating the vulnerability in most modern JavaScript environments.

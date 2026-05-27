@@ -1,0 +1,4 @@
+## 2026-05-27 - [Prototype Pollution in Lua Labels]
+**Vulnerability:** The parser stores user-supplied strings (Lua goto labels) as keys in a plain javascript object literal `{}`, which inherits from `Object.prototype`, exposing it to prototype pollution attacks (e.g., using `__proto__` as a label name).
+**Learning:** Dictionary objects constructed to store user-supplied text should not be vulnerable to prototype pollution.
+**Prevention:** Use `Object.create(null)` instead of `{}` when initializing dictionary objects that store user-supplied strings, with a fallback like `Object.create ? Object.create(null) : {}` for safer evaluation across JS engine versions.

@@ -1011,7 +1011,7 @@
     var character = input.charAt(index)
       , next = input.charAt(index + 1);
 
-    var literal = ('0' === character && 'xX'.indexOf(next || null) >= 0) ?
+    var literal = ('0' === character && (next === 'x' || next === 'X')) ?
       readHexLiteral() : readDecLiteral();
 
     var foundImaginaryUnit = readImaginaryUnitSuffix()
@@ -1491,7 +1491,7 @@
   }
 
   function isUnary(token) {
-    if (Punctuator === token.type) return '#-~'.indexOf(token.value) >= 0;
+    if (Punctuator === token.type) return token.value === '#' || token.value === '-' || token.value === '~';
     if (Keyword === token.type) return 'not' === token.value;
     return false;
   }
@@ -2407,7 +2407,7 @@
         }
         fields.push(finishNode(ast.tableValue(value)));
       }
-      if (',;'.indexOf(token.value) >= 0) {
+      if (token.value === ',' || token.value === ';') {
         next();
         continue;
       }

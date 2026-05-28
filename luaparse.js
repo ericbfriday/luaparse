@@ -458,7 +458,7 @@
       };
     }
     , binaryExpression: function(operator, left, right) {
-      var type = ('and' === operator || 'or' === operator) ?
+      var type = (operator === 'and' || operator === 'or') ?
         'LogicalExpression' :
         'BinaryExpression';
 
@@ -1011,7 +1011,7 @@
     var character = input.charAt(index)
       , next = input.charAt(index + 1);
 
-    var literal = ('0' === character && 'xX'.indexOf(next || null) >= 0) ?
+    var literal = ('0' === character && (next === 'x' || next === 'X')) ?
       readHexLiteral() : readDecLiteral();
 
     var foundImaginaryUnit = readImaginaryUnitSuffix()
@@ -1035,7 +1035,8 @@
 
     // Imaginary unit number suffix is optional.
     // See http://luajit.org/ext_ffi_api.html#literals
-    if ('iI'.indexOf(input.charAt(index) || null) >= 0) {
+    var charCode = input.charCodeAt(index);
+    if (charCode === 105 || charCode === 73) {
       ++index;
       return true;
     } else {
@@ -1049,11 +1050,14 @@
     // Int64/uint64 number suffix is optional.
     // See http://luajit.org/ext_ffi_api.html#literals
 
-    if ('uU'.indexOf(input.charAt(index) || null) >= 0) {
+    var charCode = input.charCodeAt(index);
+    if (charCode === 117 || charCode === 85) {
       ++index;
-      if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+      charCode = input.charCodeAt(index);
+      if (charCode === 108 || charCode === 76) {
         ++index;
-        if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+        charCode = input.charCodeAt(index);
+        if (charCode === 108 || charCode === 76) {
           ++index;
           return 'ULL';
         } else {
@@ -1064,9 +1068,10 @@
         // U but no L
         raise(null, errors.malformedNumber, input.slice(tokenStart, index));
       }
-    } else if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+    } else if (charCode === 108 || charCode === 76) {
         ++index;
-        if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+        charCode = input.charCodeAt(index);
+        if (charCode === 108 || charCode === 76) {
           ++index;
           return 'LL';
         } else {
@@ -1119,13 +1124,17 @@
 
     // Binary exponents are optional
     var foundBinaryExponent = false;
-    if ('pP'.indexOf(input.charAt(index) || null) >= 0) {
+    var charCode = input.charCodeAt(index);
+    if (charCode === 112 || charCode === 80) {
       foundBinaryExponent = true;
       ++index;
+      charCode = input.charCodeAt(index);
 
       // Sign part is optional and defaults to 1 (positive).
-      if ('+-'.indexOf(input.charAt(index) || null) >= 0)
-        binarySign = ('+' === input.charAt(index++)) ? 1 : -1;
+      if (charCode === 43 || charCode === 45) {
+        binarySign = (charCode === 43) ? 1 : -1;
+        ++index;
+      }
 
       exponentStart = index;
 
@@ -1163,11 +1172,13 @@
 
     // Exponent part is optional.
     var foundExponent = false;
-    if ('eE'.indexOf(input.charAt(index) || null) >= 0) {
+    var charCode = input.charCodeAt(index);
+    if (charCode === 101 || charCode === 69) {
       foundExponent = true;
       ++index;
+      charCode = input.charCodeAt(index);
       // Sign part is optional.
-      if ('+-'.indexOf(input.charAt(index) || null) >= 0) ++index;
+      if (charCode === 43 || charCode === 45) ++index;
       // An exponent is required to contain at least one decimal digit.
       if (!isDecDigit(input.charCodeAt(index)))
         raise(null, errors.malformedNumber, input.slice(tokenStart, index));
@@ -1471,27 +1482,27 @@
   function isKeyword(id) {
     switch (id.length) {
       case 2:
-        return 'do' === id || 'if' === id || 'in' === id || 'or' === id;
+        return id === 'do' || id === 'if' || id === 'in' || id === 'or';
       case 3:
-        return 'and' === id || 'end' === id || 'for' === id || 'not' === id;
+        return id === 'and' || id === 'end' || id === 'for' || id === 'not';
       case 4:
-        if ('else' === id || 'then' === id)
+        if (id === 'else' || id === 'then')
           return true;
         if (features.labels && !features.contextualGoto)
           return ('goto' === id);
         return false;
       case 5:
-        return 'break' === id || 'local' === id || 'until' === id || 'while' === id;
+        return id === 'break' || id === 'local' || id === 'until' || id === 'while';
       case 6:
-        return 'elseif' === id || 'repeat' === id || 'return' === id;
+        return id === 'elseif' || id === 'repeat' || id === 'return';
       case 8:
-        return 'function' === id;
+        return id === 'function';
     }
     return false;
   }
 
   function isUnary(token) {
-    if (Punctuator === token.type) return '#-~'.indexOf(token.value) >= 0;
+    if (Punctuator === token.type) return token.value === '#' || token.value === '-' || token.value === '~';
     if (Keyword === token.type) return 'not' === token.value;
     return false;
   }
@@ -2407,7 +2418,7 @@
         }
         fields.push(finishNode(ast.tableValue(value)));
       }
-      if (',;'.indexOf(token.value) >= 0) {
+      if (token.value === ',' || token.value === ';') {
         next();
         continue;
       }

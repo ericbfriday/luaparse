@@ -1,0 +1,4 @@
+## 2025-02-14 - Fix Prototype Pollution in label dictionary
+**Vulnerability:** The Lua parser tracked label names using standard object literals (`labels: {}`). This allowed malicious Lua code defining labels named `__proto__`, `constructor`, or `hasOwnProperty` to manipulate the object's prototype properties or crash the parser during lookups due to unexpected inherited properties, leading to Prototype Pollution / DoS.
+**Learning:** Dictionaries storing arbitrary user-defined identifiers in parsers must never be standard object literals, as they are susceptible to prototype inheritance issues when keys collide with built-ins.
+**Prevention:** Always initialize dictionaries meant to store arbitrary keys using null-prototype objects (`Object.create(null)`). Use fallback `Object.create ? Object.create(null) : {}` if very old environment support is required.

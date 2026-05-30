@@ -1491,7 +1491,9 @@
   }
 
   function isUnary(token) {
-    if (Punctuator === token.type) return '#-~'.indexOf(token.value) >= 0;
+    // ⚡ Bolt: Inline strict equality is significantly faster than String.prototype.indexOf
+    // for single-character matching in hot paths like a parser loop.
+    if (Punctuator === token.type) return token.value === '#' || token.value === '-' || token.value === '~';
     if (Keyword === token.type) return 'not' === token.value;
     return false;
   }
@@ -2407,7 +2409,9 @@
         }
         fields.push(finishNode(ast.tableValue(value)));
       }
-      if (',;'.indexOf(token.value) >= 0) {
+      // ⚡ Bolt: Inline strict equality is significantly faster than String.prototype.indexOf
+      // for single-character matching in hot paths like a parser loop.
+      if (token.value === ',' || token.value === ';') {
         next();
         continue;
       }

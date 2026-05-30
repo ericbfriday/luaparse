@@ -1674,7 +1674,7 @@
 
   FullFlowContext.prototype.pushScope = function (isLoop) {
     var scope = {
-      labels: {},
+      labels: Object.create ? Object.create(null) : {},
       locals: [],
       deferredGotos: [],
       isLoop: !!isLoop

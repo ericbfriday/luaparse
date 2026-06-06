@@ -54,6 +54,7 @@
     "url": "https://github.com/ericbfriday/luaparse.git"
   },
   "workspaces": [
+    ".",
     "packages/*"
   ],
   "engines": {
@@ -64,6 +65,7 @@
     "version": "changeset version",
     "release": "npm run build:packages && changeset publish",
     "build:packages": "npm run build --workspaces --if-present",
+    "test:all": "npm test && npm run test:packages",
     "format": "remark . -qfo && prettier . -w --log-level warn",
     "test": "node test/runner.js --console",
     "test:packages": "npm run test-api --workspaces --if-present",

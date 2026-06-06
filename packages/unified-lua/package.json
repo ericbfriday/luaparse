@@ -2,6 +2,8 @@
   "name": "@friday-friday/unified-lua",
   "version": "0.3.0",
   "description": "unified parser plugin for Lua — produces luast syntax trees",
+  "homepage": "https://github.com/ericbfriday/luaparse#readme",
+  "bugs": "https://github.com/ericbfriday/luaparse/issues",
   "author": "Eric Friday <ericfriday@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -20,6 +22,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "sideEffects": false,
   "type": "module",

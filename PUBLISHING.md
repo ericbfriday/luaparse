@@ -1,6 +1,6 @@
 # Publishing Guide
 
-This monorepo uses [Changesets][] to manage versioning and publishing for all packages in the `packages/*` workspace.
+This monorepo uses [Changesets][] to manage versioning and publishing for the npm workspace rooted at `.` with additional packages under `packages/*`.
 
 ## Packages
 
@@ -13,7 +13,7 @@ This monorepo uses [Changesets][] to manage versioning and publishing for all pa
 | `@friday-friday/luast-util-scope`   | `packages/luast-util-scope`            |
 | `@friday-friday/unified-lua`        | `packages/unified-lua`                 |
 
-All packages are versioned together as a **fixed** group — they always share the same version number.
+All packages are versioned together as a **fixed** group — they always share the same version number. That includes the scoped root parser package, so local workspace development keeps resolving `@friday-friday/luaparse` to the checked-out root package.
 
 ## Workflow
 
@@ -53,7 +53,7 @@ npm run release
 ```
 
 This:
-1. Builds all workspace packages (`npm run build --workspaces`)
+1. Builds all workspace packages (`npm run build:packages`)
 2. Runs `changeset publish` to publish each package to npm
 3. Creates git tags for each published version (e.g. `@friday-friday/luast@0.3.0`)
 
@@ -89,8 +89,7 @@ Since this is the first release with Changesets, you can publish directly:
 # 1. Verify everything builds and tests pass
 npm install --ignore-scripts
 npm run build:packages
-npm test
-npm run test:packages
+npm run test:all
 
 # 2. Verify versions
 npx changeset status

@@ -7,3 +7,7 @@
 ## 2024-06-01 - Optimize string switch with length-based grouping
 **Learning:** In modern JavaScript engines like V8, direct string `switch` statements can degrade performance compared to integer `switch` statements (e.g., switching on string lengths). For keyword classification in the lexer/parser, length-based grouping followed by multiple `===` comparisons actually outperforms direct string `switch` statements.
 **Action:** Replace direct string switches with integer switches on string length in hot paths like `isBlockFollow` to reduce execution time.
+
+## 2024-06-07 - Direct string switch for keywords
+**Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
+**Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.

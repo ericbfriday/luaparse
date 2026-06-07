@@ -2761,6 +2761,9 @@
     if (!_options) _options = {};
 
     input = _input || '';
+    if (typeof input !== 'string') {
+      throw new TypeError("Expected input to be a string");
+    }
     options = assign({}, defaultOptions, _options);
     luastMode = options.ast === 'luast';
     if (luastMode) {

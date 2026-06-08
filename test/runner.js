@@ -588,6 +588,9 @@
       }
     ]
 
+    this.error(function() { return luaparse.parse([1, 2, 3], {}) }, "Expected input to be a string, but got object")
+    this.error(function() { return luaparse.parse(123, {}) }, "Expected input to be a string, but got number")
+
     /*jshint loopfunc:true */
     for (var i = 0; i < optionErrors.length; ++i) {
       this.error(function () {
@@ -595,7 +598,7 @@
       }, optionErrors[i].message)
     }
 
-    this.done(optionErrors.length)
+    this.done(optionErrors.length + 2)
   })
 
   suite.addTest('Interpretation of literals', function () {

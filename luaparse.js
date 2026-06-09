@@ -1479,23 +1479,16 @@
   // `true`, `false` and `nil` will not be considered keywords, but literals.
 
   function isKeyword(id) {
-    switch (id.length) {
-      case 2:
-        return 'do' === id || 'if' === id || 'in' === id || 'or' === id;
-      case 3:
-        return 'and' === id || 'end' === id || 'for' === id || 'not' === id;
-      case 4:
-        if ('else' === id || 'then' === id)
-          return true;
-        if (features.labels && !features.contextualGoto)
-          return ('goto' === id);
-        return false;
-      case 5:
-        return 'break' === id || 'local' === id || 'until' === id || 'while' === id;
-      case 6:
-        return 'elseif' === id || 'repeat' === id || 'return' === id;
-      case 8:
-        return 'function' === id;
+    // ⚡ Bolt: Direct string switches are significantly faster in modern JS engines (like V8)
+    // compared to manually grouping by string length and performing sequential strict equality checks.
+    switch (id) {
+      case 'and': case 'break': case 'do': case 'else': case 'elseif':
+      case 'end': case 'for': case 'function': case 'if': case 'in':
+      case 'local': case 'not': case 'or': case 'repeat': case 'return':
+      case 'then': case 'until': case 'while':
+        return true;
+      case 'goto':
+        return !features.contextualGoto && features.labels;
     }
     return false;
   }

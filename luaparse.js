@@ -89,6 +89,8 @@
     // Encoding mode: how to interpret code units higher than U+007F in input
     , encodingMode: 'none'
     , ast: 'legacy'
+    // Bounding the maximum allowed input size
+    , maxInputLength: 0
   };
 
   var luastTypeMap = {
@@ -2762,6 +2764,9 @@
 
     input = _input || '';
     options = assign({}, defaultOptions, _options);
+    if (options.maxInputLength > 0 && input.length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed limit');
+    }
     luastMode = options.ast === 'luast';
     if (luastMode) {
       options.locations = true;
@@ -2804,6 +2809,9 @@
 
   function write(_input) {
     input += String(_input);
+    if (options && options.maxInputLength > 0 && input.length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed limit');
+    }
     length = input.length;
     return exports;
   }

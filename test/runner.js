@@ -598,6 +598,14 @@
     this.done(optionErrors.length)
   })
 
+  suite.addTest('maxInputLength option', function () {
+    this.error(function () {
+      return luaparse.parse('foo = 1', { maxInputLength: 3 })
+    }, 'Input length exceeds maximum allowed limit')
+
+    this.done(1)
+  })
+
   suite.addTest('Interpretation of literals', function () {
     var testcases = [
       ['019', '19', '0x13'],

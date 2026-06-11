@@ -598,6 +598,28 @@
     this.done(optionErrors.length)
   })
 
+  suite.addTest('maxInputLength security option', function () {
+    var code = "print('hello world!')";
+    var errorThrown = false;
+    try {
+      luaparse.parse(code, { maxInputLength: 5 });
+    } catch(e) {
+      errorThrown = true;
+    }
+    this.equal(errorThrown, true, 'Parsing should throw error when input length exceeds maxInputLength');
+
+    var errorThrownWrite = false;
+    try {
+      var p = luaparse.parse({ wait: true, maxInputLength: 5 });
+      p.write("print('hello world!')");
+    } catch(e) {
+      errorThrownWrite = true;
+    }
+    this.equal(errorThrownWrite, true, 'Writing should throw error when input length exceeds maxInputLength');
+
+    this.done(2);
+  })
+
   suite.addTest('Interpretation of literals', function () {
     var testcases = [
       ['019', '19', '0x13'],

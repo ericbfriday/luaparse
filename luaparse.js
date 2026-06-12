@@ -62,6 +62,8 @@
   var defaultOptions = exports.defaultOptions = {
     // Explicitly tell the parser when the input ends.
       wait: false
+    // Maximum input length before throwing an error.
+    , maxInputLength: 0
     // Store comments as an array in the chunk object.
     , comments: true
     // Track identifier scopes by adding an isLocal attribute to each
@@ -2762,6 +2764,11 @@
 
     input = _input || '';
     options = assign({}, defaultOptions, _options);
+
+    if (options.maxInputLength && input.length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed length');
+    }
+
     luastMode = options.ast === 'luast';
     if (luastMode) {
       options.locations = true;
@@ -2805,6 +2812,9 @@
   function write(_input) {
     input += String(_input);
     length = input.length;
+    if (options.maxInputLength && length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed length');
+    }
     return exports;
   }
 

@@ -2762,6 +2762,9 @@
 
     input = _input || '';
     options = assign({}, defaultOptions, _options);
+    if (options.maxInputLength !== undefined && input.length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum input length');
+    }
     luastMode = options.ast === 'luast';
     if (luastMode) {
       options.locations = true;
@@ -2805,6 +2808,9 @@
   function write(_input) {
     input += String(_input);
     length = input.length;
+    if (options.maxInputLength !== undefined && length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum input length');
+    }
     return exports;
   }
 
@@ -2820,6 +2826,9 @@
     });
 
     length = input.length;
+    if (options.maxInputLength !== undefined && length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum input length');
+    }
     trackLocations = options.locations || options.ranges;
     // Initialize with a lookahead token.
     lookahead = lex();

@@ -3,6 +3,7 @@ import type {Root} from '@friday-friday/luast'
 export interface ParseOptions {
   wait?: boolean
   comments?: boolean
+  maxInputLength?: number
   scope?: boolean
   locations?: boolean
   ranges?: boolean

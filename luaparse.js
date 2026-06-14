@@ -60,8 +60,10 @@
   // Options can be set either globally on the parser object through
   // defaultOptions, or during the parse call.
   var defaultOptions = exports.defaultOptions = {
+    // Bound the maximum allowed input size before parsing begins.
+      maxInputLength: 0
     // Explicitly tell the parser when the input ends.
-      wait: false
+    , wait: false
     // Store comments as an array in the chunk object.
     , comments: true
     // Track identifier scopes by adding an isLocal attribute to each
@@ -2762,6 +2764,11 @@
 
     input = _input || '';
     options = assign({}, defaultOptions, _options);
+
+    if (options.maxInputLength > 0 && input.length > options.maxInputLength) {
+      throw new Error('Input exceeds maximum allowed length');
+    }
+
     luastMode = options.ast === 'luast';
     if (luastMode) {
       options.locations = true;

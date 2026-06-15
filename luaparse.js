@@ -89,6 +89,8 @@
     // Encoding mode: how to interpret code units higher than U+007F in input
     , encodingMode: 'none'
     , ast: 'legacy'
+    // Limit the maximum input length to protect against DoS attacks
+    , maxInputLength: 0
   };
 
   var luastTypeMap = {
@@ -2769,6 +2771,10 @@
       options.comments = true;
     }
 
+    if (options.maxInputLength > 0 && input.length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed length');
+    }
+
     // Rewind the lexer
     index = 0;
     line = 1;
@@ -2805,6 +2811,9 @@
   function write(_input) {
     input += String(_input);
     length = input.length;
+    if (options.maxInputLength > 0 && length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed length');
+    }
     return exports;
   }
 

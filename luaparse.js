@@ -1533,7 +1533,7 @@
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
-    var scope = scopes[scopeDepth++].slice();
+    var scope = Object.create(scopes[scopeDepth++]);
     scopes.push(scope);
     if (options.onCreateScope) options.onCreateScope();
   }
@@ -1548,8 +1548,8 @@
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
     if (options.onLocalDeclaration) options.onLocalDeclaration(name);
-    if (-1 !== indexOf(scopes[scopeDepth], name)) return;
-    scopes[scopeDepth].push(name);
+    if (scopes[scopeDepth][name]) return;
+    scopes[scopeDepth][name] = true;
   }
 
   // Add identifier to the current scope
@@ -1570,7 +1570,7 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return (-1 !== indexOf(scopes[scopeDepth], name));
+    return !!scopes[scopeDepth][name];
   }
 
   // Location tracking
@@ -2775,7 +2775,7 @@
     lineStart = 0;
     length = input.length;
     // When tracking identifier scope, initialize with an empty scope.
-    scopes = [[]];
+    scopes = [Object.create ? Object.create(null) : {}];
     scopeDepth = 0;
     globals = [];
     locations = [];

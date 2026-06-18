@@ -585,13 +585,19 @@
       {
         options: {luaVersion: 'hasOwnProperty'},
         message: "Lua version 'hasOwnProperty' not supported"
+      },
+
+      {
+        options: {maxInputLength: 2},
+        message: "Input length exceeds maximum allowed length (3 > 2)",
+        input: "1+1"
       }
     ]
 
     /*jshint loopfunc:true */
     for (var i = 0; i < optionErrors.length; ++i) {
       this.error(function () {
-        return luaparse.parse('', optionErrors[i].options)
+        return luaparse.parse(optionErrors[i].input || '', optionErrors[i].options)
       }, optionErrors[i].message)
     }
 

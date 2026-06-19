@@ -1533,14 +1533,22 @@
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
-    var scope = scopes[scopeDepth++].slice();
+    var parent = scopes[scopeDepth++];
+    var scope;
+    if (Object.create) {
+      scope = Object.create(parent);
+    } else {
+      var F = function () {};
+      F.prototype = parent;
+      scope = new F();
+    }
     scopes.push(scope);
     if (options.onCreateScope) options.onCreateScope();
   }
 
   // Exit and remove the current scope.
   function destroyScope() {
-    var scope = scopes.pop();
+    scopes.pop();
     --scopeDepth;
     if (options.onDestroyScope) options.onDestroyScope();
   }
@@ -1548,8 +1556,9 @@
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
     if (options.onLocalDeclaration) options.onLocalDeclaration(name);
-    if (-1 !== indexOf(scopes[scopeDepth], name)) return;
-    scopes[scopeDepth].push(name);
+    var currentScope = scopes[scopeDepth];
+    if (Object.prototype.hasOwnProperty.call(currentScope, name)) return;
+    currentScope[name] = true;
   }
 
   // Add identifier to the current scope
@@ -1570,7 +1579,8 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return (-1 !== indexOf(scopes[scopeDepth], name));
+    var currentScope = scopes[scopeDepth];
+    return currentScope[name] === true;
   }
 
   // Location tracking
@@ -2775,7 +2785,15 @@
     lineStart = 0;
     length = input.length;
     // When tracking identifier scope, initialize with an empty scope.
-    scopes = [[]];
+    var emptyScope;
+    if (Object.create) {
+      emptyScope = Object.create(null);
+    } else {
+      var F = function () {};
+      F.prototype = null;
+      emptyScope = new F();
+    }
+    scopes = [emptyScope];
     scopeDepth = 0;
     globals = [];
     locations = [];

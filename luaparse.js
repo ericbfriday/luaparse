@@ -89,6 +89,8 @@
     // Encoding mode: how to interpret code units higher than U+007F in input
     , encodingMode: 'none'
     , ast: 'legacy'
+    // Limit the maximum input length to parse.
+    , maxInputLength: 0
   };
 
   var luastTypeMap = {
@@ -2805,6 +2807,9 @@
   function write(_input) {
     input += String(_input);
     length = input.length;
+    if (options.maxInputLength > 0 && length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed length.');
+    }
     return exports;
   }
 
@@ -2820,6 +2825,9 @@
     });
 
     length = input.length;
+    if (options.maxInputLength > 0 && length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed length.');
+    }
     trackLocations = options.locations || options.ranges;
     // Initialize with a lookahead token.
     lookahead = lex();

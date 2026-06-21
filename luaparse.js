@@ -89,6 +89,9 @@
     // Encoding mode: how to interpret code units higher than U+007F in input
     , encodingMode: 'none'
     , ast: 'legacy'
+    // Limit the maximum input length to protect against DoS attacks.
+    // Set to 0 to disable.
+    , maxInputLength: 0
   };
 
   var luastTypeMap = {
@@ -2762,6 +2765,11 @@
 
     input = _input || '';
     options = assign({}, defaultOptions, _options);
+
+    if (options.maxInputLength > 0 && input.length > options.maxInputLength) {
+      throw new Error('Input length exceeds maximum allowed length of ' + options.maxInputLength);
+    }
+
     luastMode = options.ast === 'luast';
     if (luastMode) {
       options.locations = true;

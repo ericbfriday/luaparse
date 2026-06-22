@@ -1,3 +1,6 @@
 ## 2024-06-01 - Optimize indexOf with character codes
 **Learning:** Checking for specific characters using `indexOf` on a string (like `',;'.indexOf(char) >= 0`) causes a measurable performance overhead due to string allocations and method call overheads. In the hot path of a lexer/parser, like in `luaparse.js`, this adds up to slow down execution.
 **Action:** Replace `indexOf` checks for small character sets with strict equality checks using `===` or `charCodeAt` for single character matching over `String.prototype.indexOf`, as it significantly reduces execution time. Out-of-bounds `charCodeAt` safely returns `NaN` for `===` comparisons.
+## 2024-06-22 - Optimize block scopes with dictionaries
+**Learning:** Tracking nested scopes with array `indexOf` in performance-sensitive code (like a parser) causes significant execution overhead as scopes grow. Using dictionaries instead provides O(1) lookups.
+**Action:** When optimizing nested block scopes, use dictionary-based lookups (`Object.create(null)`) instead of `Array.prototype.indexOf`. To maintain performance when entering new block scopes with dictionaries, use prototypical inheritance (`Object.create(parentScope)`), with a standard ES3 constructor fallback for older environments lacking `Object.create`.

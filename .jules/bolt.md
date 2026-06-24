@@ -1,3 +1,6 @@
 ## 2024-06-01 - Optimize indexOf with character codes
 **Learning:** Checking for specific characters using `indexOf` on a string (like `',;'.indexOf(char) >= 0`) causes a measurable performance overhead due to string allocations and method call overheads. In the hot path of a lexer/parser, like in `luaparse.js`, this adds up to slow down execution.
 **Action:** Replace `indexOf` checks for small character sets with strict equality checks using `===` or `charCodeAt` for single character matching over `String.prototype.indexOf`, as it significantly reduces execution time. Out-of-bounds `charCodeAt` safely returns `NaN` for `===` comparisons.
+## 2024-05-24 - Optimize identifier scope lookup
+**Learning:** In `luaparse.js`, identifier scope tracking used an array of arrays (`scopes = [[]]`) and relied on `indexOf` for lookups, leading to O(N) complexity for both lookup and scope inheritance (which created a slice of the parent scope). This causes noticeable slowdowns for code with deep scopes or numerous identifiers.
+**Action:** Replace `indexOf`-based array scopes with object-based (dictionary) scopes. Use prototypical inheritance (`Object.create(parent)` or `F.prototype` fallback) for creating child scopes instead of slicing to avoid O(N) copying and keep lookups at O(1).

@@ -1388,7 +1388,10 @@
       if (']' === character) {
         terminator = true;
         for (var i = 0; i < level; ++i) {
-          if ('=' !== input.charAt(index + i)) terminator = false;
+          if ('=' !== input.charAt(index + i)) {
+            terminator = false;
+            break;
+          }
         }
         if (']' !== input.charAt(index + level)) terminator = false;
       }

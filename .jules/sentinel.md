@@ -1,4 +1,4 @@
-## 2024-05-20 - Prevent prototype pollution in dictionary objects
-**Vulnerability:** Lua labels stored in plain objects (`{}`) allow prototype pollution via special keys like `__proto__`.
-**Learning:** Dictionaries storing user-supplied string keys should not inherit from `Object.prototype` to avoid prototype pollution and logic bugs.
-**Prevention:** Use `Object.create ? Object.create(null) : {}` to create prototype-less dictionaries with a fallback for older environments.
+## 2024-06-27 - O(N^2) DoS in Lua Long String Parsing
+**Vulnerability:** The `readLongString` function in the Lua parser iterates character by character to find the closing sequence of a long string/comment `]=*]`. In doing so, it attempts to match the sequence of `=` characters using a loop `for (var i = 0; i < level; ++i) { if ('=' !== input.charAt(index + i)) terminator = false; }`. Critically, it does not `break` out of this inner loop when `terminator` becomes `false`. This results in an O(N^2) time complexity relative to the long string's `level` if the input is constructed to fail at the end of a long `=` sequence continuously. An attacker could craft a payload with a large opening long string level (e.g., `[==========[`) and then repeatedly append near-matches that fail just at the end to cause Denial of Service (DoS) via CPU exhaustion.
+**Learning:** Inner loops matching delimiters or string prefixes MUST break early on the first mismatched character to prevent algorithmic complexity attacks (like O(N^2) parsing).
+**Prevention:** Always use `break` or return early in scanning loops when a match is invalidated.

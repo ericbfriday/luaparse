@@ -554,12 +554,18 @@
     , toString = Object.prototype.toString
     ;
 
-  var indexOf = function (array, element) {
+  var indexOf = /* istanbul ignore next */ function (array, element) {
     for (var i = 0, length = array.length; i < length; ++i) {
       if (array[i] === element) return i;
     }
     return -1;
   };
+
+  /* istanbul ignore else */
+  if (Array.prototype.indexOf)
+    indexOf = function (array, element) {
+      return array.indexOf(element);
+    };
 
   // Iterate through an array of objects and return the index of an object
   // with a matching property.
@@ -862,9 +868,7 @@
       var charCode = input.charCodeAt(index);
       if (isWhiteSpace(charCode)) {
         ++index;
-      } else if (isLineTerminator(charCode)) {
-        consumeEOL();
-      } else {
+      } else if (!consumeEOL()) {
         break;
       }
     }
@@ -1457,7 +1461,7 @@
   // On the other hand, LuaJIT allows arbitrary octets ≥ 128 in identifiers.
 
   function isIdentifierStart(charCode) {
-    if ((charCode >= 97 && charCode <= 122) || (charCode >= 65 && charCode <= 90) || 95 === charCode)
+    if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode)
       return true;
     if (features.extendedIdentifiers && charCode >= 128)
       return true;
@@ -1465,7 +1469,7 @@
   }
 
   function isIdentifierPart(charCode) {
-    if ((charCode >= 97 && charCode <= 122) || (charCode >= 65 && charCode <= 90) || 95 === charCode || (charCode >= 48 && charCode <= 57))
+    if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode || (charCode >= 48 && charCode <= 57))
       return true;
     if (features.extendedIdentifiers && charCode >= 128)
       return true;
@@ -1531,8 +1535,7 @@
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
-    var parentScope = scopes[scopeDepth++];
-    var scope = Object.create ? Object.create(parentScope) : Object.assign({}, parentScope);
+    var scope = Object.create ? Object.create(scopes[scopeDepth++]) : Object.assign({}, scopes[scopeDepth++]);
     scopes.push(scope);
     if (options.onCreateScope) options.onCreateScope();
   }
@@ -1547,7 +1550,7 @@
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
     if (options.onLocalDeclaration) options.onLocalDeclaration(name);
-    if (scopes[scopeDepth][name]) return;
+    if (-1 !== scopes[scopeDepth][name]) return;
     scopes[scopeDepth][name] = true;
   }
 
@@ -1569,7 +1572,7 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return !!scopes[scopeDepth][name];
+    return (-1 !== scopes[scopeDepth][name]);
   }
 
   // Location tracking
@@ -2479,13 +2482,13 @@
       }
     } else if (2 === length) {
       switch (charCode) {
-        case 61: case 126: return 3; // == ~=
+        case 47: return 10; // //
         case 46: return 8; // ..
-        case 111: return 1; // or
         case 60: case 62:
             if('<<' === operator || '>>' === operator) return 7; // << >>
             return 3; // <= >=
-        case 47: return 10; // //
+        case 61: case 126: return 3; // == ~=
+        case 111: return 1; // or
       }
     } else if (97 === charCode && 'and' === operator) return 2;
     return 0;

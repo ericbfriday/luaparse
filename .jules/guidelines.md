@@ -17,22 +17,22 @@
 
 ### Sentinel (Security)
 
-- After identifying and fixing a vulnerability, record the finding in
+* After identifying and fixing a vulnerability, record the finding in
   `.jules/sentinel.md` and **stop**. Do not re-scan the same pattern on
   subsequent runs.
-- If `.jules/sentinel.md` already documents the vulnerability you found, the
+* If `.jules/sentinel.md` already documents the vulnerability you found, the
   fix is already applied. Close the session without a PR.
 
 ### Bolt (Performance)
 
-- After applying a performance optimization, record it in `.jules/bolt.md`
+* After applying a performance optimization, record it in `.jules/bolt.md`
   and **stop**. Do not re-optimize the same hot path on subsequent runs.
-- If `.jules/bolt.md` already documents the optimization you are about to
+* If `.jules/bolt.md` already documents the optimization you are about to
   propose, it has already been applied. Close the session without a PR.
 
 ## General
 
-- All PRs must pass `npm test` before submission.
-- All PRs must pass `npm run format` (idempotency check) before submission.
-- Do not modify `package-lock.json` unless adding/removing dependencies.
-- Keep PRs small and focused. One concern per PR.
+* All PRs must pass `npm test` before submission.
+* All PRs must pass `npm run format` (idempotency check) before submission.
+* Do not modify `package-lock.json` unless adding/removing dependencies.
+* Keep PRs small and focused. One concern per PR.

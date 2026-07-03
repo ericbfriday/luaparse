@@ -1388,9 +1388,12 @@
       if (']' === character) {
         terminator = true;
         for (var i = 0; i < level; ++i) {
-          if ('=' !== input.charAt(index + i)) terminator = false;
+          if (61 !== input.charCodeAt(index + i)) {
+            terminator = false;
+            break;
+          }
         }
-        if (']' !== input.charAt(index + level)) terminator = false;
+        if (terminator && 93 !== input.charCodeAt(index + level)) terminator = false;
       }
 
       // We reached the end of the multiline string. Get out now.

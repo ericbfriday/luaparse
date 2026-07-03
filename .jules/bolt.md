@@ -1,3 +1,6 @@
 ## 2024-06-01 - Optimize indexOf with character codes
 **Learning:** Checking for specific characters using `indexOf` on a string (like `',;'.indexOf(char) >= 0`) causes a measurable performance overhead due to string allocations and method call overheads. In the hot path of a lexer/parser, like in `luaparse.js`, this adds up to slow down execution.
 **Action:** Replace `indexOf` checks for small character sets with strict equality checks using `===` or `charCodeAt` for single character matching over `String.prototype.indexOf`, as it significantly reduces execution time. Out-of-bounds `charCodeAt` safely returns `NaN` for `===` comparisons.
+## 2024-10-24 - Early Exit and charCodeAt in String Parsing Loops
+**Learning:** To prevent O(N^2) Denial of Service (DoS) vulnerabilities in parser loops, ensure inner loops matching string prefixes or delimiters break early upon the first mismatched character. Additionally, using `charCodeAt` with a numeric value (e.g. `61`) instead of `charAt` with a string (e.g. `'='`) provides a significant performance boost in modern V8 engines.
+**Action:** Always verify inner string comparison loops in parsers include early exit (`break`) conditions. Use `charCodeAt` instead of `charAt` for character matching inside performance-critical paths.

@@ -1516,12 +1516,13 @@
   function isBlockFollow(token) {
     if (EOF === token.type) return true;
     if (Keyword !== token.type) return false;
-    switch (token.value) {
-      case 'else': case 'elseif':
-      case 'end': case 'until':
-        return true;
-      default:
-        return false;
+    var val = token.value;
+    switch (val.length) {
+      case 3: return 'end' === val;
+      case 4: return 'else' === val;
+      case 5: return 'until' === val;
+      case 6: return 'elseif' === val;
+      default: return false;
     }
   }
 

@@ -1,3 +1,6 @@
 ## 2024-06-01 - Optimize indexOf with character codes
 **Learning:** Checking for specific characters using `indexOf` on a string (like `',;'.indexOf(char) >= 0`) causes a measurable performance overhead due to string allocations and method call overheads. In the hot path of a lexer/parser, like in `luaparse.js`, this adds up to slow down execution.
 **Action:** Replace `indexOf` checks for small character sets with strict equality checks using `===` or `charCodeAt` for single character matching over `String.prototype.indexOf`, as it significantly reduces execution time. Out-of-bounds `charCodeAt` safely returns `NaN` for `===` comparisons.
+## 2024-06-01 - Avoid premature terminator assignment in readLongString
+**Learning:** In string-heavy parsers, prematurely assigning `terminator = true` and continuing to iterate to check the string terminator can add significant CPU overhead for long strings, especially when many incorrect delimiter checks happen.
+**Action:** Move `terminator = false` with an early `break` into the inner delimiter check loop (`for (var i = 0; i < level; ++i)`), rather than needlessly continuing the loop once a mismatched character is found. This avoids DoS-like CPU usage for long bracket strings (`[====[...]====]`).

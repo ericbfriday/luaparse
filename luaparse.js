@@ -1388,9 +1388,14 @@
       if (']' === character) {
         terminator = true;
         for (var i = 0; i < level; ++i) {
-          if ('=' !== input.charAt(index + i)) terminator = false;
+          if ('=' !== input.charAt(index + i)) {
+            // Optimization: Break early if a mismatch is found to prevent O(N^2)
+            // performance degradation on large long strings.
+            terminator = false;
+            break;
+          }
         }
-        if (']' !== input.charAt(index + level)) terminator = false;
+        if (terminator && ']' !== input.charAt(index + level)) terminator = false;
       }
 
       // We reached the end of the multiline string. Get out now.

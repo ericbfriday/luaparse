@@ -1388,12 +1388,9 @@
       if (']' === character) {
         terminator = true;
         for (var i = 0; i < level; ++i) {
-          if ('=' !== input.charAt(index + i)) {
-            terminator = false;
-            break;
-          }
+          if ('=' !== input.charAt(index + i)) terminator = false;
         }
-        if (terminator && ']' !== input.charAt(index + level)) terminator = false;
+        if (']' !== input.charAt(index + level)) terminator = false;
       }
 
       // We reached the end of the multiline string. Get out now.
@@ -1528,7 +1525,8 @@
   // Scope
   // -----
 
-  // Store each block scope as a dictionary of identifier names.
+  // Store each block scope as a an array of identifier names. Each scope is
+  // stored in an FILO-array.
   var scopes
     // The current scope index
     , scopeDepth
@@ -1537,19 +1535,14 @@
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
-    var parentScope = scopes[scopeDepth++];
-    var scope = Object.create ? Object.create(parentScope) : (function() {
-      var F = function () {};
-      F.prototype = parentScope;
-      return new F();
-    })();
+    var scope = scopes[scopeDepth++].slice();
     scopes.push(scope);
     if (options.onCreateScope) options.onCreateScope();
   }
 
   // Exit and remove the current scope.
   function destroyScope() {
-    scopes.pop();
+    var scope = scopes.pop();
     --scopeDepth;
     if (options.onDestroyScope) options.onDestroyScope();
   }
@@ -1557,7 +1550,8 @@
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
     if (options.onLocalDeclaration) options.onLocalDeclaration(name);
-    scopes[scopeDepth][name] = true;
+    if (-1 !== indexOf(scopes[scopeDepth], name)) return;
+    scopes[scopeDepth].push(name);
   }
 
   // Add identifier to the current scope
@@ -1578,7 +1572,7 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return !!scopes[scopeDepth][name];
+    return (-1 !== indexOf(scopes[scopeDepth], name));
   }
 
   // Location tracking
@@ -2788,7 +2782,7 @@
     lineStart = 0;
     length = input.length;
     // When tracking identifier scope, initialize with an empty scope.
-    scopes = [Object.create ? Object.create(null) : {}];
+    scopes = [[]];
     scopeDepth = 0;
     globals = [];
     locations = [];

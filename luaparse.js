@@ -2761,6 +2761,10 @@
     }
     if (!_options) _options = {};
 
+    if (typeof _input !== 'undefined' && typeof _input !== 'string') {
+      throw new TypeError("Expected input to be a string, but got " + typeof _input);
+    }
+
     input = _input || '';
     options = assign({}, defaultOptions, _options);
 

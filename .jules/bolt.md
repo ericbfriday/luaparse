@@ -11,3 +11,6 @@
 ## 2024-06-07 - Direct string switch for keywords
 **Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
 **Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.
+## 2024-07-16 - Fast global scope checking with dictionaries
+**Learning:** Tracking global variables with O(N) `indexOfObject` limits parsing performance for very large lua chunks. Replacing it with an O(1) dictionary (`globalsSet`) drastically improves scalability.
+**Action:** For large scope collections, use `Object.create(null)` to track presence rather than searching arrays with `indexOf` or `indexOfObject`.

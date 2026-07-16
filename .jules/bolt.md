@@ -11,3 +11,6 @@
 ## 2024-06-07 - Direct string switch for keywords
 **Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
 **Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.
+## 2025-02-18 - [Optimize Global Scope Tracking]
+**Learning:** Tracking global variables with O(N) array searches (`indexOfObject`) significantly limits parsing performance for files with large numbers of globals.
+**Action:** Replace O(N) array searches with O(1) dictionary lookups (e.g., `Object.create(null)`) for global identifier tracking to drastically improve scalability.

@@ -11,3 +11,6 @@
 ## 2024-06-07 - Direct string switch for keywords
 **Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
 **Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.
+## 2025-01-20 - Global variables tracking performance optimization in luaparse
+**Learning:** Tracking global variables with O(N) array searches (like `indexOfObject`) in a large scope collection significantly limits parsing performance for very large files. It leads to O(N^2) complexity.
+**Action:** Replace O(N) array searches with O(1) dictionary lookups (e.g., `Object.create(null)`) for scope and global tracking to drastically improve scalability.

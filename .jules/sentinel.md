@@ -11,3 +11,7 @@
 **Vulnerability:** The main `parse` function accepted non-string inputs (like objects/arrays) without validation, which caused unexpected internal type errors (e.g., `input.substr is not a function`) deep in the parser.
 **Learning:** In dynamically typed environments, boundaries of APIs must coerce or validate inputs to their expected types. Unvalidated types can lead to unhandled exceptions, potential DOS vectors, or unpredictable behavior.
 **Prevention:** Explicitly cast to or validate `String` types for inputs immediately inside public entry points before further processing.
+## 2024-07-21 - Block prototype pollution in assign polyfill
+**Vulnerability:** The assign polyfill blindly copies all enumerable properties, which can lead to prototype pollution if keys like __proto__ are included in untrusted inputs.
+**Learning:** Even fallback polyfills must be hardened against prototype pollution by sanitizing keys during object assignment.
+**Prevention:** Explicitly block __proto__, constructor, and prototype in property-copying loops and Object.assign polyfills.

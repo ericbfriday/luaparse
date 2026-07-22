@@ -93,45 +93,48 @@
     , maxInputLength: 0
   };
 
-  var luastTypeMap = {
-      'LabelStatement': 'labelStatement'
-    , 'BreakStatement': 'breakStatement'
-    , 'GotoStatement': 'gotoStatement'
-    , 'ReturnStatement': 'returnStatement'
-    , 'IfStatement': 'ifStatement'
-    , 'IfClause': 'ifClause'
-    , 'ElseifClause': 'elseifClause'
-    , 'ElseClause': 'elseClause'
-    , 'WhileStatement': 'whileStatement'
-    , 'DoStatement': 'doStatement'
-    , 'RepeatStatement': 'repeatStatement'
-    , 'LocalStatement': 'localStatement'
-    , 'AssignmentStatement': 'assignmentStatement'
-    , 'CallStatement': 'callStatement'
-    , 'FunctionDeclaration': 'functionDeclaration'
-    , 'ForNumericStatement': 'forNumericStatement'
-    , 'ForGenericStatement': 'forGenericStatement'
-    , 'Chunk': 'root'
-    , 'Identifier': 'identifier'
-    , 'StringLiteral': 'stringLiteral'
-    , 'NumericLiteral': 'numericLiteral'
-    , 'BooleanLiteral': 'booleanLiteral'
-    , 'NilLiteral': 'nilLiteral'
-    , 'VarargLiteral': 'varargLiteral'
-    , 'BinaryExpression': 'binaryExpression'
-    , 'LogicalExpression': 'logicalExpression'
-    , 'UnaryExpression': 'unaryExpression'
-    , 'MemberExpression': 'memberExpression'
-    , 'IndexExpression': 'indexExpression'
-    , 'CallExpression': 'callExpression'
-    , 'TableCallExpression': 'tableCallExpression'
-    , 'StringCallExpression': 'stringCallExpression'
-    , 'TableConstructorExpression': 'tableConstructor'
-    , 'TableKey': 'tableKey'
-    , 'TableKeyString': 'tableKeyString'
-    , 'TableValue': 'tableValue'
-    , 'Comment': 'comment'
-  };
+  function getLuastType(type) {
+    switch (type) {
+      case 'LabelStatement': return 'labelStatement';
+      case 'BreakStatement': return 'breakStatement';
+      case 'GotoStatement': return 'gotoStatement';
+      case 'ReturnStatement': return 'returnStatement';
+      case 'IfStatement': return 'ifStatement';
+      case 'IfClause': return 'ifClause';
+      case 'ElseifClause': return 'elseifClause';
+      case 'ElseClause': return 'elseClause';
+      case 'WhileStatement': return 'whileStatement';
+      case 'DoStatement': return 'doStatement';
+      case 'RepeatStatement': return 'repeatStatement';
+      case 'LocalStatement': return 'localStatement';
+      case 'AssignmentStatement': return 'assignmentStatement';
+      case 'CallStatement': return 'callStatement';
+      case 'FunctionDeclaration': return 'functionDeclaration';
+      case 'ForNumericStatement': return 'forNumericStatement';
+      case 'ForGenericStatement': return 'forGenericStatement';
+      case 'Chunk': return 'root';
+      case 'Identifier': return 'identifier';
+      case 'StringLiteral': return 'stringLiteral';
+      case 'NumericLiteral': return 'numericLiteral';
+      case 'BooleanLiteral': return 'booleanLiteral';
+      case 'NilLiteral': return 'nilLiteral';
+      case 'VarargLiteral': return 'varargLiteral';
+      case 'BinaryExpression': return 'binaryExpression';
+      case 'LogicalExpression': return 'logicalExpression';
+      case 'UnaryExpression': return 'unaryExpression';
+      case 'MemberExpression': return 'memberExpression';
+      case 'IndexExpression': return 'indexExpression';
+      case 'CallExpression': return 'callExpression';
+      case 'TableCallExpression': return 'tableCallExpression';
+      case 'StringCallExpression': return 'stringCallExpression';
+      case 'TableConstructorExpression': return 'tableConstructor';
+      case 'TableKey': return 'tableKey';
+      case 'TableKeyString': return 'tableKeyString';
+      case 'TableValue': return 'tableValue';
+      case 'Comment': return 'comment';
+      default: return type;
+    }
+  }
 
   var luastMode;
 
@@ -540,7 +543,7 @@
       location.bless(node);
     }
     if (luastMode) {
-      node.type = luastTypeMap[node.type] || node.type;
+      node.type = getLuastType(node.type);
     }
     if (options.onCreateNode) options.onCreateNode(node);
     return node;

@@ -56,6 +56,9 @@
   exports.version = "0.1.0";
 
   var input, options, length, features, encodingMode;
+  var parserActive = false;
+  var expressionDepth = 0;
+  var MAX_EXPRESSION_DEPTH = 512;
 
   // Options can be set either globally on the parser object through
   // defaultOptions, or during the parse call.
@@ -1672,6 +1675,7 @@
   function FullFlowContext() {
     this.scopes = [];
     this.pendingGotos = [];
+    this.pendingGotosByTarget = Object.create(null);
   }
 
   FullFlowContext.prototype.isInLoop = function () {
@@ -1694,13 +1698,17 @@
   };
 
   FullFlowContext.prototype.popScope = function () {
+    var unresolved = [];
     for (var i = 0; i < this.pendingGotos.length; ++i) {
       var theGoto = this.pendingGotos[i];
+      if (theGoto.resolved) continue;
       if (theGoto.maxDepth >= this.scopes.length)
         if (--theGoto.maxDepth <= 0)
           raise(theGoto.token, errors.labelNotVisible, theGoto.target);
+      unresolved.push(theGoto);
     }
 
+    this.pendingGotos = unresolved;
     this.scopes.pop();
   };
 
@@ -1714,12 +1722,18 @@
         return;
     }
 
-    this.pendingGotos.push({
+    var theGoto = {
       maxDepth: this.scopes.length,
       target: target,
       token: token,
-      localCounts: localCounts
-    });
+      localCounts: localCounts,
+      resolved: false
+    };
+    this.pendingGotos.push(theGoto);
+    var targetGotos = this.pendingGotosByTarget[target];
+    if (!targetGotos)
+      targetGotos = this.pendingGotosByTarget[target] = [];
+    targetGotos.push(theGoto);
   };
 
   FullFlowContext.prototype.addLabel = function (name, token) {
@@ -1728,22 +1742,26 @@
     if (Object.prototype.hasOwnProperty.call(scope.labels, name)) {
       raise(token, errors.labelAlreadyDefined, name, scope.labels[name].line);
     } else {
-      var newGotos = [];
+      var targetGotos = this.pendingGotosByTarget[name] || [];
+      var unresolved = [];
 
-      for (var i = 0; i < this.pendingGotos.length; ++i) {
-        var theGoto = this.pendingGotos[i];
+      for (var i = 0; i < targetGotos.length; ++i) {
+        var theGoto = targetGotos[i];
 
-        if (theGoto.maxDepth >= this.scopes.length && theGoto.target === name) {
-          if (theGoto.localCounts[this.scopes.length - 1] < scope.locals.length) {
-            scope.deferredGotos.push(theGoto);
-          }
+        if (theGoto.maxDepth < this.scopes.length) {
+          unresolved.push(theGoto);
           continue;
         }
 
-        newGotos.push(theGoto);
+        if (theGoto.localCounts[this.scopes.length - 1] < scope.locals.length)
+          scope.deferredGotos.push(theGoto);
+        theGoto.resolved = true;
       }
 
-      this.pendingGotos = newGotos;
+      if (unresolved.length)
+        this.pendingGotosByTarget[name] = unresolved;
+      else
+        delete this.pendingGotosByTarget[name];
     }
 
     scope.labels[name] = {
@@ -2503,51 +2521,59 @@
   //     exp ::= (unop exp | primary | prefixexp ) { binop exp }
 
   function parseSubExpression(minPrecedence, flowContext) {
-    var operator = token.value
-    // The left-hand side in binary operations.
-      , expression, marker;
+    if (expressionDepth >= MAX_EXPRESSION_DEPTH)
+      throw new Error('Maximum expression nesting depth exceeded');
 
-    if (trackLocations) marker = createLocationMarker();
+    expressionDepth++;
+    try {
+      var operator = token.value
+      // The left-hand side in binary operations.
+        , expression, marker;
 
-    // UnaryExpression
-    if (isUnary(token)) {
-      markLocation();
-      next();
-      var argument = parseSubExpression(10, flowContext);
-      if (argument == null) raiseUnexpectedToken('<expression>', token);
-      expression = finishNode(ast.unaryExpression(operator, argument));
-    }
-    if (null == expression) {
-      // PrimaryExpression
-      expression = parsePrimaryExpression(flowContext);
+      if (trackLocations) marker = createLocationMarker();
 
-      // PrefixExpression
-      if (null == expression) {
-        expression = parsePrefixExpression(flowContext);
+      // UnaryExpression
+      if (isUnary(token)) {
+        markLocation();
+        next();
+        var argument = parseSubExpression(10, flowContext);
+        if (argument == null) raiseUnexpectedToken('<expression>', token);
+        expression = finishNode(ast.unaryExpression(operator, argument));
       }
+      if (null == expression) {
+        // PrimaryExpression
+        expression = parsePrimaryExpression(flowContext);
+
+        // PrefixExpression
+        if (null == expression) {
+          expression = parsePrefixExpression(flowContext);
+        }
+      }
+      // This is not a valid left hand expression.
+      if (null == expression) return null;
+
+      var precedence;
+      while (true) {
+        operator = token.value;
+
+        precedence = (Punctuator === token.type || Keyword === token.type) ?
+          binaryPrecedence(operator) : 0;
+
+        if (precedence === 0 || precedence <= minPrecedence) break;
+        // Right-hand precedence operators
+        if ('^' === operator || '..' === operator) --precedence;
+        next();
+        var right = parseSubExpression(precedence, flowContext);
+        if (null == right) raiseUnexpectedToken('<expression>', token);
+        // Push in the marker created before the loop to wrap its entirety.
+        if (trackLocations) locations.push(marker);
+        expression = finishNode(ast.binaryExpression(operator, expression, right));
+
+      }
+      return expression;
+    } finally {
+      expressionDepth--;
     }
-    // This is not a valid left hand expression.
-    if (null == expression) return null;
-
-    var precedence;
-    while (true) {
-      operator = token.value;
-
-      precedence = (Punctuator === token.type || Keyword === token.type) ?
-        binaryPrecedence(operator) : 0;
-
-      if (precedence === 0 || precedence <= minPrecedence) break;
-      // Right-hand precedence operators
-      if ('^' === operator || '..' === operator) --precedence;
-      next();
-      var right = parseSubExpression(precedence, flowContext);
-      if (null == right) raiseUnexpectedToken('<expression>', token);
-      // Push in the marker created before the loop to wrap its entirety.
-      if (trackLocations) locations.push(marker);
-      expression = finishNode(ast.binaryExpression(operator, expression, right));
-
-    }
-    return expression;
   }
 
   //     prefixexp ::= prefix {suffix}
@@ -2765,60 +2791,73 @@
       throw new TypeError("Expected input to be a string, but got " + typeof _input);
     }
 
-    input = _input || '';
-    options = assign({}, defaultOptions, _options);
-
-    if (options.maxInputLength && input.length > options.maxInputLength) {
-      throw new Error("Input length exceeds maximum allowed length");
+    if (parserActive) {
+      throw new Error('A parser session is already active');
     }
 
-    luastMode = options.ast === 'luast';
-    if (luastMode) {
-      options.locations = true;
-      options.ranges = true;
-      options.comments = true;
+    parserActive = true;
+    expressionDepth = 0;
+    try {
+      input = _input || '';
+      options = assign({}, defaultOptions, _options);
+
+      if (options.maxInputLength && input.length > options.maxInputLength) {
+        throw new Error("Input length exceeds maximum allowed length");
+      }
+
+      luastMode = options.ast === 'luast';
+      if (luastMode) {
+        options.locations = true;
+        options.ranges = true;
+        options.comments = true;
+      }
+
+      // Rewind the lexer
+      index = 0;
+      line = 1;
+      lineStart = 0;
+      length = input.length;
+      // When tracking identifier scope, initialize with an empty scope.
+      scopes = [Object.create ? Object.create(null) : {}];
+      scopeDepth = 0;
+      globals = [];
+      locations = [];
+
+      if (!Object.prototype.hasOwnProperty.call(versionFeatures, options.luaVersion)) {
+        throw new Error(sprintf("Lua version '%1' not supported", options.luaVersion));
+      }
+
+      features = assign({}, versionFeatures[options.luaVersion]);
+      if (options.extendedIdentifiers !== void 0)
+        features.extendedIdentifiers = !!options.extendedIdentifiers;
+
+      if (!Object.prototype.hasOwnProperty.call(encodingModes, options.encodingMode)) {
+        throw new Error(sprintf("Encoding mode '%1' not supported", options.encodingMode));
+      }
+
+      encodingMode = encodingModes[options.encodingMode];
+
+      if (options.comments) comments = [];
+      if (!options.wait) return end();
+      return exports;
+    } catch (error) {
+      parserActive = false;
+      throw error;
     }
-
-    // Rewind the lexer
-    index = 0;
-    line = 1;
-    lineStart = 0;
-    length = input.length;
-    // When tracking identifier scope, initialize with an empty scope.
-    scopes = [Object.create ? Object.create(null) : {}];
-    scopeDepth = 0;
-    globals = [];
-    locations = [];
-
-    if (!Object.prototype.hasOwnProperty.call(versionFeatures, options.luaVersion)) {
-      throw new Error(sprintf("Lua version '%1' not supported", options.luaVersion));
-    }
-
-    features = assign({}, versionFeatures[options.luaVersion]);
-    if (options.extendedIdentifiers !== void 0)
-      features.extendedIdentifiers = !!options.extendedIdentifiers;
-
-    if (!Object.prototype.hasOwnProperty.call(encodingModes, options.encodingMode)) {
-      throw new Error(sprintf("Encoding mode '%1' not supported", options.encodingMode));
-    }
-
-    encodingMode = encodingModes[options.encodingMode];
-
-    if (options.comments) comments = [];
-    if (!options.wait) return end();
-    return exports;
   }
 
   // Write to the source code buffer without beginning the parse.
   exports.write = write;
 
   function write(_input) {
-    input += String(_input);
-    length = input.length;
+    var newInput = input + String(_input);
+    var newLength = newInput.length;
     var maxLength = options ? options.maxInputLength : defaultOptions.maxInputLength;
-    if (maxLength && length > maxLength) {
+    if (maxLength && newLength > maxLength) {
       throw new Error("Input length exceeds maximum allowed length");
     }
+    input = newInput;
+    length = newLength;
     return exports;
   }
 
@@ -2826,27 +2865,31 @@
   exports.end = end;
 
   function end(_input) {
-    if ('undefined' !== typeof _input) write(_input);
+    try {
+      if ('undefined' !== typeof _input) write(_input);
 
-    // Ignore shebangs.
-    if (input && input.substr(0, 2) === '#!') input = input.replace(/^.*/, function (line) {
-      return line.replace(/./g, ' ');
-    });
+      // Ignore shebangs.
+      if (input && input.substr(0, 2) === '#!') input = input.replace(/^.*/, function (line) {
+        return line.replace(/./g, ' ');
+      });
 
-    length = input.length;
-    trackLocations = options.locations || options.ranges;
-    // Initialize with a lookahead token.
-    lookahead = lex();
+      length = input.length;
+      trackLocations = options.locations || options.ranges;
+      // Initialize with a lookahead token.
+      lookahead = lex();
 
-    var chunk = parseChunk();
-    if (options.comments) chunk.comments = comments;
-    if (options.scope && !luastMode) chunk.globals = globals;
+      var chunk = parseChunk();
+      if (options.comments) chunk.comments = comments;
+      if (options.scope && !luastMode) chunk.globals = globals;
 
-    /* istanbul ignore if */
-    if (locations.length > 0)
-      throw new Error('Location tracking failed. This is most likely a bug in luaparse');
+      /* istanbul ignore if */
+      if (locations.length > 0)
+        throw new Error('Location tracking failed. This is most likely a bug in luaparse');
 
-    return chunk;
+      return chunk;
+    } finally {
+      parserActive = false;
+    }
   }
 
 }));

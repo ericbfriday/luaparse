@@ -121,6 +121,21 @@ describe('getChildFields', () => {
   it('returns empty array for unknown types', () => {
     expect(getChildFields({type: 'unknownNode'})).toEqual([])
   })
+
+  it('treats prototype names as unknown node types', () => {
+    for (const type of [
+      'constructor',
+      'toString',
+      '__proto__',
+      'hasOwnProperty'
+    ]) {
+      expect(Object.hasOwn(childFields, type)).toBe(false)
+      expect(childFields[type]).toBeUndefined()
+      expect(getChildFields({type})).toEqual([])
+      expect(isArrayField(type, 'body')).toBe(false)
+      expect(isNullableField(type, 'body')).toBe(false)
+    }
+  })
 })
 
 describe('forEachChild', () => {

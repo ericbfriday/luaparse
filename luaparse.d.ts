@@ -14,6 +14,7 @@ export interface ParseOptions {
   extendedIdentifiers?: boolean
   encodingMode?: 'none' | 'x-user-defined' | 'pseudo-latin1'
   ast?: 'legacy' | 'luast'
+  maxInputLength?: number
 }
 
 export interface AstNode {

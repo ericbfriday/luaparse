@@ -4,6 +4,7 @@ import * as luaparse from '@friday-friday/luaparse'
 export type Options = {
   luaVersion?: '5.1' | '5.2' | '5.3' | 'LuaJIT'
   encodingMode?: 'none' | 'x-user-defined' | 'pseudo-latin1'
+  maxInputLength?: number
 }
 
 export default function luaParse(
@@ -13,7 +14,8 @@ export default function luaParse(
   const settings = {
     ast: 'luast' as const,
     luaVersion: options?.luaVersion ?? '5.1',
-    encodingMode: options?.encodingMode ?? 'none'
+    encodingMode: options?.encodingMode ?? 'none',
+    maxInputLength: options?.maxInputLength ?? 0
   }
 
   Object.assign(this, {

@@ -100,6 +100,37 @@ describe('analyzeScope', () => {
     expect(scope.isLocal(scope.globals[0])).toBe(false)
   })
 
+  it('isolates conditional bodies and handles deep trees iteratively', () => {
+    const tree = parseTree(
+      'if true then local branch = 1 else branch = 2 end\nreturn branch'
+    )
+    const scope = analyzeScope(tree)
+    expect(scope.globals.map((global) => global.name)).toEqual(['branch'])
+
+    let expression: Record<string, unknown> = {
+      type: 'identifier',
+      name: 'deep'
+    }
+    for (let index = 0; index < 10_000; index++) {
+      expression = {
+        type: 'unaryExpression',
+        operator: '-',
+        argument: expression
+      }
+    }
+
+    const deepTree = {
+      type: 'root',
+      body: [{type: 'returnStatement', arguments: [expression]}]
+    } as unknown as Root
+    expect(analyzeScope(deepTree).globals.map((global) => global.name)).toEqual(
+      ['deep']
+    )
+
+    expression.argument = expression
+    expect(() => analyzeScope(deepTree)).toThrow('Cyclic AST')
+  })
+
   describe('comparison with luaparse scope:true', () => {
     const fixtures = [
       {name: 'simple global', code: 'x = 1'},

@@ -409,4 +409,43 @@ describe('fromLuaparse', () => {
       expect(types).toContain('numericLiteral')
     })
   })
+
+  it('converts deep trees iteratively and rejects unsafe object structure', () => {
+    let expression: Record<string, unknown> = {
+      type: 'Identifier',
+      name: 'leaf'
+    }
+    for (let index = 0; index < 8000; index++) {
+      expression = {
+        type: 'UnaryExpression',
+        operator: '-',
+        argument: expression
+      }
+    }
+
+    const converted = fromLuaparse({
+      type: 'Chunk',
+      body: [{type: 'ReturnStatement', arguments: [expression]}],
+      comments: []
+    })
+    expect(converted.body[0].type).toBe('returnStatement')
+
+    const cyclic: Record<string, unknown> = {
+      type: 'UnaryExpression',
+      operator: '-'
+    }
+    cyclic.argument = cyclic
+    expect(() =>
+      fromLuaparse({type: 'Chunk', body: [cyclic], comments: []})
+    ).toThrow('Cyclic luaparse AST')
+
+    expect(() => fromLuaparse({type: 'constructor'})).toThrow(
+      'Unknown luaparse node type: constructor'
+    )
+    const inherited = Object.assign(Object.create({name: 'inherited'}), {
+      type: 'Identifier',
+      name: 'own'
+    })
+    expect(fromLuaparse(inherited)).toEqual({type: 'identifier', name: 'own'})
+  })
 })

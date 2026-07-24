@@ -567,7 +567,68 @@
       'should ignore shebangs'
     )
 
-    this.done(11)
+    parse = luaparse.parse({wait: true})
+    this.error(
+      function () {
+        return luaparse.parse('return 2')
+      },
+      'A parser session is already active'
+    )
+    this.equal(parse.end('return 1').body.length, 1, 'should finish active input')
+
+    this.error(
+      function () {
+        return luaparse.parse('return 1', {
+          onCreateNode: function () {
+            luaparse.parse('return 2')
+          }
+        })
+      },
+      'A parser session is already active'
+    )
+    this.equal(
+      luaparse.parse('return 3').body.length,
+      1,
+      'should recover after callback errors'
+    )
+
+    this.error(
+      function () {
+        return luaparse.parse(
+          'return ' + new Array(601).join('(') + '1' + new Array(601).join(')')
+        )
+      },
+      'Maximum expression nesting depth exceeded'
+    )
+    this.error(
+      function () {
+        return luaparse.parse(
+          'return ' + new Array(1001).join('1^') + '1'
+        )
+      },
+      'Maximum expression nesting depth exceeded'
+    )
+
+    parse = luaparse.parse({wait: true, maxInputLength: 8})
+    parse.write('return')
+    this.error(
+      function () {
+        return parse.write(' 123')
+      },
+      'Input length exceeds maximum allowed length'
+    )
+    this.equal(parse.end().body.length, 1, 'should recover after a rejected write')
+
+    var labels = []
+    for (var labelIndex = 0; labelIndex < 2000; labelIndex++)
+      labels.push('goto l' + labelIndex + ' ::l' + labelIndex + '::')
+    this.equal(
+      luaparse.parse(labels.join(' '), {luaVersion: '5.2'}).body.length,
+      4000,
+      'should resolve a large set of unique goto targets'
+    )
+
+    this.done(20)
   })
 
   suite.addTest('Option validation', function () {

@@ -49,6 +49,16 @@ describe('unified-lua plugin', () => {
     expect(tree.body[1].type).toBe('gotoStatement')
   })
 
+  it('forwards maxInputLength to luaparse', () => {
+    expect(() =>
+      unified().use(luaParse, {maxInputLength: 1}).parse('return 1')
+    ).toThrow('Input length exceeds maximum allowed length')
+
+    expect(() =>
+      unified().use(luaParse, {maxInputLength: 8}).parse('return 1')
+    ).not.toThrow()
+  })
+
   it('tree is traversable by luast-util-visit', () => {
     const tree = unified().use(luaParse).parse('local x = 1 + 2') as Root
 

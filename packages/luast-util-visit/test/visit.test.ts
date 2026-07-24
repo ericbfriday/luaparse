@@ -290,4 +290,46 @@ describe('visit', () => {
       'breakStatement'
     ])
   })
+
+  it('walks deep trees iteratively and ignores inherited syntax', () => {
+    let node: Record<string, unknown> = id('leaf')
+    for (let index = 0; index < 10_000; index++) {
+      node = {type: 'unaryExpression', operator: '-', argument: node}
+    }
+
+    let visits = 0
+    visit(node as LuastNode, () => {
+      visits++
+    })
+    expect(visits).toBe(10_001)
+
+    const inherited = Object.create({
+      argument: id('hidden')
+    }) as Record<string, unknown>
+    Object.assign(inherited, {
+      type: 'unaryExpression',
+      operator: '-'
+    })
+    const names: string[] = []
+    visit(inherited as LuastNode, (visited) => {
+      names.push(visited.type)
+    })
+    expect(names).toEqual(['unaryExpression'])
+
+    for (const type of ['constructor', 'toString', '__proto__']) {
+      expect(() => {
+        visit({type} as LuastNode, (visited) => {
+          expect(visited.type).toBe(type)
+        })
+      }).not.toThrow()
+    }
+
+    const cyclic = {type: 'unaryExpression'} as Record<string, unknown>
+    cyclic.argument = cyclic
+    expect(() => {
+      visit(cyclic as LuastNode, (visited) => {
+        expect(visited).toBeDefined()
+      })
+    }).toThrow('Cyclic AST')
+  })
 })

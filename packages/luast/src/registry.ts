@@ -1,6 +1,10 @@
 import type {LuastAnyNode} from './types.js'
 
-export const childFields: Record<string, readonly string[]> = {
+function registry<T extends Record<string, readonly string[]>>(entries: T): T {
+  return Object.assign(Object.create(null), entries) as T
+}
+
+export const childFields: Record<string, readonly string[]> = registry({
   root: ['body'],
   labelStatement: ['label'],
   breakStatement: [],
@@ -38,14 +42,14 @@ export const childFields: Record<string, readonly string[]> = {
   tableKeyString: ['key', 'value'],
   tableValue: ['value'],
   comment: []
-}
+})
 
-export const nullableFields: Record<string, readonly string[]> = {
+export const nullableFields: Record<string, readonly string[]> = registry({
   functionDeclaration: ['identifier'],
   forNumericStatement: ['step']
-}
+})
 
-export const arrayFields: Record<string, readonly string[]> = {
+export const arrayFields: Record<string, readonly string[]> = registry({
   root: ['body', 'comments'],
   returnStatement: ['arguments'],
   ifStatement: ['clauses'],
@@ -62,41 +66,59 @@ export const arrayFields: Record<string, readonly string[]> = {
   forGenericStatement: ['variables', 'iterators', 'body'],
   callExpression: ['arguments'],
   tableConstructor: ['fields']
-}
+})
 
 export function getChildFields(node: LuastAnyNode): readonly string[] {
-  return childFields[node.type] ?? []
+  return Object.hasOwn(node, 'type') && Object.hasOwn(childFields, node.type)
+    ? childFields[node.type]
+    : []
 }
 
 export function forEachChild(
   node: LuastAnyNode,
-  callback: (child: LuastAnyNode, field: string, index: number | undefined) => void
+  callback: (
+    child: LuastAnyNode,
+    field: string,
+    index: number | undefined
+  ) => void
 ): void {
-  const fields = childFields[node.type]
+  const fields = getChildFields(node)
   if (fields === undefined) return
 
-  const nodeArrayFields = arrayFields[node.type]
-
   for (const field of fields) {
+    if (!Object.hasOwn(node, field)) continue
     const child = (node as unknown as Record<string, unknown>)[field]
     if (child === null || child === undefined) continue
 
-    const isArray = nodeArrayFields?.includes(field)
+    const isArray = isArrayField(node.type, field)
 
     if (isArray && Array.isArray(child)) {
-      for (let i = 0; i < child.length; i++) {
-        callback(child[i] as LuastAnyNode, field, i)
+      const children = child as unknown[]
+      for (const [index, element] of children.entries()) {
+        if (
+          typeof element === 'object' &&
+          element !== null &&
+          Object.hasOwn(element, 'type')
+        ) {
+          callback(element as LuastAnyNode, field, index)
+        }
       }
-    } else if (typeof child === 'object' && 'type' in child) {
+    } else if (typeof child === 'object' && Object.hasOwn(child, 'type')) {
       callback(child as LuastAnyNode, field, undefined)
     }
   }
 }
 
 export function isArrayField(nodeType: string, field: string): boolean {
-  return arrayFields[nodeType]?.includes(field) ?? false
+  return (
+    Object.hasOwn(arrayFields, nodeType) &&
+    arrayFields[nodeType].includes(field)
+  )
 }
 
 export function isNullableField(nodeType: string, field: string): boolean {
-  return nullableFields[nodeType]?.includes(field) ?? false
+  return (
+    Object.hasOwn(nullableFields, nodeType) &&
+    nullableFields[nodeType].includes(field)
+  )
 }

@@ -11,3 +11,8 @@
 **Vulnerability:** The main `parse` function accepted non-string inputs (like objects/arrays) without validation, which caused unexpected internal type errors (e.g., `input.substr is not a function`) deep in the parser.
 **Learning:** In dynamically typed environments, boundaries of APIs must coerce or validate inputs to their expected types. Unvalidated types can lead to unhandled exceptions, potential DOS vectors, or unpredictable behavior.
 **Prevention:** Explicitly cast to or validate `String` types for inputs immediately inside public entry points before further processing.
+
+## 2026-07-24 - Prevent Prototype Pollution in Object.assign Polyfill
+**Vulnerability:** The custom `assign` polyfill used in `luaparse.js` recursively copied all properties from the source object to the destination object, making it vulnerable to prototype pollution if untrusted inputs contained keys like `__proto__`, `constructor`, or `prototype`.
+**Learning:** Polyfills or loops that copy properties from user-supplied objects (like configuration options) must actively sanitize or block special prototype-related keys to prevent prototype pollution attacks.
+**Prevention:** Explicitly block `__proto__`, `constructor`, and `prototype` keys during object assignment loops to ensure safer property copying.

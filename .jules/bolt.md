@@ -11,3 +11,9 @@
 ## 2024-06-07 - Direct string switch for keywords
 **Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
 **Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.
+
+## 2026-08-01 - Global Variables Tracking
+
+**Learning:** When parsing Lua code and tracking global variable scopes, the parser stores a list of global identifier nodes in an array (`globals`) and uses `indexOfObject` (an O(N) operation) to check if a global node with the same name already exists before adding it. This results in O(N^2) complexity when parsing files with many global variables, causing severe performance degradation.
+
+**Action:** Replaced the O(N) array search with an O(1) dictionary lookup by introducing `globalTrackers`. A dictionary `globalTrackers = Object.create ? Object.create(null) : {}` is initialized and tracks the existence of global identifier names, drastically improving performance for files with numerous global variables.

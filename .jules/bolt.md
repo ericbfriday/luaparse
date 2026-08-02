@@ -11,3 +11,6 @@
 ## 2024-06-07 - Direct string switch for keywords
 **Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
 **Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.
+## 2024-08-01 - Replace O(N) array lookup with O(1) dictionary in globals array
+**Learning:** Tracking large arrays sequentially (using indexOf or custom manual loops) inside an AST parser scope resolution leads to noticeable performance bottlenecks. In `luaparse.js`, `indexOfObject(globals, 'name', node.name)` was executing for every global identifier in a linear lookup array.
+**Action:** Replace the O(N) lookup loop with an O(1) hash map check. Initialize `globalNames = Object.create(null)` to track presence. Since `globals` array was returned as part of the chunk AST object, preserve the `globals` array for backward compatibility but optimize the internal presence check.

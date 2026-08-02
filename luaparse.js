@@ -1530,7 +1530,9 @@
     // The current scope index
     , scopeDepth
     // A list of all global identifier nodes.
-    , globals;
+    , globals
+    // A dictionary of global identifier names.
+    , globalNames;
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
@@ -1567,8 +1569,10 @@
   // globals array so we can return the information to the user.
   function attachScope(node, isLocal) {
     if (luastMode) return;
-    if (!isLocal && -1 === indexOfObject(globals, 'name', node.name))
+    if (!isLocal && !globalNames[node.name]) {
       globals.push(node);
+      globalNames[node.name] = true;
+    }
 
     node.isLocal = isLocal;
   }
@@ -2822,6 +2826,7 @@
       scopes = [Object.create ? Object.create(null) : {}];
       scopeDepth = 0;
       globals = [];
+      globalNames = Object.create ? Object.create(null) : {};
       locations = [];
 
       if (!Object.prototype.hasOwnProperty.call(versionFeatures, options.luaVersion)) {

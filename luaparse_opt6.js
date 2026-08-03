@@ -1530,7 +1530,9 @@
     // The current scope index
     , scopeDepth
     // A list of all global identifier nodes.
-    , globals;
+    , globals
+    // ⚡ Bolt: Added globalNames to optimize O(N) indexOfObject lookup in attachScope
+    , globalNames;
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
@@ -1567,8 +1569,10 @@
   // globals array so we can return the information to the user.
   function attachScope(node, isLocal) {
     if (luastMode) return;
-    if (!isLocal && -1 === indexOfObject(globals, 'name', node.name))
+    if (!isLocal && !globalNames[node.name]) {
+      globalNames[node.name] = true;
       globals.push(node);
+    }
 
     node.isLocal = isLocal;
   }
@@ -2484,24 +2488,32 @@
   // As this function gets hit on every expression it's been optimized due to
   // the expensive CompareICStub which took ~8% of the parse time.
 
-  // ⚡ Bolt: Use direct string switch for operator precedence lookup.
-  // In modern V8/JS engines, a direct string switch is highly optimized and
-  // faster than manual length-and-charCode dispatching.
   function binaryPrecedence(operator) {
-    switch (operator) {
-      case '^': return 12;
-      case '*': case '/': case '//': case '%': return 10;
-      case '+': case '-': return 9;
-      case '..': return 8;
-      case '<<': case '>>': return 7;
-      case '&': return 6;
-      case '~': return 5;
-      case '|': return 4;
-      case '<': case '>': case '<=': case '>=': case '~=': case '==': return 3;
-      case 'and': return 2;
-      case 'or': return 1;
-      default: return 0;
-    }
+    var charCode = operator.charCodeAt(0)
+      , length = operator.length;
+
+    if (1 === length) {
+      switch (charCode) {
+        case 94: return 12; // ^
+        case 42: case 47: case 37: return 10; // * / %
+        case 43: case 45: return 9; // + -
+        case 38: return 6; // &
+        case 126: return 5; // ~
+        case 124: return 4; // |
+        case 60: case 62: return 3; // < >
+      }
+    } else if (2 === length) {
+      switch (charCode) {
+        case 47: return 10; // //
+        case 46: return 8; // ..
+        case 60: case 62:
+            if('<<' === operator || '>>' === operator) return 7; // << >>
+            return 3; // <= >=
+        case 61: case 126: return 3; // == ~=
+        case 111: return 1; // or
+      }
+    } else if (97 === charCode && 'and' === operator) return 2;
+    return 0;
   }
 
   // Implement an operator-precedence parser to handle binary operator
@@ -2814,6 +2826,7 @@
       scopes = [Object.create ? Object.create(null) : {}];
       scopeDepth = 0;
       globals = [];
+      globalNames = Object.create ? Object.create(null) : {};
       locations = [];
 
       if (!Object.prototype.hasOwnProperty.call(versionFeatures, options.luaVersion)) {

@@ -11,3 +11,6 @@
 ## 2024-06-07 - Direct string switch for keywords
 **Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
 **Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.
+## 2025-02-27 - Direct String Switch vs Manual Dispatch for Operators
+**Learning:** In modern JS engines like V8, a direct string `switch` statement for mapping known static strings (like operators) is significantly faster (often 2-3x) than complex length-based grouping and `charCodeAt` dispatch. However, this does not apply to keyword classification in high-throughput parser loops, where switching on an integer (length) compiles to a very fast jump table that acts as a rapid filter.
+**Action:** Prefer direct string `switch` statements for short operator mapping or known string lookups, but avoid it for broad keyword classification.

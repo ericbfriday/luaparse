@@ -11,3 +11,6 @@
 ## 2024-06-07 - Direct string switch for keywords
 **Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
 **Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.
+## 2024-08-04 - [Optimize Scope Tracking Arrays]
+**Learning:** For tracking small local identifier scopes in modern V8 engines, object dictionary lookups and deep prototype chains (`Object.create(parent)`) are slower due to allocation overhead compared to duplicating small flat arrays (`parent.slice()`) and using `indexOf()`.
+**Action:** When tracking highly dynamic nested scopes, favor flat arrays over deeply nested object prototypes for identifier presence checks.

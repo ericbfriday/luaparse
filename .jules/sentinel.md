@@ -15,3 +15,7 @@
 **Vulnerability:** A polyfill for `Object.assign` naively copied all own properties, which allows prototype pollution if a malicious JSON parsed object containing `__proto__` or `constructor.prototype` keys is passed.
 **Learning:** Even if `Object.assign` natively blocks `__proto__` in newer environments, custom polyfills or deep merge functions must explicitly block special keys (`__proto__`, `constructor`, `prototype`) to prevent prototype pollution.
 **Prevention:** Always explicitly check and skip `__proto__`, `constructor`, and `prototype` keys inside property-copying loops or polyfills when merging untrusted objects.
+## 2026-08-05 - Prevent O(N^2) DoS in string parsing by advancing index
+**Vulnerability:** Parsing long string and comment terminators has an O(N^2) complexity because it redundantly re-checks characters without advancing the index on failure. An attacker can supply malformed long strings to cause CPU exhaustion.
+**Learning:** When searching for terminators with repeated characters, the index must be advanced by the number of matched characters on a mismatch to avoid O(N^2) redundant scanning.
+**Prevention:** Advance the parser index (`index += i`) by the number of partially matched characters when a terminator search fails.

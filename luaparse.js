@@ -1391,13 +1391,15 @@
       // if it matches.
       if (']' === character) {
         terminator = true;
-        for (var i = 0; i < level; ++i) {
+        var i = 0;
+        for (; i < level; ++i) {
           if ('=' !== input.charAt(index + i)) {
             terminator = false;
             break;
           }
         }
         if (terminator && ']' !== input.charAt(index + level)) terminator = false;
+        if (!terminator) index += i;
       }
 
       // We reached the end of the multiline string. Get out now.

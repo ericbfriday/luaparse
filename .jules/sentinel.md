@@ -15,3 +15,7 @@
 **Vulnerability:** A polyfill for `Object.assign` naively copied all own properties, which allows prototype pollution if a malicious JSON parsed object containing `__proto__` or `constructor.prototype` keys is passed.
 **Learning:** Even if `Object.assign` natively blocks `__proto__` in newer environments, custom polyfills or deep merge functions must explicitly block special keys (`__proto__`, `constructor`, `prototype`) to prevent prototype pollution.
 **Prevention:** Always explicitly check and skip `__proto__`, `constructor`, and `prototype` keys inside property-copying loops or polyfills when merging untrusted objects.
+## YYYY-MM-DD - Prevent native Object.assign prototype pollution fallback
+**Vulnerability:** The `assign` polyfill correctly blocked `__proto__`, but a fallback to native `Object.assign` bypassed these checks, allowing prototype pollution when merging untrusted `options`.
+**Learning:** Custom object merge functions must not fall back to native implementations like `Object.assign` if those native implementations do not explicitly block prototype pollution vectors on deeply nested structures or older environments.
+**Prevention:** Remove the native `Object.assign` fallback and solely rely on the custom polyfill that explicitly sanitizes keys.

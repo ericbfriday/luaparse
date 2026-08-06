@@ -615,9 +615,6 @@
     return dest;
   };
 
-  /* istanbul ignore else */
-  if (Object.assign)
-    assign = Object.assign;
 
   // ### Error functions
 

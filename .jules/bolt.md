@@ -11,3 +11,6 @@
 ## 2024-06-07 - Direct string switch for keywords
 **Learning:** In modern JS engines like V8, direct string `switch` statements for keyword classification are significantly faster than length-based grouping followed by multiple `===` comparisons.
 **Action:** Use direct string `switch` statements for known string lookups instead of length-based manual dispatch in hot paths.
+## 2026-08-06 - Optimize binary precedence check
+**Learning:** In modern V8, direct string switch statements for mapping known static strings are significantly faster than manual character-code length dispatch loops.
+**Action:** Prefer single direct string switch statements over length-based or charcode-based grouping for known token/operator lookups.

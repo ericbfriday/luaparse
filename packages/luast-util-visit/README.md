@@ -43,20 +43,20 @@ Walk the tree but only call `visitor` on nodes matching `type`.
 
 ### Visitor actions
 
-- `SKIP` — do not visit children of this node
-- `REMOVE` — remove the node from its parent
-- `EXIT` — stop traversal immediately
+* `SKIP` — do not visit children of this node
+* `REMOVE` — remove the node from its parent
+* `EXIT` — stop traversal immediately
 
 ### Types
 
-- `Visitor` — `(node, parent, field, index) => VisitorAction`
-- `VisitorAction` — `typeof SKIP | typeof REMOVE | typeof EXIT | void`
+* `Visitor` — `(node, parent, field, index) => VisitorAction`
+* `VisitorAction` — `typeof SKIP | typeof REMOVE | typeof EXIT | void`
 
 ## Related
 
-- [`@friday-friday/luast`](../luast) — tree specification and types
-- [`@friday-friday/luast-util-scope`](../luast-util-scope) — scope analysis
-- [`@friday-friday/luaparse`](../../) — Lua parser
+* [`@friday-friday/luast`](../luast) — tree specification and types
+* [`@friday-friday/luast-util-scope`](../luast-util-scope) — scope analysis
+* [`@friday-friday/luaparse`](../../) — Lua parser
 
 ## License
 

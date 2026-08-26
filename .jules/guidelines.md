@@ -2,16 +2,49 @@
 
 ## Before Creating a Pull Request
 
-1. **Check for existing open PRs.** Use `gh pr list --state open` to see if the
-   same fix or improvement has already been proposed. If it has, do **not**
-   create a duplicate.
+1. **Check for existing open PRs — with the right command.** Run
+   `gh pr list --state open --limit 200`. The default page size is 30; on a
+   repo that already has more than 30 open PRs, an unqualified `gh pr list`
+   silently truncates and hides exactly the duplicates you're trying to avoid.
+   Grep the titles/bodies for your target function or vulnerability name, not
+   just an eyeball scan.
 
-2. **Check if the fix is already on master.** Before proposing a change, verify
-   the current state of `master` — the issue may already be resolved.
+2. **Check if the fix is already on master — by grepping the code, not the
+   log file.** `.jules/bolt.md` and `.jules/sentinel.md` are a narrative log,
+   not a reliable index: entries get reworded slightly each run, so
+   fuzzy-matching your finding against old entries is not a substitute for
+   checking reality. Before writing a single line of diff:
+   - `git fetch origin master && git diff origin/master -- luaparse.js` from
+     your working branch's merge-base to confirm your target lines still
+     look like what you think they look like.
+   - Grep `luaparse.js` on current `origin/master` for the specific pattern
+     you intend to replace (e.g. the function name, the vulnerable line). If
+     it doesn't match your assumption, your branch is stale — rebase before
+     doing anything else, not after.
+   - If grepping shows the pattern is already gone, the fix is already
+     applied. Close the session without a PR, and add a one-line dated note
+     to the relevant `.jules/*.md` file confirming you re-checked and it was
+     already fixed (so the next run doesn't repeat this same check from
+     scratch).
 
-3. **One PR per logical change.** Do not submit the same change multiple times
+3. **Rebase onto current `origin/master` immediately before opening the PR,
+   every time — not just at branch creation.** A branch cut days ago can
+   silently drop security fixes that landed on master since (this happened:
+   a stale branch removed the `MAX_EXPRESSION_DEPTH` recursion guard by
+   reverting to a pre-guard version of a function it was touching). Rebasing
+   late and re-running the full test suite on top of current master is
+   mandatory, not optional, even for "obviously small" changes.
+
+4. **One PR per logical change.** Do not submit the same change multiple times
    with slightly different branch names or descriptions. If a previous attempt
    failed, close it first before retrying.
+
+5. **Never bundle unrelated files.** A PR fixing one function in
+   `luaparse.js` should not also touch `.changeset/`, `FUTURE-README.md`,
+   `LUAST-SPEC.md`, `MIGRATION-PLAN.md`, `PORT-ANALYSIS.md`, package READMEs,
+   or leave scratch/PoC scripts (e.g. `poc_*.js`, `*_test.js`) in the repo
+   root. If your diff touches more than the file(s) your change is actually
+   about, split it or drop the extra hunks before opening the PR.
 
 ## Agent-Specific Rules
 

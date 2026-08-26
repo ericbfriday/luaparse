@@ -15,6 +15,11 @@
 **Vulnerability:** A polyfill for `Object.assign` naively copied all own properties, which allows prototype pollution if a malicious JSON parsed object containing `__proto__` or `constructor.prototype` keys is passed.
 **Learning:** Even if `Object.assign` natively blocks `__proto__` in newer environments, custom polyfills or deep merge functions must explicitly block special keys (`__proto__`, `constructor`, `prototype`) to prevent prototype pollution.
 **Prevention:** Always explicitly check and skip `__proto__`, `constructor`, and `prototype` keys inside property-copying loops or polyfills when merging untrusted objects.
+## 2026-08-05 - Prevent O(N^2) DoS in string parsing by advancing index
+**Vulnerability:** Parsing long string and comment terminators has an O(N^2) complexity because it redundantly re-checks characters without advancing the index on failure. An attacker can supply malformed long strings to cause CPU exhaustion.
+**Learning:** When searching for terminators with repeated characters, the index must be advanced by the number of matched characters on a mismatch to avoid O(N^2) redundant scanning.
+**Prevention:** Advance the parser index (`index += i`) by the number of partially matched characters when a terminator search fails.
+
 ## 2026-08-07 - Prototype Pollution via Native Object.assign
 **Vulnerability:** The parser uses a custom `assign` function that blocks `__proto__`, `constructor`, and `prototype` to prevent prototype pollution. However, it falls back to native `Object.assign` if available, bypassing these checks and leaving the application vulnerable when merging parsed untrusted JSON objects into configuration options.
 **Learning:** Native implementations like `Object.assign` do not perform safety checks against dangerous keys (`__proto__`, etc.). When creating security polyfills, do not fall back to native implementations that lack the same security guarantees.

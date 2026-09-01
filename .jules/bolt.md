@@ -14,3 +14,6 @@
 ## 2026-08-10 - O(1) dictionary lookup for global identifiers
 **Learning:** In deeply nested or heavily localized environments where large arrays of global identifiers are collected, checking for uniqueness with `indexOfObject` results in an O(N^2) bottleneck. Utilizing an auxiliary dictionary mapping enables O(1) existence checks.
 **Action:** When gathering unique elements into an array during parsing (like `globals`), always use an adjacent dictionary object (e.g. `Object.create(null)`) to perform O(1) tracking and avoid O(N) array traversals per element.
+## 2024-05-24 - V8 String Switch Performance
+**Learning:** In modern V8 engines, a direct string `switch` statement is consistently faster than manually extracting string lengths or checking character codes for known string lookups (like operator parsing or block follow checks).
+**Action:** Replace length-based manual dispatch with direct string `switch` statements for better performance.

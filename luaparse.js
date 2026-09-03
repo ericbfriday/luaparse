@@ -1535,11 +1535,9 @@
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
     var parentScope = scopes[scopeDepth++];
-    var scope = Object.create ? Object.create(parentScope) : (function() {
-      var F = function () {};
-      F.prototype = parentScope;
-      return new F();
-    })();
+    // ⚡ Bolt: Array copying (.slice()) is faster than the ES3 constructor fallback
+    // for small scopes and avoids Object.prototype pollution.
+    var scope = Object.create ? Object.create(parentScope) : parentScope.slice();
     scopes.push(scope);
     if (options.onCreateScope) options.onCreateScope();
   }
@@ -1554,7 +1552,9 @@
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
     if (options.onLocalDeclaration) options.onLocalDeclaration(name);
-    scopes[scopeDepth][name] = true;
+    // ⚡ Bolt: Array push for fast tracking in fallback environments.
+    if (Object.create) scopes[scopeDepth][name] = true;
+    else scopes[scopeDepth].push(name);
   }
 
   // Add identifier to the current scope
@@ -1578,7 +1578,9 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return !!scopes[scopeDepth][name];
+    // ⚡ Bolt: Use indexOf for array fallback checking
+    if (Object.create) return !!scopes[scopeDepth][name];
+    return indexOf(scopes[scopeDepth], name) !== -1;
   }
 
   // Location tracking
@@ -2822,7 +2824,7 @@
       lineStart = 0;
       length = input.length;
       // When tracking identifier scope, initialize with an empty scope.
-      scopes = [Object.create ? Object.create(null) : {}];
+      scopes = [Object.create ? Object.create(null) : []];
       scopeDepth = 0;
       globals = [];
       globalsMap = Object.create ? Object.create(null) : {};

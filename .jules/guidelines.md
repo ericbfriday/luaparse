@@ -14,14 +14,14 @@
    not a reliable index: entries get reworded slightly each run, so
    fuzzy-matching your finding against old entries is not a substitute for
    checking reality. Before writing a single line of diff:
-   - `git fetch origin master && git diff origin/master -- luaparse.js` from
+   * `git fetch origin master && git diff origin/master -- luaparse.js` from
      your working branch's merge-base to confirm your target lines still
      look like what you think they look like.
-   - Grep `luaparse.js` on current `origin/master` for the specific pattern
+   * Grep `luaparse.js` on current `origin/master` for the specific pattern
      you intend to replace (e.g. the function name, the vulnerable line). If
      it doesn't match your assumption, your branch is stale — rebase before
      doing anything else, not after.
-   - If grepping shows the pattern is already gone, the fix is already
+   * If grepping shows the pattern is already gone, the fix is already
      applied. Close the session without a PR, and add a one-line dated note
      to the relevant `.jules/*.md` file confirming you re-checked and it was
      already fixed (so the next run doesn't repeat this same check from
@@ -50,22 +50,22 @@
 
 ### Sentinel (Security)
 
-- After identifying and fixing a vulnerability, record the finding in
+* After identifying and fixing a vulnerability, record the finding in
   `.jules/sentinel.md` and **stop**. Do not re-scan the same pattern on
   subsequent runs.
-- If `.jules/sentinel.md` already documents the vulnerability you found, the
+* If `.jules/sentinel.md` already documents the vulnerability you found, the
   fix is already applied. Close the session without a PR.
 
 ### Bolt (Performance)
 
-- After applying a performance optimization, record it in `.jules/bolt.md`
+* After applying a performance optimization, record it in `.jules/bolt.md`
   and **stop**. Do not re-optimize the same hot path on subsequent runs.
-- If `.jules/bolt.md` already documents the optimization you are about to
+* If `.jules/bolt.md` already documents the optimization you are about to
   propose, it has already been applied. Close the session without a PR.
 
 ## General
 
-- All PRs must pass `npm test` before submission.
-- All PRs must pass `npm run format` (idempotency check) before submission.
-- Do not modify `package-lock.json` unless adding/removing dependencies.
-- Keep PRs small and focused. One concern per PR.
+* All PRs must pass `npm test` before submission.
+* All PRs must pass `npm run format` (idempotency check) before submission.
+* Do not modify `package-lock.json` unless adding/removing dependencies.
+* Keep PRs small and focused. One concern per PR.

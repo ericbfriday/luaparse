@@ -604,12 +604,17 @@
 
     for (var i = 0, length = args.length; i < length; ++i) {
       src = args[i];
-      for (prop in src)
+      if (src == null) continue;
+      // Security: Prevent CPU exhaustion DoS by iterating only own properties instead of the entire prototype chain
+      var keys = Object.keys(src);
+      for (var j = 0; j < keys.length; ++j) {
+        prop = keys[j];
         /* istanbul ignore else */
         if (Object.prototype.hasOwnProperty.call(src, prop)) {
           if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') continue;
           dest[prop] = src[prop];
         }
+      }
     }
 
     return dest;

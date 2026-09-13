@@ -604,12 +604,14 @@
 
     for (var i = 0, length = args.length; i < length; ++i) {
       src = args[i];
-      for (prop in src)
-        /* istanbul ignore else */
-        if (Object.prototype.hasOwnProperty.call(src, prop)) {
-          if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') continue;
-          dest[prop] = src[prop];
-        }
+      if (src == null) continue;
+      // Sentinel: Prevent DoS from CPU exhaustion via prototype chain traversal
+      var keys = Object.keys(src);
+      for (var j = 0, keysLength = keys.length; j < keysLength; ++j) {
+        prop = keys[j];
+        if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') continue;
+        dest[prop] = src[prop];
+      }
     }
 
     return dest;

@@ -14,3 +14,6 @@
 ## 2026-08-10 - O(1) dictionary lookup for global identifiers
 **Learning:** In deeply nested or heavily localized environments where large arrays of global identifiers are collected, checking for uniqueness with `indexOfObject` results in an O(N^2) bottleneck. Utilizing an auxiliary dictionary mapping enables O(1) existence checks.
 **Action:** When gathering unique elements into an array during parsing (like `globals`), always use an adjacent dictionary object (e.g. `Object.create(null)`) to perform O(1) tracking and avoid O(N) array traversals per element.
+## 2026-09-19 - Direct string switch for operator precedence
+**Learning:** In modern JavaScript engines like V8, a direct string `switch` statement for looking up static string operators is significantly faster than using manual length-based dispatch combined with `charCodeAt`.
+**Action:** Use direct string `switch` statements for resolving the precedence of known operators instead of manual length-based grouping.

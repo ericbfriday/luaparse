@@ -604,12 +604,16 @@
 
     for (var i = 0, length = args.length; i < length; ++i) {
       src = args[i];
-      for (prop in src)
-        /* istanbul ignore else */
-        if (Object.prototype.hasOwnProperty.call(src, prop)) {
-          if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') continue;
-          dest[prop] = src[prop];
-        }
+      if (src == null) continue;
+
+      // SECURITY: Use Object.keys instead of for...in to prevent DoS via
+      // deep prototype chain CPU exhaustion.
+      var keys = Object.keys(src);
+      for (var j = 0, keysLen = keys.length; j < keysLen; ++j) {
+        prop = keys[j];
+        if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') continue;
+        dest[prop] = src[prop];
+      }
     }
 
     return dest;

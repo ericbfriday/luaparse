@@ -24,3 +24,7 @@
 **Vulnerability:** The parser uses a custom `assign` function that blocks `__proto__`, `constructor`, and `prototype` to prevent prototype pollution. However, it falls back to native `Object.assign` if available, bypassing these checks and leaving the application vulnerable when merging parsed untrusted JSON objects into configuration options.
 **Learning:** Native implementations like `Object.assign` do not perform safety checks against dangerous keys (`__proto__`, etc.). When creating security polyfills, do not fall back to native implementations that lack the same security guarantees.
 **Prevention:** Remove the native `Object.assign` fallback in environments where untrusted objects with dangerous keys might be merged.
+## 2026-08-08 - Prevent DoS via prototype traversal in assignment polyfills
+**Vulnerability:** A polyfill for `Object.assign` uses a `for...in` loop. When an attacker supplies an object with an extremely deep prototype chain, traversing it causes CPU exhaustion and Denial of Service (DoS).
+**Learning:** `for...in` iterates over all enumerable properties in the entire prototype chain. Using it to copy properties from untrusted sources introduces a DoS vector if the prototype chain is manipulated.
+**Prevention:** Use `Object.keys()` instead of `for...in` when polyfilling property-copying loops to prevent traversing the entire prototype chain.

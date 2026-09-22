@@ -4,13 +4,38 @@ Date: 2026-04-27
 
 ## Contents
 
-- [Overview](#overview)
-- [Design decisions](#design-decisions)
-- [Package architecture](#package-architecture)
-- [Type-name mapping](#type-name-mapping)
-- [Phased plan](#phased-plan)
-- [Risk assessment](#risk-assessment)
-- [Resolved design questions](#resolved-design-questions)
+* [Overview](#overview)
+  * [Guiding principles](#guiding-principles)
+* [Design decisions](#design-decisions)
+  * [1. Named fields, not `children`](#1-named-fields-not-children)
+  * [2. Root node is `root`, not `Chunk`](#2-root-node-is-root-not-chunk)
+  * [3. camelCase type names](#3-camelcase-type-names)
+  * [4. Comments on root only](#4-comments-on-root-only)
+  * [5. Scope analysis as a separate utility](#5-scope-analysis-as-a-separate-utility)
+  * [6. Keep separate call expression types](#6-keep-separate-call-expression-types)
+  * [7. `raw` as a first-class field on literals](#7-raw-as-a-first-class-field-on-literals)
+* [Package architecture](#package-architecture)
+  * [`luast`](#luast)
+  * [`luast-util-from-luaparse`](#luast-util-from-luaparse)
+  * [`luast-util-visit`](#luast-util-visit)
+  * [`luast-util-scope`](#luast-util-scope)
+  * [`unified-lua`](#unified-lua)
+* [Type-name mapping](#type-name-mapping)
+  * [Field renames](#field-renames)
+* [Phased plan](#phased-plan)
+  * [Phase 1: Specification and types](#phase-1-specification-and-types)
+  * [Phase 2: Adapter](#phase-2-adapter)
+  * [Phase 3: Native emission](#phase-3-native-emission)
+  * [Phase 4: Unified integration](#phase-4-unified-integration)
+  * [Phase 5: Scope and comment utilities](#phase-5-scope-and-comment-utilities)
+  * [Phase 6: Module modernization](#phase-6-module-modernization)
+* [Risk assessment](#risk-assessment)
+* [Resolved design questions](#resolved-design-questions)
+* [Appendix: Scope migration guide](#appendix-scope-migration-guide)
+  * [API comparison](#api-comparison)
+  * [Basic usage](#basic-usage)
+  * [Key differences](#key-differences)
+  * [Complete migration example](#complete-migration-example)
 
 ## Overview
 
@@ -47,16 +72,16 @@ Do not populate `children`.
 
 **Rationale:**
 
-- esast is the only programming-language unist spec and it made this same
+* esast is the only programming-language unist spec and it made this same
   choice for the same reasons
-- Programming language ASTs have heterogeneous child roles.
+* Programming language ASTs have heterogeneous child roles.
   A flat `children` array requires either:
-  - container/wrapper nodes for everything (verbose, accidental complexity)
-  - positional conventions (fragile, semantically opaque)
-  - dual representation (sync risk — PORT-ANALYSIS.md warned against this)
-- Named fields preserve the semantic meaning that transforms and linters
+  * container/wrapper nodes for everything (verbose, accidental complexity)
+  * positional conventions (fragile, semantically opaque)
+  * dual representation (sync risk — PORT-ANALYSIS.md warned against this)
+* Named fields preserve the semantic meaning that transforms and linters
   depend on
-- Minimizes the structural delta from the current luaparse AST
+* Minimizes the structural delta from the current luaparse AST
 
 **Tradeoff:** Generic `unist-util-visit` does not traverse luast trees.
 A dedicated `luast-util-visit` is required (small, well-understood — modeled
@@ -95,10 +120,10 @@ Do not embed comments in the statement/expression tree.
 
 **Rationale:**
 
-- Matches the current `luaparse` behavior (comments on `Chunk`)
-- Matches esast's recommendation (`comments` only on `Program`)
-- Keeps the AST clean for transforms that don't care about comments
-- Comment attachment (mapping comments to adjacent nodes) can be handled by
+* Matches the current `luaparse` behavior (comments on `Chunk`)
+* Matches esast's recommendation (`comments` only on `Program`)
+* Keeps the AST clean for transforms that don't care about comments
+* Comment attachment (mapping comments to adjacent nodes) can be handled by
   a separate utility (`luast-util-attach-comments`)
 
 ### 5. Scope analysis as a separate utility
@@ -110,11 +135,11 @@ under `data.scope`.
 
 **Rationale:**
 
-- `isLocal` and `globals` are semantic analysis results, not syntax
-- The current luaparse implementation aliases identifier nodes into the
+* `isLocal` and `globals` are semantic analysis results, not syntax
+* The current luaparse implementation aliases identifier nodes into the
   `globals` array, which is a data-integrity hazard
-- A separate utility can be versioned and evolved independently of the spec
-- Follows unist convention: `data` is the ecosystem metadata space
+* A separate utility can be versioned and evolved independently of the spec
+* Follows unist convention: `data` is the ecosystem metadata space
 
 ### 6. Keep separate call expression types
 
@@ -123,10 +148,10 @@ under `data.scope`.
 
 **Rationale:**
 
-- They have different syntactic forms (`f()`, `f{}`, `f""`)
-- A linter or formatter needs to distinguish them
-- Merging would lose syntactic information
-- Splitting is consistent with the current luaparse behavior
+* They have different syntactic forms (`f()`, `f{}`, `f""`)
+* A linter or formatter needs to distinguish them
+* Merging would lose syntactic information
+* Splitting is consistent with the current luaparse behavior
 
 ### 7. `raw` as a first-class field on literals
 
@@ -135,11 +160,11 @@ in `data`.
 
 **Rationale:**
 
-- `raw` is core representation data for Lua (string delimiters vary:
+* `raw` is core representation data for Lua (string delimiters vary:
   `"..."`, `'...'`, `[[...]]`)
-- `data` is for ecosystem metadata, not source representation
-- mdast uses first-class fields for similar data (`lang`, `meta` on `code`)
-- esast recommends against `raw`, but that recommendation is specific to
+* `data` is for ecosystem metadata, not source representation
+* mdast uses first-class fields for similar data (`lang`, `meta` on `code`)
+* esast recommends against `raw`, but that recommendation is specific to
   ESTree where `raw` was a non-standard parser addition.
   In Lua, `raw` is the only way to reconstruct the original source form of
   a literal
@@ -163,11 +188,11 @@ The tree specification and TypeScript type definitions.
 
 **Exports:**
 
-- TypeScript interfaces for all node types (`Root`, `IfStatement`,
+* TypeScript interfaces for all node types (`Root`, `IfStatement`,
   `BinaryExpression`, etc.)
-- Union types (`Statement`, `Expression`, `Clause`, `TableField`)
-- The child-field registry as a runtime data structure
-- Type guards (`isStatement()`, `isExpression()`, etc.)
+* Union types (`Statement`, `Expression`, `Clause`, `TableField`)
+* The child-field registry as a runtime data structure
+* Type guards (`isStatement()`, `isExpression()`, etc.)
 
 **Dependencies:** `@types/unist`
 
@@ -177,13 +202,13 @@ Converts a legacy `luaparse` AST to a luast tree.
 
 **Responsibilities:**
 
-- Rename types (`IfStatement` → `ifStatement`)
-- Convert `loc`/`range` → `position` (columns +1)
-- Rename `Chunk` → `root`
-- Rename `FunctionDeclaration.isLocal` → `functionDeclaration.local`
-- Strip `isLocal` from identifiers (move to `data.scope` if present)
-- Strip `globals` from root (move to `data.scope` if present)
-- Normalize `TableCallExpression` (remove the redundant `arguments` alias)
+* Rename types (`IfStatement` → `ifStatement`)
+* Convert `loc`/`range` → `position` (columns +1)
+* Rename `Chunk` → `root`
+* Rename `FunctionDeclaration.isLocal` → `functionDeclaration.local`
+* Strip `isLocal` from identifiers (move to `data.scope` if present)
+* Strip `globals` from root (move to `data.scope` if present)
+* Normalize `TableCallExpression` (remove the redundant `arguments` alias)
 
 **Dependencies:** `@friday-friday/luast`, `@friday-friday/luaparse`
 
@@ -210,7 +235,7 @@ visit(tree, 'ifStatement', (node, parent, field, index) => {
 `@friday-friday/luast` to determine which fields to recurse into.
 Handles single-node fields, array fields, and nullable fields.
 
-**Size:** ~100–150 lines.
+**Size:** \~100–150 lines.
 
 **Dependencies:** `@friday-friday/luast`
 
@@ -314,25 +339,25 @@ Complete mapping from current luaparse types to luast types.
 
 **Deliverables:**
 
-- [x] `LUAST-SPEC.md` — the specification document (this repo)
-- [x] `luast` package — TypeScript type definitions
-  - All node interfaces
-  - Union types (`Statement`, `Expression`, `Clause`, `TableField`)
-  - Child-field registry as a runtime export
-  - Type guard functions
-- [x] `luast-util-visit` — tree visitor
-  - `visit(tree, [type], callback)` with enter/exit support
-  - Action constants: `SKIP`, `REMOVE`, `EXIT`
-  - Type-narrowed callback parameters
+* [x] `LUAST-SPEC.md` — the specification document (this repo)
+* [x] `luast` package — TypeScript type definitions
+  * All node interfaces
+  * Union types (`Statement`, `Expression`, `Clause`, `TableField`)
+  * Child-field registry as a runtime export
+  * Type guard functions
+* [x] `luast-util-visit` — tree visitor
+  * `visit(tree, [type], callback)` with enter/exit support
+  * Action constants: `SKIP`, `REMOVE`, `EXIT`
+  * Type-narrowed callback parameters
 
 **No changes to luaparse itself.**
 
 **Acceptance criteria:**
 
-- Types compile cleanly
-- Registry covers all 33 node types
-- Visitor traverses a hand-built tree correctly
-- Tests confirm `unist-util-is` and `unist-util-position` work on luast nodes
+* Types compile cleanly
+* Registry covers all 33 node types
+* Visitor traverses a hand-built tree correctly
+* Tests confirm `unist-util-is` and `unist-util-position` work on luast nodes
 
 ### Phase 2: Adapter
 
@@ -341,26 +366,26 @@ incrementally.
 
 **Deliverables:**
 
-- [x] `luast-util-from-luaparse` — adapter function
-  - Recursive tree walk converting every node
-  - Type rename (PascalCase → camelCase)
-  - Position conversion (columns +1, loc/range → position)
-  - Field renames (`isLocal` → `local`, strip scope annotations)
-  - `TableCallExpression.arguments` deduplication
-- [x] Test suite
-  - Round-trip: `parse(code)` → `fromLuaparse(ast)` → verify full tree
-  - Position accuracy: spot-check column offsets
-  - All 33 node types covered
-  - Verify `luast-util-visit` traverses the converted tree correctly
-  - Verify `unist-util-position` reads positions correctly
+* [x] `luast-util-from-luaparse` — adapter function
+  * Recursive tree walk converting every node
+  * Type rename (PascalCase → camelCase)
+  * Position conversion (columns +1, loc/range → position)
+  * Field renames (`isLocal` → `local`, strip scope annotations)
+  * `TableCallExpression.arguments` deduplication
+* [x] Test suite
+  * Round-trip: `parse(code)` → `fromLuaparse(ast)` → verify full tree
+  * Position accuracy: spot-check column offsets
+  * All 33 node types covered
+  * Verify `luast-util-visit` traverses the converted tree correctly
+  * Verify `unist-util-position` reads positions correctly
 
 **No changes to luaparse itself.**
 
 **Acceptance criteria:**
 
-- Adapter produces valid luast trees for the full luaparse test suite
-- Every node type is covered
-- Position offsets are accurate
+* Adapter produces valid luast trees for the full luaparse test suite
+* Every node type is covered
+* Position offsets are accurate
 
 ### Phase 3: Native emission
 
@@ -368,26 +393,26 @@ incrementally.
 
 **Deliverables:**
 
-- [x] New parser option: `parse(code, { ast: 'luast' })`
-  - Emits luast directly from the AST factory
-  - Positions are 1-indexed columns from the start
-  - Type names are camelCase from the start
-  - No `isLocal`/`globals` on the tree
-- [x] Legacy AST remains the default (`ast: 'legacy'` or omitted)
-- [x] Performance benchmark: native emission vs. parse + adapter (deferred)
+* [x] New parser option: `parse(code, { ast: 'luast' })`
+  * Emits luast directly from the AST factory
+  * Positions are 1-indexed columns from the start
+  * Type names are camelCase from the start
+  * No `isLocal`/`globals` on the tree
+* [x] Legacy AST remains the default (`ast: 'legacy'` or omitted)
+* [x] Performance benchmark: native emission vs. parse + adapter (deferred)
 
 **Changes to luaparse:**
 
-- Modify `ast` factory to optionally produce luast node shapes
-- Modify `Marker.bless` to optionally emit `position` instead of `loc`/`range`
-- Add `ast` option to parser options
+* Modify `ast` factory to optionally produce luast node shapes
+* Modify `Marker.bless` to optionally emit `position` instead of `loc`/`range`
+* Add `ast` option to parser options
 
 **Acceptance criteria:**
 
-- `parse(code, { ast: 'luast' })` produces identical trees to
+* `parse(code, { ast: 'luast' })` produces identical trees to
   `fromLuaparse(parse(code, { locations: true, ranges: true, comments: true }))`
-- No performance regression for legacy mode
-- Existing test suite passes unchanged
+* No performance regression for legacy mode
+* Existing test suite passes unchanged
 
 ### Phase 4: Unified integration
 
@@ -395,21 +420,21 @@ incrementally.
 
 **Deliverables:**
 
-- [x] `unified-lua` — parser plugin
-  - Accepts `luaVersion`, `encodingMode` options
-  - Returns luast `root` from `processor.parse()`
-  - Compatible with `VFile` input
-- [x] Fixture suite proving compatibility with:
-  - `luast-util-visit`
-  - `unist-util-is`
-  - `unist-util-position`
-  - `unist-util-stringify-position` (not tested separately)
-  - `unist-util-generated` (not tested separately)
+* [x] `unified-lua` — parser plugin
+  * Accepts `luaVersion`, `encodingMode` options
+  * Returns luast `root` from `processor.parse()`
+  * Compatible with `VFile` input
+* [x] Fixture suite proving compatibility with:
+  * `luast-util-visit`
+  * `unist-util-is`
+  * `unist-util-position`
+  * `unist-util-stringify-position` (not tested separately)
+  * `unist-util-generated` (not tested separately)
 
 **Acceptance criteria:**
 
-- `unified().use(luaParse).parse(code)` returns a valid luast tree
-- All fixture tests pass
+* `unified().use(luaParse).parse(code)` returns a valid luast tree
+* All fixture tests pass
 
 ### Phase 5: Scope and comment utilities
 
@@ -418,20 +443,20 @@ ecosystem utilities.
 
 **Deliverables:**
 
-- [x] `luast-util-scope` — scope analysis
-  - `analyzeScope(tree)` returns scope information
-  - Identifies local/global identifiers
-  - No tree mutation
-- [ ] `luast-util-attach-comments` (optional) — comment attachment
-  - Maps comments to their nearest/enclosing nodes
-  - Attaches via `data.comments` on target nodes
-- [x] Documentation on migrating from `parse({ scope: true })` to
-      `analyzeScope(tree)`
+* [x] `luast-util-scope` — scope analysis
+  * `analyzeScope(tree)` returns scope information
+  * Identifies local/global identifiers
+  * No tree mutation
+* [ ] `luast-util-attach-comments` (optional) — comment attachment
+  * Maps comments to their nearest/enclosing nodes
+  * Attaches via `data.comments` on target nodes
+* [x] Documentation on migrating from `parse({ scope: true })` to
+  `analyzeScope(tree)`
 
 **Acceptance criteria:**
 
-- Scope analysis produces equivalent results to luaparse's `scope: true`
-- Comments are correctly associated with adjacent nodes
+* Scope analysis produces equivalent results to luaparse's `scope: true`
+* Comments are correctly associated with adjacent nodes
 
 ### Phase 6: Module modernization
 
@@ -439,21 +464,21 @@ ecosystem utilities.
 
 **Deliverables:**
 
-- [x] Convert luaparse to ESM (with CJS wrapper for backwards compatibility)
-- [x] Ship TypeScript source or `.d.ts` files
-- [x] Modern `exports` field in `package.json`
-- [ ] Drop legacy browser build (or produce it as a build artifact) (deferred)
-- [x] Update Node.js engine target to current LTS
-- [x] Replace gulp/jshint/testem toolchain with modern equivalents
+* [x] Convert luaparse to ESM (with CJS wrapper for backwards compatibility)
+* [x] Ship TypeScript source or `.d.ts` files
+* [x] Modern `exports` field in `package.json`
+* [ ] Drop legacy browser build (or produce it as a build artifact) (deferred)
+* [x] Update Node.js engine target to current LTS
+* [x] Replace gulp/jshint/testem toolchain with modern equivalents
 
 **This phase is a major version bump (2.0).**
 
 **Acceptance criteria:**
 
-- `import luaparse from '@friday-friday/luaparse'` works in ESM
-- `require('@friday-friday/luaparse')` still works in CJS
-- TypeScript users get types without `@types/luaparse`
-- CI passes on current Node.js LTS
+* `import luaparse from '@friday-friday/luaparse'` works in ESM
+* `require('@friday-friday/luaparse')` still works in CJS
+* TypeScript users get types without `@types/luaparse`
+* CI passes on current Node.js LTS
 
 ## Risk assessment
 
@@ -486,11 +511,11 @@ This decouples syntax parsing from semantic analysis and follows the unist `data
 
 ### API comparison
 
-| Feature | Legacy API (`luaparse`) | New API (`luast-util-scope`) |
-| :--- | :--- | :--- |
-| **Activation** | `parse(code, { scope: true })` | `analyzeScope(tree)` |
-| **Global list** | `chunk.globals` | `scope.globals` |
-| **Local check** | `identifier.isLocal` | `scope.isLocal(identifier)` |
+| Feature         | Legacy API (`luaparse`)        | New API (`luast-util-scope`) |
+| :-------------- | :----------------------------- | :--------------------------- |
+| **Activation**  | `parse(code, { scope: true })` | `analyzeScope(tree)`         |
+| **Global list** | `chunk.globals`                | `scope.globals`              |
+| **Local check** | `identifier.isLocal`           | `scope.isLocal(identifier)`  |
 
 ### Basic usage
 
@@ -557,4 +582,3 @@ visit(tree, 'identifier', (node) => {
 console.log('All globals:', scope.globals.map(g => g.name))
 // Output: ['print', 'y']
 ```
-

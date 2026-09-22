@@ -600,16 +600,18 @@
 
   var assign = /* istanbul ignore next */ function (dest) {
     var args = slice.call(arguments, 1)
-      , src, prop;
+      , src, prop, keys;
 
     for (var i = 0, length = args.length; i < length; ++i) {
       src = args[i];
-      for (prop in src)
-        /* istanbul ignore else */
-        if (Object.prototype.hasOwnProperty.call(src, prop)) {
-          if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') continue;
-          dest[prop] = src[prop];
-        }
+      if (src == null) continue;
+      // SECURITY: Use Object.keys() to avoid CPU exhaustion DoS from deeply nested prototype chains in untrusted objects
+      keys = Object.keys(src);
+      for (var j = 0, kLength = keys.length; j < kLength; ++j) {
+        prop = keys[j];
+        if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') continue;
+        dest[prop] = src[prop];
+      }
     }
 
     return dest;

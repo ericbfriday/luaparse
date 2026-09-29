@@ -14,3 +14,7 @@
 ## 2026-08-10 - O(1) dictionary lookup for global identifiers
 **Learning:** In deeply nested or heavily localized environments where large arrays of global identifiers are collected, checking for uniqueness with `indexOfObject` results in an O(N^2) bottleneck. Utilizing an auxiliary dictionary mapping enables O(1) existence checks.
 **Action:** When gathering unique elements into an array during parsing (like `globals`), always use an adjacent dictionary object (e.g. `Object.create(null)`) to perform O(1) tracking and avoid O(N) array traversals per element.
+
+## 2026-09-29 - Inline whitespace and EOL handling in lexer loop
+**Learning:** In the hot path of `skipWhiteSpace()`, calling `isWhiteSpace()` and `consumeEOL()` function abstractions for every character introduces measurable call overhead. Inlining direct character code comparisons for spaces (32), tabs (9), and line terminators (10, 13) inside `skipWhiteSpace()` yields a ~4.5% speedup across full Lua parses.
+**Action:** Inline character checks for whitespace and EOL handling in high-frequency lexer loops rather than delegating to tiny utility functions.

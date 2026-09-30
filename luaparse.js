@@ -1510,7 +1510,8 @@
   }
 
   function isUnary(token) {
-    if (Punctuator === token.type) { var v = token.value; return v === '#' || v === '-' || v === '~'; }
+    // Bolt: Direct property comparison is slightly faster in modern V8 than creating a temporary variable
+    if (Punctuator === token.type) return '#' === token.value || '-' === token.value || '~' === token.value;
     if (Keyword === token.type) return 'not' === token.value;
     return false;
   }
@@ -2450,7 +2451,8 @@
         }
         fields.push(finishNode(ast.tableValue(value)));
       }
-      var v = token.value; if (v === ',' || v === ';') {
+      // Bolt: Direct property comparison is slightly faster in modern V8 than creating a temporary variable
+      if (',' === token.value || ';' === token.value) {
         next();
         continue;
       }

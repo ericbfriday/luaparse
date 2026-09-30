@@ -866,9 +866,19 @@
   function skipWhiteSpace() {
     while (index < length) {
       var charCode = input.charCodeAt(index);
-      if (isWhiteSpace(charCode)) {
+      if (charCode === 32 || charCode === 9) {
         ++index;
-      } else if (!consumeEOL()) {
+      } else if (charCode === 10) {
+        if (13 === input.charCodeAt(index + 1)) ++index;
+        ++line;
+        lineStart = ++index;
+      } else if (charCode === 13) {
+        if (10 === input.charCodeAt(index + 1)) ++index;
+        ++line;
+        lineStart = ++index;
+      } else if (charCode === 0xB || charCode === 0xC) {
+        ++index;
+      } else {
         break;
       }
     }

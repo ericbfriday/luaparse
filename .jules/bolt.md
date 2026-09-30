@@ -14,3 +14,6 @@
 ## 2026-08-10 - O(1) dictionary lookup for global identifiers
 **Learning:** In deeply nested or heavily localized environments where large arrays of global identifiers are collected, checking for uniqueness with `indexOfObject` results in an O(N^2) bottleneck. Utilizing an auxiliary dictionary mapping enables O(1) existence checks.
 **Action:** When gathering unique elements into an array during parsing (like `globals`), always use an adjacent dictionary object (e.g. `Object.create(null)`) to perform O(1) tracking and avoid O(N) array traversals per element.
+## 2026-09-30 - isUnary variable vs direct comparison
+**Learning:** Benchmarked `isUnary` function to compare using local variables (`var v = token.value; return v === '#' ...`) versus direct property comparison (`token.value === '#'`). The performance gain was negligible (less than 1% difference).
+**Action:** Do not blindly apply micro-optimizations like local variable extraction vs direct property access without measurable impact, as speed without correctness or significant gain is useless.

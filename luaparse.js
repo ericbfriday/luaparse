@@ -59,6 +59,8 @@
   var parserActive = false;
   var expressionDepth = 0;
   var MAX_EXPRESSION_DEPTH = 512;
+  var blockDepth = 0;
+  var MAX_BLOCK_DEPTH = 512;
 
   // Options can be set either globally on the parser object through
   // defaultOptions, or during the parse call.
@@ -1876,25 +1878,33 @@
   //     block ::= {stat} [retstat]
 
   function parseBlock(flowContext) {
-    var block = []
-      , statement;
+    // Prevent call stack exhaustion DoS by limiting statement/block nesting
+    if (blockDepth >= MAX_BLOCK_DEPTH)
+      throw new Error('Maximum block nesting depth exceeded');
+    blockDepth++;
+    try {
+      var block = []
+        , statement;
 
-    while (!isBlockFollow(token)) {
-      // Return has to be the last statement in a block.
-      // Likewise 'break' in Lua older than 5.2
-      if ('return' === token.value || (!features.relaxedBreak && 'break' === token.value)) {
-        block.push(parseStatement(flowContext));
-        break;
+      while (!isBlockFollow(token)) {
+        // Return has to be the last statement in a block.
+        // Likewise 'break' in Lua older than 5.2
+        if ('return' === token.value || (!features.relaxedBreak && 'break' === token.value)) {
+          block.push(parseStatement(flowContext));
+          break;
+        }
+        statement = parseStatement(flowContext);
+        consume(';');
+        // Statements are only added if they are returned, this allows us to
+        // ignore some statements, such as EmptyStatement.
+        if (statement) block.push(statement);
       }
-      statement = parseStatement(flowContext);
-      consume(';');
-      // Statements are only added if they are returned, this allows us to
-      // ignore some statements, such as EmptyStatement.
-      if (statement) block.push(statement);
-    }
 
-    // Doesn't really need an ast node
-    return block;
+      // Doesn't really need an ast node
+      return block;
+    } finally {
+      blockDepth--;
+    }
   }
 
   // There are two types of statements, simple and compound.
@@ -2811,6 +2821,7 @@
 
     parserActive = true;
     expressionDepth = 0;
+    blockDepth = 0;
     try {
       input = _input || '';
       options = assign({}, defaultOptions, _options);

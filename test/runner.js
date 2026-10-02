@@ -608,6 +608,18 @@
       },
       'Maximum expression nesting depth exceeded'
     )
+    this.error(
+      function () {
+        return luaparse.parse(
+          new Array(601).join('do ') + new Array(601).join('end ')
+        )
+      },
+      'Maximum block nesting depth exceeded'
+    )
+    this.equal(
+      luaparse.parse(new Array(100).join('do ') + new Array(100).join('end ')).body.length,
+      1
+    )
 
     parse = luaparse.parse({wait: true, maxInputLength: 8})
     parse.write('return')
@@ -628,7 +640,7 @@
       'should resolve a large set of unique goto targets'
     )
 
-    this.done(20)
+    this.done(22)
   })
 
   suite.addTest('Option validation', function () {

@@ -35,21 +35,22 @@ Configure the plugin.
 
 **Options:**
 
-- `luaVersion` (`'5.1' | '5.2' | '5.3' | 'LuaJIT'`, default: `'5.1'`) —
+* `luaVersion` (`'5.1' | '5.2' | '5.3' | 'LuaJIT'`, default: `'5.1'`) —
   Lua version to parse
-- `encodingMode` (`'none' | 'x-user-defined' | 'pseudo-latin1'`, default:
+* `encodingMode` (`'none' | 'x-user-defined' | 'pseudo-latin1'`, default:
   `'none'`) — string encoding mode
 
 ## Related
 
-- [`@friday-friday/luast`](../luast) — tree specification and types
-- [`@friday-friday/luast-util-visit`](../luast-util-visit) — tree visitor
-- [`@friday-friday/luast-util-scope`](../luast-util-scope) — scope analysis
-- [`@friday-friday/luaparse`](../../) — Lua parser
+* [`@friday-friday/luast`](../luast) — tree specification and types
+* [`@friday-friday/luast-util-visit`](../luast-util-visit) — tree visitor
+* [`@friday-friday/luast-util-scope`](../luast-util-scope) — scope analysis
+* [`@friday-friday/luaparse`](../../) — Lua parser
 
 ## License
 
 [MIT](./LICENSE)
 
 [unified]: https://github.com/unifiedjs/unified
+
 [luast]: ../luast

@@ -1510,7 +1510,8 @@
   }
 
   function isUnary(token) {
-    if (Punctuator === token.type) { var v = token.value; return v === '#' || v === '-' || v === '~'; }
+    // Bolt: Direct property comparisons are faster than creating temporary variables for short property lookups
+    if (Punctuator === token.type) { return '#' === token.value || '-' === token.value || '~' === token.value; }
     if (Keyword === token.type) return 'not' === token.value;
     return false;
   }

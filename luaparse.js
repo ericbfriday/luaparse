@@ -784,7 +784,8 @@
 
       case 46: // .
         // If the dot is followed by a digit it's a float.
-        if (isDecDigit(next)) return scanNumericLiteral();
+        // Bolt: Inlined isDecDigit for performance
+        if (next >= 48 && next <= 57) return scanNumericLiteral();
         if (46 === next) {
           if (46 === input.charCodeAt(index + 2)) return scanVarargLiteral();
           return scanPunctuator('..');
@@ -1150,10 +1151,11 @@
       exponentStart = index;
 
       // The binary exponent sign requires a decimal digit.
-      if (!isDecDigit(input.charCodeAt(index)))
+      // Bolt: Inlined isDecDigit bounds check for performance
+      if (!(input.charCodeAt(index) >= 48 && input.charCodeAt(index) <= 57))
         raise(null, errors.malformedNumber, input.slice(tokenStart, index));
 
-      while (isDecDigit(input.charCodeAt(index))) ++index;
+      while (input.charCodeAt(index) >= 48 && input.charCodeAt(index) <= 57) ++index;
       binaryExponent = input.slice(exponentStart, index);
 
       // Calculate the binary exponent of the number.
@@ -1171,14 +1173,15 @@
   // functions.
 
   function readDecLiteral() {
-    while (isDecDigit(input.charCodeAt(index))) ++index;
+    // Bolt: Inlined isDecDigit bounds check for performance
+    while (input.charCodeAt(index) >= 48 && input.charCodeAt(index) <= 57) ++index;
     // Fraction part is optional
     var foundFraction = false;
     if ('.' === input.charAt(index)) {
       foundFraction = true;
       ++index;
       // Fraction part defaults to 0
-      while (isDecDigit(input.charCodeAt(index))) ++index;
+      while (input.charCodeAt(index) >= 48 && input.charCodeAt(index) <= 57) ++index;
     }
 
     // Exponent part is optional.
@@ -1191,10 +1194,10 @@
       code = input.charCodeAt(index);
       if (code === 43 || code === 45) ++index;
       // An exponent is required to contain at least one decimal digit.
-      if (!isDecDigit(input.charCodeAt(index)))
+      if (!(input.charCodeAt(index) >= 48 && input.charCodeAt(index) <= 57))
         raise(null, errors.malformedNumber, input.slice(tokenStart, index));
 
-      while (isDecDigit(input.charCodeAt(index))) ++index;
+      while (input.charCodeAt(index) >= 48 && input.charCodeAt(index) <= 57) ++index;
     }
 
     return {
@@ -1262,7 +1265,8 @@
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
         // \ddd, where ddd is a sequence of up to three decimal digits.
-        while (isDecDigit(input.charCodeAt(index)) && index - sequenceStart < 3) ++index;
+        // Bolt: Inlined isDecDigit bounds check for performance
+        while (input.charCodeAt(index) >= 48 && input.charCodeAt(index) <= 57 && index - sequenceStart < 3) ++index;
 
         var frag = input.slice(sequenceStart, index);
         var ddd = parseInt(frag, 10);
@@ -1461,10 +1465,6 @@
 
   function isLineTerminator(charCode) {
     return 10 === charCode || 13 === charCode;
-  }
-
-  function isDecDigit(charCode) {
-    return charCode >= 48 && charCode <= 57;
   }
 
   function isHexDigit(charCode) {

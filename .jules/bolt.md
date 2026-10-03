@@ -18,3 +18,6 @@
 ## 2026-09-29 - Inline whitespace and EOL handling in lexer loop
 **Learning:** In the hot path of `skipWhiteSpace()`, calling `isWhiteSpace()` and `consumeEOL()` function abstractions for every character introduces measurable call overhead. Inlining direct character code comparisons for spaces (32), tabs (9), and line terminators (10, 13) inside `skipWhiteSpace()` yields a ~4.5% speedup across full Lua parses.
 **Action:** Inline character checks for whitespace and EOL handling in high-frequency lexer loops rather than delegating to tiny utility functions.
+## 2024-10-03 - Inline isDecDigit bounds checking
+**Learning:** In the hot path of numeric parsing, `isDecDigit()` function calls add measurable call overhead. Inlining the bounds checking logic `charCode >= 48 && charCode <= 57` directly into the lexer loops yields a noticeable speedup.
+**Action:** Inline character boundary checks for decimal digits in high-frequency lexer loops rather than delegating to tiny utility functions.

@@ -1510,7 +1510,8 @@
   }
 
   function isUnary(token) {
-    if (Punctuator === token.type) { var v = token.value; return v === '#' || v === '-' || v === '~'; }
+    // Bolt Optimization: Direct property comparisons are faster than creating temporary variables in hot paths
+    if (Punctuator === token.type) return '#' === token.value || '-' === token.value || '~' === token.value;
     if (Keyword === token.type) return 'not' === token.value;
     return false;
   }
@@ -1520,13 +1521,15 @@
   function isBlockFollow(token) {
     if (EOF === token.type) return true;
     if (Keyword !== token.type) return false;
-    var val = token.value;
-    switch (val.length) {
-      case 3: return 'end' === val;
-      case 4: return 'else' === val;
-      case 5: return 'until' === val;
-      case 6: return 'elseif' === val;
-      default: return false;
+    // Bolt Optimization: Direct string switch is faster in modern V8 than length-based switch
+    switch (token.value) {
+      case 'end':
+      case 'else':
+      case 'until':
+      case 'elseif':
+        return true;
+      default:
+        return false;
     }
   }
 

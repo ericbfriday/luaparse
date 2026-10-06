@@ -24,3 +24,7 @@
 **Vulnerability:** The parser uses a custom `assign` function that blocks `__proto__`, `constructor`, and `prototype` to prevent prototype pollution. However, it falls back to native `Object.assign` if available, bypassing these checks and leaving the application vulnerable when merging parsed untrusted JSON objects into configuration options.
 **Learning:** Native implementations like `Object.assign` do not perform safety checks against dangerous keys (`__proto__`, etc.). When creating security polyfills, do not fall back to native implementations that lack the same security guarantees.
 **Prevention:** Remove the native `Object.assign` fallback in environments where untrusted objects with dangerous keys might be merged.
+## YYYY-MM-DD - Call Stack Exhaustion (DoS) in AST Parser
+**Vulnerability:** The AST parser (`luaparse.js`) lacks depth limits for statements and block nesting, causing a Denial of Service (DoS) vulnerability via call stack exhaustion. Deeply nested blocks (e.g., `do` / `end` or `while` loops) could crash the process.
+**Learning:** AST parsers inherently use recursive descent. Relying only on expression depth limits is insufficient. Attackers can leverage deeply nested block statements to consume the execution stack.
+**Prevention:** Implement `blockDepth` tracking and enforce a `MAX_BLOCK_DEPTH` limit for block structures just as is done for expressions.

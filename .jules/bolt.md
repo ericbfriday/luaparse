@@ -18,3 +18,6 @@
 ## 2026-09-29 - Inline whitespace and EOL handling in lexer loop
 **Learning:** In the hot path of `skipWhiteSpace()`, calling `isWhiteSpace()` and `consumeEOL()` function abstractions for every character introduces measurable call overhead. Inlining direct character code comparisons for spaces (32), tabs (9), and line terminators (10, 13) inside `skipWhiteSpace()` yields a ~4.5% speedup across full Lua parses.
 **Action:** Inline character checks for whitespace and EOL handling in high-frequency lexer loops rather than delegating to tiny utility functions.
+## 2026-10-10 - Function inlining for single character checks
+**Learning:** Inlining small utility functions like `isLineTerminator` inside lexer loops shows performance gains in micro-benchmarks, but provides zero measurable real-world performance gain in full end-to-end AST parses due to engine optimization and branch prediction noise.
+**Action:** Do not inline or replace single-character checks like `isLineTerminator` with direct `charCode` comparisons unless full-parse benchmarks demonstrate a consistent, reproducible gain.

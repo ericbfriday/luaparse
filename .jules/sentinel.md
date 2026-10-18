@@ -39,3 +39,9 @@
 **Vulnerability:** Deeply nested block statements (e.g., `do` blocks) could trigger a recursion loop (`parseBlock` -> `parseStatement` -> `parseDoStatement` -> `parseBlock`), eventually causing a stack overflow and taking down the Node process.
 **Learning:** Recursion limits must be applied not just to expressions, but to statement and block nesting to prevent denial of service (DoS) attacks via CPU and call stack exhaustion.
 **Prevention:** Introduce a maximum block depth limit (e.g., `MAX_BLOCK_DEPTH = 512`) and check/increment this depth in the `parseBlock` function, throwing a clear error when the limit is exceeded.
+
+## 2026-10-18 - Fix global prototype collision in legacy scope fallback
+
+**Vulnerability:** In the legacy ES3 fallback path where `Object.create` is falsy, `luaparse` falls back to constructing custom objects using prototypes for scope management. `scopeHasName` accessed properties directly using `!!scopes[scopeDepth][name]`, causing it to traverse all the way to `Object.prototype` and incorrectly mark built-ins like `toString` as local variables instead of globals.
+**Learning:** Legacy scoping strategies that rely on custom objects with prototype chains can inadvertently expose built-in `Object.prototype` properties if property lookups are unconstrained.
+**Prevention:** Always use `Object.prototype.hasOwnProperty.call` when checking for key existence in objects used as dictionaries, and explicitly halt traversal at `Object.prototype` when manually walking the prototype chain.

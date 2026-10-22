@@ -1590,7 +1590,12 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return !!scopes[scopeDepth][name];
+    var s = scopes[scopeDepth];
+    do {
+      if (Object.prototype.hasOwnProperty.call(s, name)) return true;
+      s = Object.getPrototypeOf ? Object.getPrototypeOf(s) : s.__proto__;
+    } while (s && s !== Object.prototype);
+    return false;
   }
 
   // Location tracking

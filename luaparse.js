@@ -1590,7 +1590,11 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return !!scopes[scopeDepth][name];
+    // Iterate over the scopes array to safely check for property existence without relying on the prototype chain in legacy environments.
+    for (var i = scopeDepth; i >= 0; i--) {
+      if (Object.prototype.hasOwnProperty.call(scopes[i], name)) return true;
+    }
+    return false;
   }
 
   // Location tracking

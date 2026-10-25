@@ -39,3 +39,9 @@
 **Vulnerability:** Deeply nested block statements (e.g., `do` blocks) could trigger a recursion loop (`parseBlock` -> `parseStatement` -> `parseDoStatement` -> `parseBlock`), eventually causing a stack overflow and taking down the Node process.
 **Learning:** Recursion limits must be applied not just to expressions, but to statement and block nesting to prevent denial of service (DoS) attacks via CPU and call stack exhaustion.
 **Prevention:** Introduce a maximum block depth limit (e.g., `MAX_BLOCK_DEPTH = 512`) and check/increment this depth in the `parseBlock` function, throwing a clear error when the limit is exceeded.
+
+## 2026-10-06 - Prevent prototype collisions in legacy fallback chains
+
+**Vulnerability:** When `Object.create` is unavailable, hierarchical dictionaries (like scope chains) fallback to using `{}` which inherits from `Object.prototype`. Simple property lookups (like `!!dict[name]`) will falsely return true for properties like `toString`, leading to logic errors or prototype collisions.
+**Learning:** Checking for property existence in prototype-chain based dictionaries using direct access is unsafe in legacy environments where `Object.prototype` cannot be explicitly nullified. Furthermore, manually walking the prototype chain using `__proto__` or `Object.getPrototypeOf` is not reliably supported in these legacy environments.
+**Prevention:** Rather than relying on prototype chains for safe traversal in legacy codebases, iterate over the explicit scope tracking array (e.g., `scopes`) using `hasOwnProperty` at each level to safely preserve parent-scope semantics while avoiding native object properties.

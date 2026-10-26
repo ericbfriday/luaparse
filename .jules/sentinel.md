@@ -39,3 +39,9 @@
 **Vulnerability:** Deeply nested block statements (e.g., `do` blocks) could trigger a recursion loop (`parseBlock` -> `parseStatement` -> `parseDoStatement` -> `parseBlock`), eventually causing a stack overflow and taking down the Node process.
 **Learning:** Recursion limits must be applied not just to expressions, but to statement and block nesting to prevent denial of service (DoS) attacks via CPU and call stack exhaustion.
 **Prevention:** Introduce a maximum block depth limit (e.g., `MAX_BLOCK_DEPTH = 512`) and check/increment this depth in the `parseBlock` function, throwing a clear error when the limit is exceeded.
+
+## YYYY-MM-DD - \[Prototype Collision in Legacy Scope Check]
+
+**Vulnerability:** Inherited prototype properties (e.g. `toString`) in `scopeHasName` were treated as existing identifiers when `Object.create` was unavailable and the scopes array elements defaulted to standard objects.
+**Learning:** `hasOwnProperty` on the current scope frame is insufficient for nested scope lookup in legacy pre-ES5 environments where `__proto__` walking fails.
+**Prevention:** In legacy fallbacks, iterate backwards over explicit scope arrays and strictly use `Object.prototype.hasOwnProperty.call` at each level.

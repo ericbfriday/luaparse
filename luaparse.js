@@ -1590,7 +1590,15 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return !!scopes[scopeDepth][name];
+    var has = !!scopes[scopeDepth][name];
+    if (Object.create || !has) return has;
+
+    // Fallback: Since scopes[scopeDepth] inherits from Object.prototype in legacy environments,
+    // we must verify the identifier is actually in our scope hierarchy, not inherited from Object.prototype.
+    for (var i = scopeDepth; i >= 0; --i) {
+      if (Object.prototype.hasOwnProperty.call(scopes[i], name)) return true;
+    }
+    return false;
   }
 
   // Location tracking

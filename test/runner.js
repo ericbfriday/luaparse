@@ -358,6 +358,58 @@
     })
   }
 
+  if (isModule) {
+    suite.addTest('Scope dictionaries across legacy environments', function () {
+      var vm = require('vm')
+      var source = require('fs').readFileSync(require.resolve('../luaparse'), 'utf8')
+      var environments = [
+        '',
+        'Object.create = undefined;',
+        'Object.create = undefined; Object.getPrototypeOf = undefined;',
+        'Object.create = undefined; Object.getPrototypeOf = undefined; delete Object.prototype.__proto__;'
+      ]
+      var names = [
+        'ordinary', 'toString', 'valueOf', 'constructor',
+        'hasOwnProperty', '__proto__', '__ordinary'
+      ]
+      var count = 0
+      for (var e = 0; e < environments.length; ++e) {
+        var context = vm.createContext({})
+        vm.runInContext(environments[e], context)
+        vm.runInContext(source, context)
+        var parser = context.luaparse
+        for (var n = 0; n < names.length; ++n) {
+          var name = names[n]
+          var cases = [
+            ['return ' + name, function (tree) {
+              return tree.body[0].arguments[0].isLocal
+            }, false, [name]],
+            ['local ' + name + '; do do return ' + name + ' end end', function (tree) {
+              return tree.body[1].body[0].body[0].arguments[0].isLocal
+            }, true, []],
+            ['do local ' + name + ' end; return ' + name, function (tree) {
+              return tree.body[1].arguments[0].isLocal
+            }, false, [name]],
+            ['local ' + name + '; do local ' + name + ' = ' + name + '; return ' + name + ' end', function (tree) {
+              return tree.body[1].body[0].init[0].isLocal &&
+                tree.body[1].body[1].arguments[0].isLocal
+            }, true, []]
+          ]
+          for (var c = 0; c < cases.length; ++c) {
+            var tree = parser.parse(cases[c][0], {scope: true})
+            this.deepEqual(
+              [cases[c][1](tree), Array.prototype.map.call(tree.globals, function (node) { return node.name })],
+              [cases[c][2], cases[c][3]],
+              'environment ' + e + ': ' + cases[c][0]
+            )
+            ++count
+          }
+        }
+      }
+      this.done(count)
+    })
+  }
+
   // Reporters ----------------------------------------------------------------
 
   // Beautify console output Mocha-style.

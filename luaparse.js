@@ -1566,7 +1566,8 @@
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
     if (options.onLocalDeclaration) options.onLocalDeclaration(name);
-    scopes[scopeDepth][name] = true;
+    // Prefix legacy keys so __proto__ is an ordinary data property.
+    scopes[scopeDepth][Object.create ? name : '$' + name] = true;
   }
 
   // Add identifier to the current scope
@@ -1590,15 +1591,11 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    var scope = scopes[scopeDepth];
-    var hasOwn = Object.prototype.hasOwnProperty;
-    var getProto = Object.getPrototypeOf;
-    do {
-      if (scope === Object.prototype)
-        return false;
-      if (hasOwn.call(scope, name))
+    if (Object.create) return !!scopes[scopeDepth][name];
+    for (var i = scopeDepth; i >= 0; --i) {
+      if (Object.prototype.hasOwnProperty.call(scopes[i], '$' + name))
         return true;
-    } while (scope = getProto ? getProto(scope) : scope.__proto__);
+    }
     return false;
   }
 

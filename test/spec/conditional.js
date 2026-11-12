@@ -64,826 +64,859 @@
     {
       source: 'if 1 then end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [0, 9]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               }
-            },
-            range: [0, 13]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 13
+            column: 14,
+            offset: 13
           }
-        },
-        range: [0, 13],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then local a end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 16
+                            column: 17,
+                            offset: 16
                           },
                           end: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           }
-                        },
-                        range: [16, 17],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [10, 17]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [0, 17]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 21
+                column: 22,
+                offset: 21
               }
-            },
-            range: [0, 21]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 21
+            column: 22,
+            offset: 21
           }
-        },
-        range: [0, 21],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then local a local b end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 16
+                            column: 17,
+                            offset: 16
                           },
                           end: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           }
-                        },
-                        range: [16, 17],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [10, 17]
+                    }
                   },
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 24
+                            column: 25,
+                            offset: 24
                           },
                           end: {
                             line: 1,
-                            column: 25
+                            column: 26,
+                            offset: 25
                           }
-                        },
-                        range: [24, 25],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 18
+                        column: 19,
+                        offset: 18
                       },
                       end: {
                         line: 1,
-                        column: 25
+                        column: 26,
+                        offset: 25
                       }
-                    },
-                    range: [18, 25]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   }
-                },
-                range: [0, 25]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 29
+                column: 30,
+                offset: 29
               }
-            },
-            range: [0, 29]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 29
+            column: 30,
+            offset: 29
           }
-        },
-        range: [0, 29],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then local a; local b; end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 16
+                            column: 17,
+                            offset: 16
                           },
                           end: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           }
-                        },
-                        range: [16, 17],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [10, 17]
+                    }
                   },
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 25
+                            column: 26,
+                            offset: 25
                           },
                           end: {
                             line: 1,
-                            column: 26
+                            column: 27,
+                            offset: 26
                           }
-                        },
-                        range: [25, 26],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 19
+                        column: 20,
+                        offset: 19
                       },
                       end: {
                         line: 1,
-                        column: 26
+                        column: 27,
+                        offset: 26
                       }
-                    },
-                    range: [19, 26]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 27
+                    column: 28,
+                    offset: 27
                   }
-                },
-                range: [0, 27]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 31
+                column: 32,
+                offset: 31
               }
-            },
-            range: [0, 31]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 31
+            column: 32,
+            offset: 31
           }
-        },
-        range: [0, 31],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then else end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [0, 9]
+                }
               },
               {
-                type: 'ElseClause',
+                type: 'elseClause',
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 14
+                    column: 15,
+                    offset: 14
                   }
-                },
-                range: [10, 14]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 18
+                column: 19,
+                offset: 18
               }
-            },
-            range: [0, 18]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 18
+            column: 19,
+            offset: 18
           }
-        },
-        range: [0, 18],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then local a else local b end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 16
+                            column: 17,
+                            offset: 16
                           },
                           end: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           }
-                        },
-                        range: [16, 17],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [10, 17]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [0, 17]
+                }
               },
               {
-                type: 'ElseClause',
+                type: 'elseClause',
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 29
+                            column: 30,
+                            offset: 29
                           },
                           end: {
                             line: 1,
-                            column: 30
+                            column: 31,
+                            offset: 30
                           }
-                        },
-                        range: [29, 30],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 23
+                        column: 24,
+                        offset: 23
                       },
                       end: {
                         line: 1,
-                        column: 30
+                        column: 31,
+                        offset: 30
                       }
-                    },
-                    range: [23, 30]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   },
                   end: {
                     line: 1,
-                    column: 30
+                    column: 31,
+                    offset: 30
                   }
-                },
-                range: [18, 30]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 34
+                column: 35,
+                offset: 34
               }
-            },
-            range: [0, 34]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 34
+            column: 35,
+            offset: 34
           }
-        },
-        range: [0, 34],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then local a; else local b; end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 16
+                            column: 17,
+                            offset: 16
                           },
                           end: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           }
-                        },
-                        range: [16, 17],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [10, 17]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   }
-                },
-                range: [0, 18]
+                }
               },
               {
-                type: 'ElseClause',
+                type: 'elseClause',
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 30
+                            column: 31,
+                            offset: 30
                           },
                           end: {
                             line: 1,
-                            column: 31
+                            column: 32,
+                            offset: 31
                           }
-                        },
-                        range: [30, 31],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 24
+                        column: 25,
+                        offset: 24
                       },
                       end: {
                         line: 1,
-                        column: 31
+                        column: 32,
+                        offset: 31
                       }
-                    },
-                    range: [24, 31]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 19
+                    column: 20,
+                    offset: 19
                   },
                   end: {
                     line: 1,
-                    column: 32
+                    column: 33,
+                    offset: 32
                   }
-                },
-                range: [19, 32]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 36
+                column: 37,
+                offset: 36
               }
-            },
-            range: [0, 36]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 36
+            column: 37,
+            offset: 36
           }
-        },
-        range: [0, 36],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -897,679 +930,711 @@
     {
       source: 'if 1 then elseif 2 then end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [0, 9]
+                }
               },
               {
-                type: 'ElseifClause',
+                type: 'elseifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 2,
                   raw: '2',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 17
+                      column: 18,
+                      offset: 17
                     },
                     end: {
                       line: 1,
-                      column: 18
+                      column: 19,
+                      offset: 18
                     }
-                  },
-                  range: [17, 18]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   }
-                },
-                range: [10, 23]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 27
+                column: 28,
+                offset: 27
               }
-            },
-            range: [0, 27]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 27
+            column: 28,
+            offset: 27
           }
-        },
-        range: [0, 27],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then local a elseif 2 then local b end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 16
+                            column: 17,
+                            offset: 16
                           },
                           end: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           }
-                        },
-                        range: [16, 17],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [10, 17]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [0, 17]
+                }
               },
               {
-                type: 'ElseifClause',
+                type: 'elseifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 2,
                   raw: '2',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 25
+                      column: 26,
+                      offset: 25
                     },
                     end: {
                       line: 1,
-                      column: 26
+                      column: 27,
+                      offset: 26
                     }
-                  },
-                  range: [25, 26]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 38
+                            column: 39,
+                            offset: 38
                           },
                           end: {
                             line: 1,
-                            column: 39
+                            column: 40,
+                            offset: 39
                           }
-                        },
-                        range: [38, 39],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 32
+                        column: 33,
+                        offset: 32
                       },
                       end: {
                         line: 1,
-                        column: 39
+                        column: 40,
+                        offset: 39
                       }
-                    },
-                    range: [32, 39]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   },
                   end: {
                     line: 1,
-                    column: 39
+                    column: 40,
+                    offset: 39
                   }
-                },
-                range: [18, 39]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 43
+                column: 44,
+                offset: 43
               }
-            },
-            range: [0, 43]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 43
+            column: 44,
+            offset: 43
           }
-        },
-        range: [0, 43],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then local a; elseif 2 then local b; end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 16
+                            column: 17,
+                            offset: 16
                           },
                           end: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           }
-                        },
-                        range: [16, 17],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [10, 17]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   }
-                },
-                range: [0, 18]
+                }
               },
               {
-                type: 'ElseifClause',
+                type: 'elseifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 2,
                   raw: '2',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 26
+                      column: 27,
+                      offset: 26
                     },
                     end: {
                       line: 1,
-                      column: 27
+                      column: 28,
+                      offset: 27
                     }
-                  },
-                  range: [26, 27]
+                  }
                 },
                 body: [
                   {
-                    type: 'LocalStatement',
+                    type: 'localStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 39
+                            column: 40,
+                            offset: 39
                           },
                           end: {
                             line: 1,
-                            column: 40
+                            column: 41,
+                            offset: 40
                           }
-                        },
-                        range: [39, 40],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 33
+                        column: 34,
+                        offset: 33
                       },
                       end: {
                         line: 1,
-                        column: 40
+                        column: 41,
+                        offset: 40
                       }
-                    },
-                    range: [33, 40]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 19
+                    column: 20,
+                    offset: 19
                   },
                   end: {
                     line: 1,
-                    column: 41
+                    column: 42,
+                    offset: 41
                   }
-                },
-                range: [19, 41]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 45
+                column: 46,
+                offset: 45
               }
-            },
-            range: [0, 45]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 45
+            column: 46,
+            offset: 45
           }
-        },
-        range: [0, 45],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then elseif 2 then else end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [0, 9]
+                }
               },
               {
-                type: 'ElseifClause',
+                type: 'elseifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 2,
                   raw: '2',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 17
+                      column: 18,
+                      offset: 17
                     },
                     end: {
                       line: 1,
-                      column: 18
+                      column: 19,
+                      offset: 18
                     }
-                  },
-                  range: [17, 18]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   }
-                },
-                range: [10, 23]
+                }
               },
               {
-                type: 'ElseClause',
+                type: 'elseClause',
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   },
                   end: {
                     line: 1,
-                    column: 28
+                    column: 29,
+                    offset: 28
                   }
-                },
-                range: [24, 28]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 32
+                column: 33,
+                offset: 32
               }
-            },
-            range: [0, 32]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 32
+            column: 33,
+            offset: 32
           }
-        },
-        range: [0, 32],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'if 1 then else if 2 then end end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [0, 9]
+                }
               },
               {
-                type: 'ElseClause',
+                type: 'elseClause',
                 body: [
                   {
-                    type: 'IfStatement',
+                    type: 'ifStatement',
                     clauses: [
                       {
-                        type: 'IfClause',
+                        type: 'ifClause',
                         condition: {
-                          type: 'NumericLiteral',
+                          type: 'numericLiteral',
                           value: 2,
                           raw: '2',
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 18
+                              column: 19,
+                              offset: 18
                             },
                             end: {
                               line: 1,
-                              column: 19
+                              column: 20,
+                              offset: 19
                             }
-                          },
-                          range: [18, 19]
+                          }
                         },
                         body: [],
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 15
+                            column: 16,
+                            offset: 15
                           },
                           end: {
                             line: 1,
-                            column: 24
+                            column: 25,
+                            offset: 24
                           }
-                        },
-                        range: [15, 24]
+                        }
                       }
                     ],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 15
+                        column: 16,
+                        offset: 15
                       },
                       end: {
                         line: 1,
-                        column: 28
+                        column: 29,
+                        offset: 28
                       }
-                    },
-                    range: [15, 28]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 28
+                    column: 29,
+                    offset: 28
                   }
-                },
-                range: [10, 28]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 32
+                column: 33,
+                offset: 32
               }
-            },
-            range: [0, 32]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 32
+            column: 33,
+            offset: 32
           }
-        },
-        range: [0, 32],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -1579,85 +1644,89 @@
     {
       source: 'if 1 then return end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [
                   {
-                    type: 'ReturnStatement',
+                    type: 'returnStatement',
                     arguments: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       }
-                    },
-                    range: [10, 16]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   }
-                },
-                range: [0, 16]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 20
+                column: 21,
+                offset: 20
               }
-            },
-            range: [0, 20]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 20
+            column: 21,
+            offset: 20
           }
-        },
-        range: [0, 20],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -1667,116 +1736,122 @@
     {
       source: 'if 1 then end; if 1 then end;',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 4
+                      column: 5,
+                      offset: 4
                     }
-                  },
-                  range: [3, 4]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [0, 9]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               }
-            },
-            range: [0, 13]
+            }
           },
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
                   raw: '1',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 18
+                      column: 19,
+                      offset: 18
                     },
                     end: {
                       line: 1,
-                      column: 19
+                      column: 20,
+                      offset: 19
                     }
-                  },
-                  range: [18, 19]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 15
+                    column: 16,
+                    offset: 15
                   },
                   end: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   }
-                },
-                range: [15, 24]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 15
+                column: 16,
+                offset: 15
               },
               end: {
                 line: 1,
-                column: 28
+                column: 29,
+                offset: 28
               }
-            },
-            range: [15, 28]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 29
+            column: 30,
+            offset: 29
           }
-        },
-        range: [0, 29],
-        comments: [],
-        globals: []
+        }
       }
     },
     {

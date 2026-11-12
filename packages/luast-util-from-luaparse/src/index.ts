@@ -66,6 +66,14 @@ const scalarFields = new Set([
   'local'
 ])
 
+// The original luaparse names some child fields differently from luast.
+// Maps luast field -> field name on the legacy node.
+const legacyFieldAliases: Record<string, Record<string, string>> = {
+  // Original luaparse emits `arguments` (a single TableConstructor node)
+  // for `expr { ... }` calls; luast calls that field `argument`.
+  tableCallExpression: {argument: 'arguments'}
+}
+
 // eslint-disable-next-line complexity
 export function fromLuaparse(legacy: unknown): Root {
   const root: Record<string, unknown> = {}
@@ -127,8 +135,12 @@ export function fromLuaparse(legacy: unknown): Root {
     }
 
     const children: Task[] = []
+    const aliases = legacyFieldAliases[luastType]
     for (const field of getChildFields(result as LuastAnyNode)) {
-      const legacyValue = Object.hasOwn(node, field) ? node[field] : undefined
+      const legacyField = aliases?.[field] ?? field
+      const legacyValue = Object.hasOwn(node, legacyField)
+        ? node[legacyField]
+        : undefined
 
       if (legacyValue === null || legacyValue === undefined) {
         result[field] = null

@@ -24,99 +24,85 @@
     {
       source: 'goto "foo"',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'CallStatement',
+            type: 'callStatement',
             expression: {
-              type: 'StringCallExpression',
+              type: 'stringCallExpression',
               base: {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'goto',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   }
-                },
-                range: [0, 4],
-                isLocal: false
+                }
               },
               argument: {
-                type: 'StringLiteral',
+                type: 'stringLiteral',
                 value: null,
                 raw: '"foo"',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 5
+                    column: 6,
+                    offset: 5
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [5, 10]
+                }
               },
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 0
+                  column: 1,
+                  offset: 0
                 },
                 end: {
                   line: 1,
-                  column: 10
+                  column: 11,
+                  offset: 10
                 }
-              },
-              range: [0, 10]
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 10
+                column: 11,
+                offset: 10
               }
-            },
-            range: [0, 10]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 10
+            column: 11,
+            offset: 10
           }
-        },
-        range: [0, 10],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'goto',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 4
-              }
-            },
-            range: [0, 4],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
@@ -131,68 +117,61 @@
       source: '::foo',
       result: "[1:5] '::' expected near '<eof>'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: '::foo::',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LabelStatement',
+            type: 'labelStatement',
             label: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'foo',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 2
+                  column: 3,
+                  offset: 2
                 },
                 end: {
                   line: 1,
-                  column: 5
+                  column: 6,
+                  offset: 5
                 }
-              },
-              range: [2, 5],
-              isLocal: true
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               }
-            },
-            range: [0, 7]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 7
+            column: 8,
+            offset: 7
           }
-        },
-        range: [0, 7],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -200,10 +179,6 @@
       source: '::break::',
       result: "[1:2] <name> expected near 'break'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -211,10 +186,6 @@
       source: 'goto "foo"',
       result: '[1:5] <name> expected near \'"foo"\'',
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -222,97 +193,92 @@
       source: 'goto hasOwnProperty',
       result: "[1:0] no visible label 'hasOwnProperty' for <goto>",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: 'goto x ::x::',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'GotoStatement',
+            type: 'gotoStatement',
             label: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'x',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 5
+                  column: 6,
+                  offset: 5
                 },
                 end: {
                   line: 1,
-                  column: 6
+                  column: 7,
+                  offset: 6
                 }
-              },
-              range: [5, 6]
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 6
+                column: 7,
+                offset: 6
               }
-            },
-            range: [0, 6]
+            }
           },
           {
-            type: 'LabelStatement',
+            type: 'labelStatement',
             label: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'x',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 9
+                  column: 10,
+                  offset: 9
                 },
                 end: {
                   line: 1,
-                  column: 10
+                  column: 11,
+                  offset: 10
                 }
-              },
-              range: [9, 10],
-              isLocal: true
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               },
               end: {
                 line: 1,
-                column: 12
+                column: 13,
+                offset: 12
               }
-            },
-            range: [7, 12]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 12
+            column: 13,
+            offset: 12
           }
-        },
-        range: [0, 12],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -320,10 +286,6 @@
       source: 'goto x do ::x:: end',
       result: "[1:0] no visible label 'x' for <goto>",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -331,10 +293,6 @@
       source: 'do ::l1:: end goto l1',
       result: "[1:14] no visible label 'l1' for <goto>",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -342,10 +300,6 @@
       source: '::x:: ::x::',
       result: "[1:8] label 'x' already defined on line 1",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -353,10 +307,6 @@
       source: 'goto x local a ::x:: f()',
       result: "[1:0] <goto x> jumps into the scope of local 'a'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -364,10 +314,6 @@
       source: 'goto x local a, b ::x:: f()',
       result: "[1:0] <goto x> jumps into the scope of local 'a'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -375,208 +321,190 @@
       source: 'goto x local function a() end ::x:: f()',
       result: "[1:0] <goto x> jumps into the scope of local 'a'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: 'do goto x local a end ::x:: f()',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'GotoStatement',
+                type: 'gotoStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'x',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 8
+                      column: 9,
+                      offset: 8
                     },
                     end: {
                       line: 1,
-                      column: 9
+                      column: 10,
+                      offset: 9
                     }
-                  },
-                  range: [8, 9]
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [3, 9]
+                }
               },
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [16, 17],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [10, 17]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 21
+                column: 22,
+                offset: 21
               }
-            },
-            range: [0, 21]
+            }
           },
           {
-            type: 'LabelStatement',
+            type: 'labelStatement',
             label: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'x',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 24
+                  column: 25,
+                  offset: 24
                 },
                 end: {
                   line: 1,
-                  column: 25
+                  column: 26,
+                  offset: 25
                 }
-              },
-              range: [24, 25],
-              isLocal: true
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 22
+                column: 23,
+                offset: 22
               },
               end: {
                 line: 1,
-                column: 27
+                column: 28,
+                offset: 27
               }
-            },
-            range: [22, 27]
+            }
           },
           {
-            type: 'CallStatement',
+            type: 'callStatement',
             expression: {
-              type: 'CallExpression',
+              type: 'callExpression',
               base: {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'f',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 28
+                    column: 29,
+                    offset: 28
                   },
                   end: {
                     line: 1,
-                    column: 29
+                    column: 30,
+                    offset: 29
                   }
-                },
-                range: [28, 29],
-                isLocal: false
+                }
               },
               arguments: [],
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 28
+                  column: 29,
+                  offset: 28
                 },
                 end: {
                   line: 1,
-                  column: 31
+                  column: 32,
+                  offset: 31
                 }
-              },
-              range: [28, 31]
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 28
+                column: 29,
+                offset: 28
               },
               end: {
                 line: 1,
-                column: 31
+                column: 32,
+                offset: 31
               }
-            },
-            range: [28, 31]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 31
+            column: 32,
+            offset: 31
           }
-        },
-        range: [0, 31],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'f',
-            loc: {
-              start: {
-                line: 1,
-                column: 28
-              },
-              end: {
-                line: 1,
-                column: 29
-              }
-            },
-            range: [28, 29],
-            isLocal: false
-          }
-        ]
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -584,298 +512,297 @@
       source: 'do local a goto x end local b ::x:: f()',
       result: "[1:11] <goto x> jumps into the scope of local 'b'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: 'do goto x local a ::x:: end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'GotoStatement',
+                type: 'gotoStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'x',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 8
+                      column: 9,
+                      offset: 8
                     },
                     end: {
                       line: 1,
-                      column: 9
+                      column: 10,
+                      offset: 9
                     }
-                  },
-                  range: [8, 9]
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [3, 9]
+                }
               },
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [16, 17],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [10, 17]
+                }
               },
               {
-                type: 'LabelStatement',
+                type: 'labelStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'x',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 20
+                      column: 21,
+                      offset: 20
                     },
                     end: {
                       line: 1,
-                      column: 21
+                      column: 22,
+                      offset: 21
                     }
-                  },
-                  range: [20, 21],
-                  isLocal: true
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   },
                   end: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   }
-                },
-                range: [18, 23]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 27
+                column: 28,
+                offset: 27
               }
-            },
-            range: [0, 27]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 27
+            column: 28,
+            offset: 27
           }
-        },
-        range: [0, 27],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: 'while 0 do goto x local a ::x:: end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'WhileStatement',
+            type: 'whileStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 6
+                  column: 7,
+                  offset: 6
                 },
                 end: {
                   line: 1,
-                  column: 7
+                  column: 8,
+                  offset: 7
                 }
-              },
-              range: [6, 7]
+              }
             },
             body: [
               {
-                type: 'GotoStatement',
+                type: 'gotoStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'x',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 16
+                      column: 17,
+                      offset: 16
                     },
                     end: {
                       line: 1,
-                      column: 17
+                      column: 18,
+                      offset: 17
                     }
-                  },
-                  range: [16, 17]
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 11
+                    column: 12,
+                    offset: 11
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [11, 17]
+                }
               },
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 24
+                        column: 25,
+                        offset: 24
                       },
                       end: {
                         line: 1,
-                        column: 25
+                        column: 26,
+                        offset: 25
                       }
-                    },
-                    range: [24, 25],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   },
                   end: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   }
-                },
-                range: [18, 25]
+                }
               },
               {
-                type: 'LabelStatement',
+                type: 'labelStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'x',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 28
+                      column: 29,
+                      offset: 28
                     },
                     end: {
                       line: 1,
-                      column: 29
+                      column: 30,
+                      offset: 29
                     }
-                  },
-                  range: [28, 29],
-                  isLocal: true
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 26
+                    column: 27,
+                    offset: 26
                   },
                   end: {
                     line: 1,
-                    column: 31
+                    column: 32,
+                    offset: 31
                   }
-                },
-                range: [26, 31]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 35
+                column: 36,
+                offset: 35
               }
-            },
-            range: [0, 35]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 35
+            column: 36,
+            offset: 35
           }
-        },
-        range: [0, 35],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -883,206 +810,205 @@
       source: 'repeat goto x local a ::x:: until 0',
       result: "[1:7] <goto x> jumps into the scope of local 'a'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: 'do goto x local a ::x:: ::y:: ::z:: end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'GotoStatement',
+                type: 'gotoStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'x',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 8
+                      column: 9,
+                      offset: 8
                     },
                     end: {
                       line: 1,
-                      column: 9
+                      column: 10,
+                      offset: 9
                     }
-                  },
-                  range: [8, 9]
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [3, 9]
+                }
               },
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [16, 17],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [10, 17]
+                }
               },
               {
-                type: 'LabelStatement',
+                type: 'labelStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'x',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 20
+                      column: 21,
+                      offset: 20
                     },
                     end: {
                       line: 1,
-                      column: 21
+                      column: 22,
+                      offset: 21
                     }
-                  },
-                  range: [20, 21],
-                  isLocal: true
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   },
                   end: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   }
-                },
-                range: [18, 23]
+                }
               },
               {
-                type: 'LabelStatement',
+                type: 'labelStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'y',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 26
+                      column: 27,
+                      offset: 26
                     },
                     end: {
                       line: 1,
-                      column: 27
+                      column: 28,
+                      offset: 27
                     }
-                  },
-                  range: [26, 27],
-                  isLocal: true
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   },
                   end: {
                     line: 1,
-                    column: 29
+                    column: 30,
+                    offset: 29
                   }
-                },
-                range: [24, 29]
+                }
               },
               {
-                type: 'LabelStatement',
+                type: 'labelStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'z',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 32
+                      column: 33,
+                      offset: 32
                     },
                     end: {
                       line: 1,
-                      column: 33
+                      column: 34,
+                      offset: 33
                     }
-                  },
-                  range: [32, 33],
-                  isLocal: true
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 30
+                    column: 31,
+                    offset: 30
                   },
                   end: {
                     line: 1,
-                    column: 35
+                    column: 36,
+                    offset: 35
                   }
-                },
-                range: [30, 35]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 39
+                column: 40,
+                offset: 39
               }
-            },
-            range: [0, 39]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 39
+            column: 40,
+            offset: 39
           }
-        },
-        range: [0, 39],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -1090,10 +1016,6 @@
       source: 'do do ::x:: end do goto x end end',
       result: "[1:19] no visible label 'x' for <goto>",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -1101,307 +1023,284 @@
       source: 'do do goto x end do ::x:: end end',
       result: "[1:6] no visible label 'x' for <goto>",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: 'do do goto x end do end ::x:: end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [
                   {
-                    type: 'GotoStatement',
+                    type: 'gotoStatement',
                     label: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'x',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 11
+                          column: 12,
+                          offset: 11
                         },
                         end: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         }
-                      },
-                      range: [11, 12]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       }
-                    },
-                    range: [6, 12]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   }
-                },
-                range: [3, 16]
+                }
               },
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   },
                   end: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   }
-                },
-                range: [17, 23]
+                }
               },
               {
-                type: 'LabelStatement',
+                type: 'labelStatement',
                 label: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'x',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 26
+                      column: 27,
+                      offset: 26
                     },
                     end: {
                       line: 1,
-                      column: 27
+                      column: 28,
+                      offset: 27
                     }
-                  },
-                  range: [26, 27],
-                  isLocal: true
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   },
                   end: {
                     line: 1,
-                    column: 29
+                    column: 30,
+                    offset: 29
                   }
-                },
-                range: [24, 29]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 33
+                column: 34,
+                offset: 33
               }
-            },
-            range: [0, 33]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 33
+            column: 34,
+            offset: 33
           }
-        },
-        range: [0, 33],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: '::foo::',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LabelStatement',
+            type: 'labelStatement',
             label: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'foo',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 2
+                  column: 3,
+                  offset: 2
                 },
                 end: {
                   line: 1,
-                  column: 5
+                  column: 6,
+                  offset: 5
                 }
-              },
-              range: [2, 5],
-              isLocal: true
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               }
-            },
-            range: [0, 7]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 7
+            column: 8,
+            offset: 7
           }
-        },
-        range: [0, 7],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: 'LuaJIT'
       }
     },
     {
       source: 'goto "foo"',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'CallStatement',
+            type: 'callStatement',
             expression: {
-              type: 'StringCallExpression',
+              type: 'stringCallExpression',
               base: {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'goto',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   }
-                },
-                range: [0, 4],
-                isLocal: false
+                }
               },
               argument: {
-                type: 'StringLiteral',
+                type: 'stringLiteral',
                 value: null,
                 raw: '"foo"',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 5
+                    column: 6,
+                    offset: 5
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [5, 10]
+                }
               },
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 0
+                  column: 1,
+                  offset: 0
                 },
                 end: {
                   line: 1,
-                  column: 10
+                  column: 11,
+                  offset: 10
                 }
-              },
-              range: [0, 10]
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 10
+                column: 11,
+                offset: 10
               }
-            },
-            range: [0, 10]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 10
+            column: 11,
+            offset: 10
           }
-        },
-        range: [0, 10],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'goto',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 4
-              }
-            },
-            range: [0, 4],
-            isLocal: false
-          }
-        ]
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: 'LuaJIT'
       }
     },
@@ -1409,97 +1308,92 @@
       source: 'goto foo',
       result: "[1:0] no visible label 'foo' for <goto>",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: 'LuaJIT'
       }
     },
     {
       source: '::foo:: goto foo',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LabelStatement',
+            type: 'labelStatement',
             label: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'foo',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 2
+                  column: 3,
+                  offset: 2
                 },
                 end: {
                   line: 1,
-                  column: 5
+                  column: 6,
+                  offset: 5
                 }
-              },
-              range: [2, 5],
-              isLocal: true
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               }
-            },
-            range: [0, 7]
+            }
           },
           {
-            type: 'GotoStatement',
+            type: 'gotoStatement',
             label: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'foo',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 13
+                  column: 14,
+                  offset: 13
                 },
                 end: {
                   line: 1,
-                  column: 16
+                  column: 17,
+                  offset: 16
                 }
-              },
-              range: [13, 16]
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 8
+                column: 9,
+                offset: 8
               },
               end: {
                 line: 1,
-                column: 16
+                column: 17,
+                offset: 16
               }
-            },
-            range: [8, 16]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 16
+            column: 17,
+            offset: 16
           }
-        },
-        range: [0, 16],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: 'LuaJIT'
       }
     },
@@ -1507,85 +1401,79 @@
       source: 'goto goto',
       result: "[1:5] '=' expected near 'goto'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: 'LuaJIT'
       }
     },
     {
       source: '::goto:: -- sic!',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LabelStatement',
+            type: 'labelStatement',
             label: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'goto',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 2
+                  column: 3,
+                  offset: 2
                 },
                 end: {
                   line: 1,
-                  column: 6
+                  column: 7,
+                  offset: 6
                 }
-              },
-              range: [2, 6],
-              isLocal: true
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 8
+                column: 9,
+                offset: 8
               }
-            },
-            range: [0, 8]
+            }
           }
         ],
-        loc: {
+        comments: [
+          {
+            type: 'comment',
+            value: ' sic!',
+            raw: '-- sic!',
+            position: {
+              start: {
+                line: 1,
+                column: 10,
+                offset: 9
+              },
+              end: {
+                line: 1,
+                column: 17,
+                offset: 16
+              }
+            }
+          }
+        ],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 8
+            column: 9,
+            offset: 8
           }
-        },
-        range: [0, 8],
-        comments: [
-          {
-            type: 'Comment',
-            value: ' sic!',
-            raw: '-- sic!',
-            loc: {
-              start: {
-                line: 1,
-                column: 9
-              },
-              end: {
-                line: 1,
-                column: 16
-              }
-            },
-            range: [9, 16]
-          }
-        ],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: 'LuaJIT'
       }
     }

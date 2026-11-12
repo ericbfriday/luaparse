@@ -24,690 +24,716 @@
     {
       source: '-- comment',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [],
-        loc: {
-          start: {
-            line: 1,
-            column: 10
-          },
-          end: {
-            line: 1,
-            column: 10
-          }
-        },
-        range: [10, 10],
         comments: [
           {
-            type: 'Comment',
+            type: 'comment',
             value: ' comment',
             raw: '-- comment',
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 10
+                column: 11,
+                offset: 10
               }
-            },
-            range: [0, 10]
+            }
           }
         ],
-        globals: []
+        position: {
+          start: {
+            line: 1,
+            column: 11,
+            offset: 10
+          },
+          end: {
+            line: 1,
+            column: 11,
+            offset: 10
+          }
+        }
       }
     },
     {
       source: '-- comment\n-- comment',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [],
-        loc: {
+        comments: [
+          {
+            type: 'comment',
+            value: ' comment',
+            raw: '-- comment',
+            position: {
+              start: {
+                line: 1,
+                column: 1,
+                offset: 0
+              },
+              end: {
+                line: 1,
+                column: 11,
+                offset: 10
+              }
+            }
+          },
+          {
+            type: 'comment',
+            value: ' comment',
+            raw: '-- comment',
+            position: {
+              start: {
+                line: 2,
+                column: 1,
+                offset: 11
+              },
+              end: {
+                line: 2,
+                column: 11,
+                offset: 21
+              }
+            }
+          }
+        ],
+        position: {
           start: {
             line: 2,
-            column: 10
+            column: 11,
+            offset: 21
           },
           end: {
             line: 2,
-            column: 10
+            column: 11,
+            offset: 21
           }
-        },
-        range: [21, 21],
-        comments: [
-          {
-            type: 'Comment',
-            value: ' comment',
-            raw: '-- comment',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 10
-              }
-            },
-            range: [0, 10]
-          },
-          {
-            type: 'Comment',
-            value: ' comment',
-            raw: '-- comment',
-            loc: {
-              start: {
-                line: 2,
-                column: 0
-              },
-              end: {
-                line: 2,
-                column: 10
-              }
-            },
-            range: [11, 21]
-          }
-        ],
-        globals: []
+        }
       }
     },
     {
       source: '--coment',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [],
-        loc: {
-          start: {
-            line: 1,
-            column: 8
-          },
-          end: {
-            line: 1,
-            column: 8
-          }
-        },
-        range: [8, 8],
         comments: [
           {
-            type: 'Comment',
+            type: 'comment',
             value: 'coment',
             raw: '--coment',
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 8
+                column: 9,
+                offset: 8
               }
-            },
-            range: [0, 8]
+            }
           }
         ],
-        globals: []
+        position: {
+          start: {
+            line: 1,
+            column: 9,
+            offset: 8
+          },
+          end: {
+            line: 1,
+            column: 9,
+            offset: 8
+          }
+        }
       }
     },
     {
       source: '-- comment\nreturn',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {
+            position: {
               start: {
                 line: 2,
-                column: 0
+                column: 1,
+                offset: 11
               },
               end: {
                 line: 2,
-                column: 6
+                column: 7,
+                offset: 17
               }
-            },
-            range: [11, 17]
+            }
           }
         ],
-        loc: {
+        comments: [
+          {
+            type: 'comment',
+            value: ' comment',
+            raw: '-- comment',
+            position: {
+              start: {
+                line: 1,
+                column: 1,
+                offset: 0
+              },
+              end: {
+                line: 1,
+                column: 11,
+                offset: 10
+              }
+            }
+          }
+        ],
+        position: {
           start: {
             line: 2,
-            column: 0
+            column: 1,
+            offset: 11
           },
           end: {
             line: 2,
-            column: 6
+            column: 7,
+            offset: 17
           }
-        },
-        range: [11, 17],
-        comments: [
-          {
-            type: 'Comment',
-            value: ' comment',
-            raw: '-- comment',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 10
-              }
-            },
-            range: [0, 10]
-          }
-        ],
-        globals: []
+        }
       }
     },
     {
       source: 'return --comment \n',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 6
+                column: 7,
+                offset: 6
               }
-            },
-            range: [0, 6]
+            }
           }
         ],
-        loc: {
+        comments: [
+          {
+            type: 'comment',
+            value: 'comment ',
+            raw: '--comment ',
+            position: {
+              start: {
+                line: 1,
+                column: 8,
+                offset: 7
+              },
+              end: {
+                line: 1,
+                column: 18,
+                offset: 17
+              }
+            }
+          }
+        ],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 6
+            column: 7,
+            offset: 6
           }
-        },
-        range: [0, 6],
-        comments: [
-          {
-            type: 'Comment',
-            value: 'comment ',
-            raw: '--comment ',
-            loc: {
-              start: {
-                line: 1,
-                column: 7
-              },
-              end: {
-                line: 1,
-                column: 17
-              }
-            },
-            range: [7, 17]
-          }
-        ],
-        globals: []
+        }
       }
     },
     {
       source: '--[[comment]]',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [],
-        loc: {
-          start: {
-            line: 1,
-            column: 13
-          },
-          end: {
-            line: 1,
-            column: 13
-          }
-        },
-        range: [13, 13],
         comments: [
           {
-            type: 'Comment',
+            type: 'comment',
             value: 'comment',
             raw: '--[[comment]]',
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               }
-            },
-            range: [0, 13]
+            }
           }
         ],
-        globals: []
+        position: {
+          start: {
+            line: 1,
+            column: 14,
+            offset: 13
+          },
+          end: {
+            line: 1,
+            column: 14,
+            offset: 13
+          }
+        }
       }
     },
     {
       source: 'if true--[[comment]]then end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'BooleanLiteral',
+                  type: 'booleanLiteral',
                   value: true,
                   raw: 'true',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 7
+                      column: 8,
+                      offset: 7
                     }
-                  },
-                  range: [3, 7]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   }
-                },
-                range: [0, 24]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 28
+                column: 29,
+                offset: 28
               }
-            },
-            range: [0, 28]
+            }
           }
         ],
-        loc: {
+        comments: [
+          {
+            type: 'comment',
+            value: 'comment',
+            raw: '--[[comment]]',
+            position: {
+              start: {
+                line: 1,
+                column: 8,
+                offset: 7
+              },
+              end: {
+                line: 1,
+                column: 21,
+                offset: 20
+              }
+            }
+          }
+        ],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 28
+            column: 29,
+            offset: 28
           }
-        },
-        range: [0, 28],
-        comments: [
-          {
-            type: 'Comment',
-            value: 'comment',
-            raw: '--[[comment]]',
-            loc: {
-              start: {
-                line: 1,
-                column: 7
-              },
-              end: {
-                line: 1,
-                column: 20
-              }
-            },
-            range: [7, 20]
-          }
-        ],
-        globals: []
+        }
       }
     },
     {
       source: '--[=[comment]=] return',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 16
+                column: 17,
+                offset: 16
               },
               end: {
                 line: 1,
-                column: 22
+                column: 23,
+                offset: 22
               }
-            },
-            range: [16, 22]
+            }
           }
         ],
-        loc: {
+        comments: [
+          {
+            type: 'comment',
+            value: 'comment',
+            raw: '--[=[comment]=]',
+            position: {
+              start: {
+                line: 1,
+                column: 1,
+                offset: 0
+              },
+              end: {
+                line: 1,
+                column: 16,
+                offset: 15
+              }
+            }
+          }
+        ],
+        position: {
           start: {
             line: 1,
-            column: 16
+            column: 17,
+            offset: 16
           },
           end: {
             line: 1,
-            column: 22
+            column: 23,
+            offset: 22
           }
-        },
-        range: [16, 22],
-        comments: [
-          {
-            type: 'Comment',
-            value: 'comment',
-            raw: '--[=[comment]=]',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 15
-              }
-            },
-            range: [0, 15]
-          }
-        ],
-        globals: []
+        }
       }
     },
     {
       source: '--[===[comment\n--[=[sub]=]--\n]===]return',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {
+            position: {
               start: {
                 line: 3,
-                column: 5
+                column: 6,
+                offset: 34
               },
               end: {
                 line: 3,
-                column: 11
+                column: 12,
+                offset: 40
               }
-            },
-            range: [34, 40]
+            }
           }
         ],
-        loc: {
+        comments: [
+          {
+            type: 'comment',
+            value: 'comment\n--[=[sub]=]--\n',
+            raw: '--[===[comment\n--[=[sub]=]--\n]===]',
+            position: {
+              start: {
+                line: 1,
+                column: 1,
+                offset: 0
+              },
+              end: {
+                line: 3,
+                column: 6,
+                offset: 34
+              }
+            }
+          }
+        ],
+        position: {
           start: {
             line: 3,
-            column: 5
+            column: 6,
+            offset: 34
           },
           end: {
             line: 3,
-            column: 11
+            column: 12,
+            offset: 40
           }
-        },
-        range: [34, 40],
-        comments: [
-          {
-            type: 'Comment',
-            value: 'comment\n--[=[sub]=]--\n',
-            raw: '--[===[comment\n--[=[sub]=]--\n]===]',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 3,
-                column: 5
-              }
-            },
-            range: [0, 34]
-          }
-        ],
-        globals: []
+        }
       }
     },
     {
       source: '--[[comment\nline two]]',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [],
-        loc: {
-          start: {
-            line: 2,
-            column: 10
-          },
-          end: {
-            line: 2,
-            column: 10
-          }
-        },
-        range: [22, 22],
         comments: [
           {
-            type: 'Comment',
+            type: 'comment',
             value: 'comment\nline two',
             raw: '--[[comment\nline two]]',
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 2,
-                column: 10
+                column: 11,
+                offset: 22
               }
-            },
-            range: [0, 22]
+            }
           }
         ],
-        globals: []
+        position: {
+          start: {
+            line: 2,
+            column: 11,
+            offset: 22
+          },
+          end: {
+            line: 2,
+            column: 11,
+            offset: 22
+          }
+        }
       }
     },
     {
       source: '--[[\ncomment\nline two\n]]',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [],
-        loc: {
-          start: {
-            line: 4,
-            column: 2
-          },
-          end: {
-            line: 4,
-            column: 2
-          }
-        },
-        range: [24, 24],
         comments: [
           {
-            type: 'Comment',
+            type: 'comment',
             value: 'comment\nline two\n',
             raw: '--[[\ncomment\nline two\n]]',
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 4,
-                column: 2
+                column: 3,
+                offset: 24
               }
-            },
-            range: [0, 24]
+            }
           }
         ],
-        globals: []
+        position: {
+          start: {
+            line: 4,
+            column: 3,
+            offset: 24
+          },
+          end: {
+            line: 4,
+            column: 3,
+            offset: 24
+          }
+        }
       }
     },
     {
       source: '--[==\nreturn --]]',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {
+            position: {
               start: {
                 line: 2,
-                column: 0
+                column: 1,
+                offset: 6
               },
               end: {
                 line: 2,
-                column: 6
+                column: 7,
+                offset: 12
               }
-            },
-            range: [6, 12]
+            }
           }
         ],
-        loc: {
+        comments: [
+          {
+            type: 'comment',
+            value: '[==',
+            raw: '--[==',
+            position: {
+              start: {
+                line: 1,
+                column: 1,
+                offset: 0
+              },
+              end: {
+                line: 1,
+                column: 6,
+                offset: 5
+              }
+            }
+          },
+          {
+            type: 'comment',
+            value: ']]',
+            raw: '--]]',
+            position: {
+              start: {
+                line: 2,
+                column: 8,
+                offset: 13
+              },
+              end: {
+                line: 2,
+                column: 12,
+                offset: 17
+              }
+            }
+          }
+        ],
+        position: {
           start: {
             line: 2,
-            column: 0
+            column: 1,
+            offset: 6
           },
           end: {
             line: 2,
-            column: 6
+            column: 7,
+            offset: 12
           }
-        },
-        range: [6, 12],
-        comments: [
-          {
-            type: 'Comment',
-            value: '[==',
-            raw: '--[==',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 5
-              }
-            },
-            range: [0, 5]
-          },
-          {
-            type: 'Comment',
-            value: ']]',
-            raw: '--]]',
-            loc: {
-              start: {
-                line: 2,
-                column: 7
-              },
-              end: {
-                line: 2,
-                column: 11
-              }
-            },
-            range: [13, 17]
-          }
-        ],
-        globals: []
+        }
       }
     },
     {
       source: 'if true -- comment\nthen end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'BooleanLiteral',
+                  type: 'booleanLiteral',
                   value: true,
                   raw: 'true',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 3
+                      column: 4,
+                      offset: 3
                     },
                     end: {
                       line: 1,
-                      column: 7
+                      column: 8,
+                      offset: 7
                     }
-                  },
-                  range: [3, 7]
+                  }
                 },
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 2,
-                    column: 4
+                    column: 5,
+                    offset: 23
                   }
-                },
-                range: [0, 23]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 2,
-                column: 8
+                column: 9,
+                offset: 27
               }
-            },
-            range: [0, 27]
+            }
           }
         ],
-        loc: {
-          start: {
-            line: 1,
-            column: 0
-          },
-          end: {
-            line: 2,
-            column: 8
-          }
-        },
-        range: [0, 27],
         comments: [
           {
-            type: 'Comment',
+            type: 'comment',
             value: ' comment',
             raw: '-- comment',
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 8
+                column: 9,
+                offset: 8
               },
               end: {
                 line: 1,
-                column: 18
+                column: 19,
+                offset: 18
               }
-            },
-            range: [8, 18]
+            }
           }
         ],
-        globals: []
+        position: {
+          start: {
+            line: 1,
+            column: 1,
+            offset: 0
+          },
+          end: {
+            line: 2,
+            column: 9,
+            offset: 27
+          }
+        }
       }
     },
     {

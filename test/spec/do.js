@@ -32,37 +32,38 @@
     {
       source: 'do end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 6
+                column: 7,
+                offset: 6
               }
-            },
-            range: [0, 6]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 6
+            column: 7,
+            offset: 6
           }
-        },
-        range: [0, 6],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -80,704 +81,729 @@
     {
       source: 'do local a, b end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [9, 10],
-                    isLocal: true
+                    }
                   },
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'b',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       },
                       end: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       }
-                    },
-                    range: [12, 13],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   }
-                },
-                range: [3, 13]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 17
+                column: 18,
+                offset: 17
               }
-            },
-            range: [0, 17]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 17
+            column: 18,
+            offset: 17
           }
-        },
-        range: [0, 17],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do local a local b end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [9, 10],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [3, 10]
+                }
               },
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'b',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       },
                       end: {
                         line: 1,
-                        column: 18
+                        column: 19,
+                        offset: 18
                       }
-                    },
-                    range: [17, 18],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 11
+                    column: 12,
+                    offset: 11
                   },
                   end: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   }
-                },
-                range: [11, 18]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 22
+                column: 23,
+                offset: 22
               }
-            },
-            range: [0, 22]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 22
+            column: 23,
+            offset: 22
           }
-        },
-        range: [0, 22],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do local a; local b; end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [9, 10],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [3, 10]
+                }
               },
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'b',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 18
+                        column: 19,
+                        offset: 18
                       },
                       end: {
                         line: 1,
-                        column: 19
+                        column: 20,
+                        offset: 19
                       }
-                    },
-                    range: [18, 19],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   },
                   end: {
                     line: 1,
-                    column: 19
+                    column: 20,
+                    offset: 19
                   }
-                },
-                range: [12, 19]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 24
+                column: 25,
+                offset: 24
               }
-            },
-            range: [0, 24]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 24
+            column: 25,
+            offset: 24
           }
-        },
-        range: [0, 24],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do local a = 1 end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [9, 10],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [
                   {
-                    type: 'NumericLiteral',
+                    type: 'numericLiteral',
                     value: 1,
                     raw: '1',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       },
                       end: {
                         line: 1,
-                        column: 14
+                        column: 15,
+                        offset: 14
                       }
-                    },
-                    range: [13, 14]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 14
+                    column: 15,
+                    offset: 14
                   }
-                },
-                range: [3, 14]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 18
+                column: 19,
+                offset: 18
               }
-            },
-            range: [0, 18]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 18
+            column: 19,
+            offset: 18
           }
-        },
-        range: [0, 18],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do do end end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [3, 9]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               }
-            },
-            range: [0, 13]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 13
+            column: 14,
+            offset: 13
           }
-        },
-        range: [0, 13],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do do end; end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [3, 9]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 14
+                column: 15,
+                offset: 14
               }
-            },
-            range: [0, 14]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 14
+            column: 15,
+            offset: 14
           }
-        },
-        range: [0, 14],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do do do end end end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [
                   {
-                    type: 'DoStatement',
+                    type: 'doStatement',
                     body: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       }
-                    },
-                    range: [6, 12]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   }
-                },
-                range: [3, 16]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 20
+                column: 21,
+                offset: 20
               }
-            },
-            range: [0, 20]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 20
+            column: 21,
+            offset: 20
           }
-        },
-        range: [0, 20],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do do do end; end; end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [
                   {
-                    type: 'DoStatement',
+                    type: 'doStatement',
                     body: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       }
-                    },
-                    range: [6, 12]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [3, 17]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 22
+                column: 23,
+                offset: 22
               }
-            },
-            range: [0, 22]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 22
+            column: 23,
+            offset: 22
           }
-        },
-        range: [0, 22],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do do do return end end end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [
                   {
-                    type: 'DoStatement',
+                    type: 'doStatement',
                     body: [
                       {
-                        type: 'ReturnStatement',
+                        type: 'returnStatement',
                         arguments: [],
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 9
+                            column: 10,
+                            offset: 9
                           },
                           end: {
                             line: 1,
-                            column: 15
+                            column: 16,
+                            offset: 15
                           }
-                        },
-                        range: [9, 15]
+                        }
                       }
                     ],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 19
+                        column: 20,
+                        offset: 19
                       }
-                    },
-                    range: [6, 19]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   }
-                },
-                range: [3, 23]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 27
+                column: 28,
+                offset: 27
               }
-            },
-            range: [0, 27]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 27
+            column: 28,
+            offset: 27
           }
-        },
-        range: [0, 27],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -791,53 +817,55 @@
     {
       source: 'do return end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'ReturnStatement',
+                type: 'returnStatement',
                 arguments: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [3, 9]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               }
-            },
-            range: [0, 13]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 13
+            column: 14,
+            offset: 13
           }
-        },
-        range: [0, 13],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -847,43 +875,40 @@
     {
       source: 'do ; end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 8
+                column: 9,
+                offset: 8
               }
-            },
-            range: [0, 8]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 8
+            column: 9,
+            offset: 8
           }
-        },
-        range: [0, 8],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     }

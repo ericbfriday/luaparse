@@ -11,23 +11,10 @@ var fixture = fs.readFileSync(
 )
 
 async function main() {
-  // Dynamic import required: adapter package is ESM-only.
-  var adapter = await import(
-    '../packages/luast-util-from-luaparse/dist/index.js'
-  )
-  var fromLuaparse = adapter.fromLuaparse
-
-  var nativeResult = luaparse.parse(fixture, {ast: 'luast'})
-  var adapterResult = fromLuaparse(
-    luaparse.parse(fixture, {locations: true, ranges: true, comments: true})
-  )
+  var nativeResult = luaparse.parse(fixture)
 
   if (nativeResult.type !== 'root') {
     throw new Error('Native emission did not produce a root node')
-  }
-
-  if (adapterResult.type !== 'root') {
-    throw new Error('Adapter path did not produce a root node')
   }
 
   console.log('Fixture: benchmarks/lib/ParseLua.lua (%d bytes)', fixture.length)
@@ -36,13 +23,11 @@ async function main() {
   var suite = new Benchmark.Suite('luast emission')
 
   suite
-    .add('native: parse(code, {ast: "luast"})', function () {
-      luaparse.parse(fixture, {ast: 'luast'})
+    .add('native: parse(code)', function () {
+      luaparse.parse(fixture)
     })
-    .add('adapter: fromLuaparse(parse(code, {...}))', function () {
-      fromLuaparse(
-        luaparse.parse(fixture, {locations: true, ranges: true, comments: true})
-      )
+    .add('native: parse(code, {comments: false})', function () {
+      luaparse.parse(fixture, {comments: false})
     })
     .on('cycle', function (event) {
       console.log(String(event.target))

@@ -28,88 +28,73 @@
     {
       source: 'a = {}',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   }
-                },
-                range: [4, 6]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 6
+                column: 7,
+                offset: 6
               }
-            },
-            range: [0, 6]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 6
+            column: 7,
+            offset: 6
           }
-        },
-        range: [0, 6],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
@@ -135,2185 +120,2003 @@
     {
       source: 'a = {{{}}}',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'TableConstructorExpression',
+                      type: 'tableConstructor',
                       fields: [
                         {
-                          type: 'TableValue',
+                          type: 'tableValue',
                           value: {
-                            type: 'TableConstructorExpression',
+                            type: 'tableConstructor',
                             fields: [],
-                            loc: {
+                            position: {
                               start: {
                                 line: 1,
-                                column: 6
+                                column: 7,
+                                offset: 6
                               },
                               end: {
                                 line: 1,
-                                column: 8
+                                column: 9,
+                                offset: 8
                               }
-                            },
-                            range: [6, 8]
+                            }
                           },
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 6
+                              column: 7,
+                              offset: 6
                             },
                             end: {
                               line: 1,
-                              column: 8
+                              column: 9,
+                              offset: 8
                             }
-                          },
-                          range: [6, 8]
+                          }
                         }
                       ],
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 5
+                          column: 6,
+                          offset: 5
                         },
                         end: {
                           line: 1,
-                          column: 9
+                          column: 10,
+                          offset: 9
                         }
-                      },
-                      range: [5, 9]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 5
+                        column: 6,
+                        offset: 5
                       },
                       end: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       }
-                    },
-                    range: [5, 9]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [4, 10]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 10
+                column: 11,
+                offset: 10
               }
-            },
-            range: [0, 10]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 10
+            column: 11,
+            offset: 10
           }
-        },
-        range: [0, 10],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = {{},{},{{}},}',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'TableConstructorExpression',
+                      type: 'tableConstructor',
                       fields: [],
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 5
+                          column: 6,
+                          offset: 5
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [5, 7]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 5
+                        column: 6,
+                        offset: 5
                       },
                       end: {
                         line: 1,
-                        column: 7
+                        column: 8,
+                        offset: 7
                       }
-                    },
-                    range: [5, 7]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'TableConstructorExpression',
+                      type: 'tableConstructor',
                       fields: [],
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 8
+                          column: 9,
+                          offset: 8
                         },
                         end: {
                           line: 1,
-                          column: 10
+                          column: 11,
+                          offset: 10
                         }
-                      },
-                      range: [8, 10]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 8
+                        column: 9,
+                        offset: 8
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [8, 10]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'TableConstructorExpression',
+                      type: 'tableConstructor',
                       fields: [
                         {
-                          type: 'TableValue',
+                          type: 'tableValue',
                           value: {
-                            type: 'TableConstructorExpression',
+                            type: 'tableConstructor',
                             fields: [],
-                            loc: {
+                            position: {
                               start: {
                                 line: 1,
-                                column: 12
+                                column: 13,
+                                offset: 12
                               },
                               end: {
                                 line: 1,
-                                column: 14
+                                column: 15,
+                                offset: 14
                               }
-                            },
-                            range: [12, 14]
+                            }
                           },
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 12
+                              column: 13,
+                              offset: 12
                             },
                             end: {
                               line: 1,
-                              column: 14
+                              column: 15,
+                              offset: 14
                             }
-                          },
-                          range: [12, 14]
+                          }
                         }
                       ],
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 11
+                          column: 12,
+                          offset: 11
                         },
                         end: {
                           line: 1,
-                          column: 15
+                          column: 16,
+                          offset: 15
                         }
-                      },
-                      range: [11, 15]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 11
+                        column: 12,
+                        offset: 11
                       },
                       end: {
                         line: 1,
-                        column: 15
+                        column: 16,
+                        offset: 15
                       }
-                    },
-                    range: [11, 15]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [4, 17]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 17
+                column: 18,
+                offset: 17
               }
-            },
-            range: [0, 17]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 17
+            column: 18,
+            offset: 17
           }
-        },
-        range: [0, 17],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { 1 }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [6, 7]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 7
+                        column: 8,
+                        offset: 7
                       }
-                    },
-                    range: [6, 7]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [4, 9]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 9
+                column: 10,
+                offset: 9
               }
-            },
-            range: [0, 9]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 9
+            column: 10,
+            offset: 9
           }
-        },
-        range: [0, 9],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { 1, }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [6, 7]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 7
+                        column: 8,
+                        offset: 7
                       }
-                    },
-                    range: [6, 7]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [4, 10]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 10
+                column: 11,
+                offset: 10
               }
-            },
-            range: [0, 10]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 10
+            column: 11,
+            offset: 10
           }
-        },
-        range: [0, 10],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { 1; }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [6, 7]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 7
+                        column: 8,
+                        offset: 7
                       }
-                    },
-                    range: [6, 7]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [4, 10]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 10
+                column: 11,
+                offset: 10
               }
-            },
-            range: [0, 10]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 10
+            column: 11,
+            offset: 10
           }
-        },
-        range: [0, 10],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { 1, 2 }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [6, 7]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 7
+                        column: 8,
+                        offset: 7
                       }
-                    },
-                    range: [6, 7]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 2,
                       raw: '2',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 9
+                          column: 10,
+                          offset: 9
                         },
                         end: {
                           line: 1,
-                          column: 10
+                          column: 11,
+                          offset: 10
                         }
-                      },
-                      range: [9, 10]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [9, 10]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   }
-                },
-                range: [4, 12]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 12
+                column: 13,
+                offset: 12
               }
-            },
-            range: [0, 12]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 12
+            column: 13,
+            offset: 12
           }
-        },
-        range: [0, 12],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { a, b, c, }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'a',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [6, 7],
-                      isLocal: false
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 7
+                        column: 8,
+                        offset: 7
                       }
-                    },
-                    range: [6, 7]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'b',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 9
+                          column: 10,
+                          offset: 9
                         },
                         end: {
                           line: 1,
-                          column: 10
+                          column: 11,
+                          offset: 10
                         }
-                      },
-                      range: [9, 10],
-                      isLocal: false
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [9, 10]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'c',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         },
                         end: {
                           line: 1,
-                          column: 13
+                          column: 14,
+                          offset: 13
                         }
-                      },
-                      range: [12, 13],
-                      isLocal: false
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       },
                       end: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       }
-                    },
-                    range: [12, 13]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   }
-                },
-                range: [4, 16]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 16
+                column: 17,
+                offset: 16
               }
-            },
-            range: [0, 16]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 16
+            column: 17,
+            offset: 16
           }
-        },
-        range: [0, 16],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          },
-          {
-            type: 'Identifier',
-            name: 'b',
-            loc: {
-              start: {
-                line: 1,
-                column: 9
-              },
-              end: {
-                line: 1,
-                column: 10
-              }
-            },
-            range: [9, 10],
-            isLocal: false
-          },
-          {
-            type: 'Identifier',
-            name: 'c',
-            loc: {
-              start: {
-                line: 1,
-                column: 12
-              },
-              end: {
-                line: 1,
-                column: 13
-              }
-            },
-            range: [12, 13],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { true; false, nil; }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'BooleanLiteral',
+                      type: 'booleanLiteral',
                       value: true,
                       raw: 'true',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 10
+                          column: 11,
+                          offset: 10
                         }
-                      },
-                      range: [6, 10]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [6, 10]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'BooleanLiteral',
+                      type: 'booleanLiteral',
                       value: false,
                       raw: 'false',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         },
                         end: {
                           line: 1,
-                          column: 17
+                          column: 18,
+                          offset: 17
                         }
-                      },
-                      range: [12, 17]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       },
                       end: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       }
-                    },
-                    range: [12, 17]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'NilLiteral',
+                      type: 'nilLiteral',
                       value: null,
                       raw: 'nil',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 19
+                          column: 20,
+                          offset: 19
                         },
                         end: {
                           line: 1,
-                          column: 22
+                          column: 23,
+                          offset: 22
                         }
-                      },
-                      range: [19, 22]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 19
+                        column: 20,
+                        offset: 19
                       },
                       end: {
                         line: 1,
-                        column: 22
+                        column: 23,
+                        offset: 22
                       }
-                    },
-                    range: [19, 22]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   }
-                },
-                range: [4, 25]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 25
+                column: 26,
+                offset: 25
               }
-            },
-            range: [0, 25]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 25
+            column: 26,
+            offset: 25
           }
-        },
-        range: [0, 25],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { a.b, a[b]; a:c(), }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'MemberExpression',
+                      type: 'memberExpression',
                       indexer: '.',
                       identifier: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 8
+                            column: 9,
+                            offset: 8
                           },
                           end: {
                             line: 1,
-                            column: 9
+                            column: 10,
+                            offset: 9
                           }
-                        },
-                        range: [8, 9]
+                        }
                       },
                       base: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 6
+                            column: 7,
+                            offset: 6
                           },
                           end: {
                             line: 1,
-                            column: 7
+                            column: 8,
+                            offset: 7
                           }
-                        },
-                        range: [6, 7],
-                        isLocal: false
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 9
+                          column: 10,
+                          offset: 9
                         }
-                      },
-                      range: [6, 9]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       }
-                    },
-                    range: [6, 9]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'IndexExpression',
+                      type: 'indexExpression',
                       base: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 11
+                            column: 12,
+                            offset: 11
                           },
                           end: {
                             line: 1,
-                            column: 12
+                            column: 13,
+                            offset: 12
                           }
-                        },
-                        range: [11, 12],
-                        isLocal: false
+                        }
                       },
                       index: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 13
+                            column: 14,
+                            offset: 13
                           },
                           end: {
                             line: 1,
-                            column: 14
+                            column: 15,
+                            offset: 14
                           }
-                        },
-                        range: [13, 14],
-                        isLocal: false
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 11
+                          column: 12,
+                          offset: 11
                         },
                         end: {
                           line: 1,
-                          column: 15
+                          column: 16,
+                          offset: 15
                         }
-                      },
-                      range: [11, 15]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 11
+                        column: 12,
+                        offset: 11
                       },
                       end: {
                         line: 1,
-                        column: 15
+                        column: 16,
+                        offset: 15
                       }
-                    },
-                    range: [11, 15]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'CallExpression',
+                      type: 'callExpression',
                       base: {
-                        type: 'MemberExpression',
+                        type: 'memberExpression',
                         indexer: ':',
                         identifier: {
-                          type: 'Identifier',
+                          type: 'identifier',
                           name: 'c',
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 19
+                              column: 20,
+                              offset: 19
                             },
                             end: {
                               line: 1,
-                              column: 20
+                              column: 21,
+                              offset: 20
                             }
-                          },
-                          range: [19, 20]
+                          }
                         },
                         base: {
-                          type: 'Identifier',
+                          type: 'identifier',
                           name: 'a',
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 17
+                              column: 18,
+                              offset: 17
                             },
                             end: {
                               line: 1,
-                              column: 18
+                              column: 19,
+                              offset: 18
                             }
-                          },
-                          range: [17, 18],
-                          isLocal: false
+                          }
                         },
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           },
                           end: {
                             line: 1,
-                            column: 20
+                            column: 21,
+                            offset: 20
                           }
-                        },
-                        range: [17, 20]
+                        }
                       },
                       arguments: [],
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 17
+                          column: 18,
+                          offset: 17
                         },
                         end: {
                           line: 1,
-                          column: 22
+                          column: 23,
+                          offset: 22
                         }
-                      },
-                      range: [17, 22]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       },
                       end: {
                         line: 1,
-                        column: 22
+                        column: 23,
+                        offset: 22
                       }
-                    },
-                    range: [17, 22]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   }
-                },
-                range: [4, 25]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 25
+                column: 26,
+                offset: 25
               }
-            },
-            range: [0, 25]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 25
+            column: 26,
+            offset: 25
           }
-        },
-        range: [0, 25],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          },
-          {
-            type: 'Identifier',
-            name: 'b',
-            loc: {
-              start: {
-                line: 1,
-                column: 13
-              },
-              end: {
-                line: 1,
-                column: 14
-              }
-            },
-            range: [13, 14],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { 1 + 2, a > b, "a" or "b" }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'BinaryExpression',
+                      type: 'binaryExpression',
                       operator: '+',
                       left: {
-                        type: 'NumericLiteral',
+                        type: 'numericLiteral',
                         value: 1,
                         raw: '1',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 6
+                            column: 7,
+                            offset: 6
                           },
                           end: {
                             line: 1,
-                            column: 7
+                            column: 8,
+                            offset: 7
                           }
-                        },
-                        range: [6, 7]
+                        }
                       },
                       right: {
-                        type: 'NumericLiteral',
+                        type: 'numericLiteral',
                         value: 2,
                         raw: '2',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 10
+                            column: 11,
+                            offset: 10
                           },
                           end: {
                             line: 1,
-                            column: 11
+                            column: 12,
+                            offset: 11
                           }
-                        },
-                        range: [10, 11]
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 11
+                          column: 12,
+                          offset: 11
                         }
-                      },
-                      range: [6, 11]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 11
+                        column: 12,
+                        offset: 11
                       }
-                    },
-                    range: [6, 11]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'BinaryExpression',
+                      type: 'binaryExpression',
                       operator: '>',
                       left: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 13
+                            column: 14,
+                            offset: 13
                           },
                           end: {
                             line: 1,
-                            column: 14
+                            column: 15,
+                            offset: 14
                           }
-                        },
-                        range: [13, 14],
-                        isLocal: false
+                        }
                       },
                       right: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           },
                           end: {
                             line: 1,
-                            column: 18
+                            column: 19,
+                            offset: 18
                           }
-                        },
-                        range: [17, 18],
-                        isLocal: false
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 13
+                          column: 14,
+                          offset: 13
                         },
                         end: {
                           line: 1,
-                          column: 18
+                          column: 19,
+                          offset: 18
                         }
-                      },
-                      range: [13, 18]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       },
                       end: {
                         line: 1,
-                        column: 18
+                        column: 19,
+                        offset: 18
                       }
-                    },
-                    range: [13, 18]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'LogicalExpression',
+                      type: 'logicalExpression',
                       operator: 'or',
                       left: {
-                        type: 'StringLiteral',
+                        type: 'stringLiteral',
                         value: null,
                         raw: '"a"',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 20
+                            column: 21,
+                            offset: 20
                           },
                           end: {
                             line: 1,
-                            column: 23
+                            column: 24,
+                            offset: 23
                           }
-                        },
-                        range: [20, 23]
+                        }
                       },
                       right: {
-                        type: 'StringLiteral',
+                        type: 'stringLiteral',
                         value: null,
                         raw: '"b"',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 27
+                            column: 28,
+                            offset: 27
                           },
                           end: {
                             line: 1,
-                            column: 30
+                            column: 31,
+                            offset: 30
                           }
-                        },
-                        range: [27, 30]
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 20
+                          column: 21,
+                          offset: 20
                         },
                         end: {
                           line: 1,
-                          column: 30
+                          column: 31,
+                          offset: 30
                         }
-                      },
-                      range: [20, 30]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 20
+                        column: 21,
+                        offset: 20
                       },
                       end: {
                         line: 1,
-                        column: 30
+                        column: 31,
+                        offset: 30
                       }
-                    },
-                    range: [20, 30]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 32
+                    column: 33,
+                    offset: 32
                   }
-                },
-                range: [4, 32]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 32
+                column: 33,
+                offset: 32
               }
-            },
-            range: [0, 32]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 32
+            column: 33,
+            offset: 32
           }
-        },
-        range: [0, 32],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          },
-          {
-            type: 'Identifier',
-            name: 'b',
-            loc: {
-              start: {
-                line: 1,
-                column: 17
-              },
-              end: {
-                line: 1,
-                column: 18
-              }
-            },
-            range: [17, 18],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { a=1, }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableKeyString',
+                    type: 'tableKeyString',
                     key: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'a',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [6, 7]
+                      }
                     },
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 8
+                          column: 9,
+                          offset: 8
                         },
                         end: {
                           line: 1,
-                          column: 9
+                          column: 10,
+                          offset: 9
                         }
-                      },
-                      range: [8, 9]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       }
-                    },
-                    range: [6, 9]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   }
-                },
-                range: [4, 12]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 12
+                column: 13,
+                offset: 12
               }
-            },
-            range: [0, 12]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 12
+            column: 13,
+            offset: 12
           }
-        },
-        range: [0, 12],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { a=1, b="foo", c=nil }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableKeyString',
+                    type: 'tableKeyString',
                     key: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'a',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [6, 7]
+                      }
                     },
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 8
+                          column: 9,
+                          offset: 8
                         },
                         end: {
                           line: 1,
-                          column: 9
+                          column: 10,
+                          offset: 9
                         }
-                      },
-                      range: [8, 9]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       }
-                    },
-                    range: [6, 9]
+                    }
                   },
                   {
-                    type: 'TableKeyString',
+                    type: 'tableKeyString',
                     key: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'b',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 11
+                          column: 12,
+                          offset: 11
                         },
                         end: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         }
-                      },
-                      range: [11, 12]
+                      }
                     },
                     value: {
-                      type: 'StringLiteral',
+                      type: 'stringLiteral',
                       value: null,
                       raw: '"foo"',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 13
+                          column: 14,
+                          offset: 13
                         },
                         end: {
                           line: 1,
-                          column: 18
+                          column: 19,
+                          offset: 18
                         }
-                      },
-                      range: [13, 18]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 11
+                        column: 12,
+                        offset: 11
                       },
                       end: {
                         line: 1,
-                        column: 18
+                        column: 19,
+                        offset: 18
                       }
-                    },
-                    range: [11, 18]
+                    }
                   },
                   {
-                    type: 'TableKeyString',
+                    type: 'tableKeyString',
                     key: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'c',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 20
+                          column: 21,
+                          offset: 20
                         },
                         end: {
                           line: 1,
-                          column: 21
+                          column: 22,
+                          offset: 21
                         }
-                      },
-                      range: [20, 21]
+                      }
                     },
                     value: {
-                      type: 'NilLiteral',
+                      type: 'nilLiteral',
                       value: null,
                       raw: 'nil',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 22
+                          column: 23,
+                          offset: 22
                         },
                         end: {
                           line: 1,
-                          column: 25
+                          column: 26,
+                          offset: 25
                         }
-                      },
-                      range: [22, 25]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 20
+                        column: 21,
+                        offset: 20
                       },
                       end: {
                         line: 1,
-                        column: 25
+                        column: 26,
+                        offset: 25
                       }
-                    },
-                    range: [20, 25]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 27
+                    column: 28,
+                    offset: 27
                   }
-                },
-                range: [4, 27]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 27
+                column: 28,
+                offset: 27
               }
-            },
-            range: [0, 27]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 27
+            column: 28,
+            offset: 27
           }
-        },
-        range: [0, 27],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
@@ -2339,253 +2142,249 @@
     {
       source: 'a = { 1, a="foo"; b={}, d=true; }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         }
-                      },
-                      range: [6, 7]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 7
+                        column: 8,
+                        offset: 7
                       }
-                    },
-                    range: [6, 7]
+                    }
                   },
                   {
-                    type: 'TableKeyString',
+                    type: 'tableKeyString',
                     key: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'a',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 9
+                          column: 10,
+                          offset: 9
                         },
                         end: {
                           line: 1,
-                          column: 10
+                          column: 11,
+                          offset: 10
                         }
-                      },
-                      range: [9, 10]
+                      }
                     },
                     value: {
-                      type: 'StringLiteral',
+                      type: 'stringLiteral',
                       value: null,
                       raw: '"foo"',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 11
+                          column: 12,
+                          offset: 11
                         },
                         end: {
                           line: 1,
-                          column: 16
+                          column: 17,
+                          offset: 16
                         }
-                      },
-                      range: [11, 16]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       }
-                    },
-                    range: [9, 16]
+                    }
                   },
                   {
-                    type: 'TableKeyString',
+                    type: 'tableKeyString',
                     key: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'b',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 18
+                          column: 19,
+                          offset: 18
                         },
                         end: {
                           line: 1,
-                          column: 19
+                          column: 20,
+                          offset: 19
                         }
-                      },
-                      range: [18, 19]
+                      }
                     },
                     value: {
-                      type: 'TableConstructorExpression',
+                      type: 'tableConstructor',
                       fields: [],
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 20
+                          column: 21,
+                          offset: 20
                         },
                         end: {
                           line: 1,
-                          column: 22
+                          column: 23,
+                          offset: 22
                         }
-                      },
-                      range: [20, 22]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 18
+                        column: 19,
+                        offset: 18
                       },
                       end: {
                         line: 1,
-                        column: 22
+                        column: 23,
+                        offset: 22
                       }
-                    },
-                    range: [18, 22]
+                    }
                   },
                   {
-                    type: 'TableKeyString',
+                    type: 'tableKeyString',
                     key: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'd',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 24
+                          column: 25,
+                          offset: 24
                         },
                         end: {
                           line: 1,
-                          column: 25
+                          column: 26,
+                          offset: 25
                         }
-                      },
-                      range: [24, 25]
+                      }
                     },
                     value: {
-                      type: 'BooleanLiteral',
+                      type: 'booleanLiteral',
                       value: true,
                       raw: 'true',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 26
+                          column: 27,
+                          offset: 26
                         },
                         end: {
                           line: 1,
-                          column: 30
+                          column: 31,
+                          offset: 30
                         }
-                      },
-                      range: [26, 30]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 24
+                        column: 25,
+                        offset: 24
                       },
                       end: {
                         line: 1,
-                        column: 30
+                        column: 31,
+                        offset: 30
                       }
-                    },
-                    range: [24, 30]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 33
+                    column: 34,
+                    offset: 33
                   }
-                },
-                range: [4, 33]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 33
+                column: 34,
+                offset: 33
               }
-            },
-            range: [0, 33]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 33
+            column: 34,
+            offset: 33
           }
-        },
-        range: [0, 33],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
@@ -2607,540 +2406,494 @@
     {
       source: 'a = { ["foo"]="bar" }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableKey',
+                    type: 'tableKey',
                     key: {
-                      type: 'StringLiteral',
+                      type: 'stringLiteral',
                       value: null,
                       raw: '"foo"',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         },
                         end: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         }
-                      },
-                      range: [7, 12]
+                      }
                     },
                     value: {
-                      type: 'StringLiteral',
+                      type: 'stringLiteral',
                       value: null,
                       raw: '"bar"',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 14
+                          column: 15,
+                          offset: 14
                         },
                         end: {
                           line: 1,
-                          column: 19
+                          column: 20,
+                          offset: 19
                         }
-                      },
-                      range: [14, 19]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 19
+                        column: 20,
+                        offset: 19
                       }
-                    },
-                    range: [6, 19]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 21
+                    column: 22,
+                    offset: 21
                   }
-                },
-                range: [4, 21]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 21
+                column: 22,
+                offset: 21
               }
-            },
-            range: [0, 21]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 21
+            column: 22,
+            offset: 21
           }
-        },
-        range: [0, 21],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { [1]=a, [2]=b, }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableKey',
+                    type: 'tableKey',
                     key: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 7
+                          column: 8,
+                          offset: 7
                         },
                         end: {
                           line: 1,
-                          column: 8
+                          column: 9,
+                          offset: 8
                         }
-                      },
-                      range: [7, 8]
+                      }
                     },
                     value: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'a',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 10
+                          column: 11,
+                          offset: 10
                         },
                         end: {
                           line: 1,
-                          column: 11
+                          column: 12,
+                          offset: 11
                         }
-                      },
-                      range: [10, 11],
-                      isLocal: false
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 11
+                        column: 12,
+                        offset: 11
                       }
-                    },
-                    range: [6, 11]
+                    }
                   },
                   {
-                    type: 'TableKey',
+                    type: 'tableKey',
                     key: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 2,
                       raw: '2',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 14
+                          column: 15,
+                          offset: 14
                         },
                         end: {
                           line: 1,
-                          column: 15
+                          column: 16,
+                          offset: 15
                         }
-                      },
-                      range: [14, 15]
+                      }
                     },
                     value: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'b',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 17
+                          column: 18,
+                          offset: 17
                         },
                         end: {
                           line: 1,
-                          column: 18
+                          column: 19,
+                          offset: 18
                         }
-                      },
-                      range: [17, 18],
-                      isLocal: false
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       },
                       end: {
                         line: 1,
-                        column: 18
+                        column: 19,
+                        offset: 18
                       }
-                    },
-                    range: [13, 18]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 21
+                    column: 22,
+                    offset: 21
                   }
-                },
-                range: [4, 21]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 21
+                column: 22,
+                offset: 21
               }
-            },
-            range: [0, 21]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 21
+            column: 22,
+            offset: 21
           }
-        },
-        range: [0, 21],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          },
-          {
-            type: 'Identifier',
-            name: 'b',
-            loc: {
-              start: {
-                line: 1,
-                column: 17
-              },
-              end: {
-                line: 1,
-                column: 18
-              }
-            },
-            range: [17, 18],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'a = { true, a=1; ["foo"]="bar", }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 1
+                    column: 2,
+                    offset: 1
                   }
-                },
-                range: [0, 1],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'BooleanLiteral',
+                      type: 'booleanLiteral',
                       value: true,
                       raw: 'true',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 6
+                          column: 7,
+                          offset: 6
                         },
                         end: {
                           line: 1,
-                          column: 10
+                          column: 11,
+                          offset: 10
                         }
-                      },
-                      range: [6, 10]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 6
+                        column: 7,
+                        offset: 6
                       },
                       end: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       }
-                    },
-                    range: [6, 10]
+                    }
                   },
                   {
-                    type: 'TableKeyString',
+                    type: 'tableKeyString',
                     key: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'a',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         },
                         end: {
                           line: 1,
-                          column: 13
+                          column: 14,
+                          offset: 13
                         }
-                      },
-                      range: [12, 13]
+                      }
                     },
                     value: {
-                      type: 'NumericLiteral',
+                      type: 'numericLiteral',
                       value: 1,
                       raw: '1',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 14
+                          column: 15,
+                          offset: 14
                         },
                         end: {
                           line: 1,
-                          column: 15
+                          column: 16,
+                          offset: 15
                         }
-                      },
-                      range: [14, 15]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       },
                       end: {
                         line: 1,
-                        column: 15
+                        column: 16,
+                        offset: 15
                       }
-                    },
-                    range: [12, 15]
+                    }
                   },
                   {
-                    type: 'TableKey',
+                    type: 'tableKey',
                     key: {
-                      type: 'StringLiteral',
+                      type: 'stringLiteral',
                       value: null,
                       raw: '"foo"',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 18
+                          column: 19,
+                          offset: 18
                         },
                         end: {
                           line: 1,
-                          column: 23
+                          column: 24,
+                          offset: 23
                         }
-                      },
-                      range: [18, 23]
+                      }
                     },
                     value: {
-                      type: 'StringLiteral',
+                      type: 'stringLiteral',
                       value: null,
                       raw: '"bar"',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 25
+                          column: 26,
+                          offset: 25
                         },
                         end: {
                           line: 1,
-                          column: 30
+                          column: 31,
+                          offset: 30
                         }
-                      },
-                      range: [25, 30]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       },
                       end: {
                         line: 1,
-                        column: 30
+                        column: 31,
+                        offset: 30
                       }
-                    },
-                    range: [17, 30]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 4
+                    column: 5,
+                    offset: 4
                   },
                   end: {
                     line: 1,
-                    column: 33
+                    column: 34,
+                    offset: 33
                   }
-                },
-                range: [4, 33]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 33
+                column: 34,
+                offset: 33
               }
-            },
-            range: [0, 33]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 33
+            column: 34,
+            offset: 33
           }
-        },
-        range: [0, 33],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 0
-              },
-              end: {
-                line: 1,
-                column: 1
-              }
-            },
-            range: [0, 1],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {

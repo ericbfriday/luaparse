@@ -53,7 +53,7 @@
 }(this, 'luaparse', function (exports) {
   'use strict';
 
-  exports.version = "0.1.0";
+  exports.version = "0.4.0";
 
   var input, options, length, features, encodingMode;
   var parserActive = false;
@@ -67,17 +67,12 @@
   var defaultOptions = exports.defaultOptions = {
     // Explicitly tell the parser when the input ends.
       wait: false
-    // Store comments as an array in the chunk object.
+    // Store comments as an array on the root node.
     , comments: true
-    // Track identifier scopes by adding an isLocal attribute to each
-    // identifier-node.
+    // Track identifier scopes while parsing. Scope information drives the
+    // onCreateScope / onDestroyScope / onLocalDeclaration callbacks; it is
+    // not stored on the tree. Use luast-util-scope for scope analysis.
     , scope: false
-    // Store location information on each syntax node as
-    // `loc: { start: { line, column }, end: { line, column } }`.
-    , locations: false
-    // Store the start and end character locations on each syntax node as
-    // `range: [start, end]`.
-    , ranges: false
     // A callback which will be invoked when a syntax node has been completed.
     // The node which has been created will be passed as the only parameter.
     , onCreateNode: null
@@ -93,52 +88,9 @@
     , luaVersion: '5.1'
     // Encoding mode: how to interpret code units higher than U+007F in input
     , encodingMode: 'none'
-    , ast: 'legacy'
     // The maximum allowed size of the input before parsing begins
     , maxInputLength: 0
   };
-
-  var luastTypeMap = {
-      'LabelStatement': 'labelStatement'
-    , 'BreakStatement': 'breakStatement'
-    , 'GotoStatement': 'gotoStatement'
-    , 'ReturnStatement': 'returnStatement'
-    , 'IfStatement': 'ifStatement'
-    , 'IfClause': 'ifClause'
-    , 'ElseifClause': 'elseifClause'
-    , 'ElseClause': 'elseClause'
-    , 'WhileStatement': 'whileStatement'
-    , 'DoStatement': 'doStatement'
-    , 'RepeatStatement': 'repeatStatement'
-    , 'LocalStatement': 'localStatement'
-    , 'AssignmentStatement': 'assignmentStatement'
-    , 'CallStatement': 'callStatement'
-    , 'FunctionDeclaration': 'functionDeclaration'
-    , 'ForNumericStatement': 'forNumericStatement'
-    , 'ForGenericStatement': 'forGenericStatement'
-    , 'Chunk': 'root'
-    , 'Identifier': 'identifier'
-    , 'StringLiteral': 'stringLiteral'
-    , 'NumericLiteral': 'numericLiteral'
-    , 'BooleanLiteral': 'booleanLiteral'
-    , 'NilLiteral': 'nilLiteral'
-    , 'VarargLiteral': 'varargLiteral'
-    , 'BinaryExpression': 'binaryExpression'
-    , 'LogicalExpression': 'logicalExpression'
-    , 'UnaryExpression': 'unaryExpression'
-    , 'MemberExpression': 'memberExpression'
-    , 'IndexExpression': 'indexExpression'
-    , 'CallExpression': 'callExpression'
-    , 'TableCallExpression': 'tableCallExpression'
-    , 'StringCallExpression': 'stringCallExpression'
-    , 'TableConstructorExpression': 'tableConstructor'
-    , 'TableKey': 'tableKey'
-    , 'TableKeyString': 'tableKeyString'
-    , 'TableValue': 'tableValue'
-    , 'Comment': 'comment'
-  };
-
-  var luastMode;
 
   function encodeUTF8(codepoint, highMask) {
     highMask = highMask || 0;
@@ -272,67 +224,69 @@
 
   // ### Abstract Syntax Tree
   //
-  // The default AST structure is inspired by the Mozilla Parser API but can
-  // easily be customized by overriding these functions.
+  // The AST is a luast tree: a Lua-specific implementation of the unist
+  // syntax-tree spec. Node types are camelCase, positions are stored as
+  // unist `position` objects, and comments live on `root.comments`.
+  // The structure can be customized by overriding these functions.
 
   var ast = exports.ast = {
       labelStatement: function(label) {
       return {
-          type: 'LabelStatement'
+          type: 'labelStatement'
         , label: label
       };
     }
 
     , breakStatement: function() {
       return {
-          type: 'BreakStatement'
+          type: 'breakStatement'
       };
     }
 
     , gotoStatement: function(label) {
       return {
-          type: 'GotoStatement'
+          type: 'gotoStatement'
         , label: label
       };
     }
 
     , returnStatement: function(args) {
       return {
-          type: 'ReturnStatement'
+          type: 'returnStatement'
         , 'arguments': args
       };
     }
 
     , ifStatement: function(clauses) {
       return {
-          type: 'IfStatement'
+          type: 'ifStatement'
         , clauses: clauses
       };
     }
     , ifClause: function(condition, body) {
       return {
-          type: 'IfClause'
+          type: 'ifClause'
         , condition: condition
         , body: body
       };
     }
     , elseifClause: function(condition, body) {
       return {
-          type: 'ElseifClause'
+          type: 'elseifClause'
         , condition: condition
         , body: body
       };
     }
     , elseClause: function(body) {
       return {
-          type: 'ElseClause'
+          type: 'elseClause'
         , body: body
       };
     }
 
     , whileStatement: function(condition, body) {
       return {
-          type: 'WhileStatement'
+          type: 'whileStatement'
         , condition: condition
         , body: body
       };
@@ -340,14 +294,14 @@
 
     , doStatement: function(body) {
       return {
-          type: 'DoStatement'
+          type: 'doStatement'
         , body: body
       };
     }
 
     , repeatStatement: function(condition, body) {
       return {
-          type: 'RepeatStatement'
+          type: 'repeatStatement'
         , condition: condition
         , body: body
       };
@@ -355,7 +309,7 @@
 
     , localStatement: function(variables, init) {
       return {
-          type: 'LocalStatement'
+          type: 'localStatement'
         , variables: variables
         , init: init
       };
@@ -363,7 +317,7 @@
 
     , assignmentStatement: function(variables, init) {
       return {
-          type: 'AssignmentStatement'
+          type: 'assignmentStatement'
         , variables: variables
         , init: init
       };
@@ -371,26 +325,24 @@
 
     , callStatement: function(expression) {
       return {
-          type: 'CallStatement'
+          type: 'callStatement'
         , expression: expression
       };
     }
 
     , functionStatement: function(identifier, parameters, isLocal, body) {
-      var node = {
-          type: 'FunctionDeclaration'
+      return {
+          type: 'functionDeclaration'
         , identifier: identifier
         , parameters: parameters
         , body: body
+        , local: isLocal
       };
-      if (luastMode) node.local = isLocal;
-      else node.isLocal = isLocal;
-      return node;
     }
 
     , forNumericStatement: function(variable, start, end, step, body) {
       return {
-          type: 'ForNumericStatement'
+          type: 'forNumericStatement'
         , variable: variable
         , start: start
         , end: end
@@ -401,33 +353,33 @@
 
     , forGenericStatement: function(variables, iterators, body) {
       return {
-          type: 'ForGenericStatement'
+          type: 'forGenericStatement'
         , variables: variables
         , iterators: iterators
         , body: body
       };
     }
 
-    , chunk: function(body) {
+    , root: function(body) {
       return {
-          type: 'Chunk'
+          type: 'root'
         , body: body
       };
     }
 
     , identifier: function(name) {
       return {
-          type: 'Identifier'
+          type: 'identifier'
         , name: name
       };
     }
 
     , literal: function(type, value, raw) {
-      type = (type === StringLiteral) ? 'StringLiteral'
-        : (type === NumericLiteral) ? 'NumericLiteral'
-        : (type === BooleanLiteral) ? 'BooleanLiteral'
-        : (type === NilLiteral) ? 'NilLiteral'
-        : 'VarargLiteral';
+      type = (type === StringLiteral) ? 'stringLiteral'
+        : (type === NumericLiteral) ? 'numericLiteral'
+        : (type === BooleanLiteral) ? 'booleanLiteral'
+        : (type === NilLiteral) ? 'nilLiteral'
+        : 'varargLiteral';
 
       return {
           type: type
@@ -438,21 +390,21 @@
 
     , tableKey: function(key, value) {
       return {
-          type: 'TableKey'
+          type: 'tableKey'
         , key: key
         , value: value
       };
     }
     , tableKeyString: function(key, value) {
       return {
-          type: 'TableKeyString'
+          type: 'tableKeyString'
         , key: key
         , value: value
       };
     }
     , tableValue: function(value) {
       return {
-          type: 'TableValue'
+          type: 'tableValue'
         , value: value
       };
     }
@@ -460,14 +412,14 @@
 
     , tableConstructorExpression: function(fields) {
       return {
-          type: 'TableConstructorExpression'
+          type: 'tableConstructor'
         , fields: fields
       };
     }
     , binaryExpression: function(operator, left, right) {
       var type = ('and' === operator || 'or' === operator) ?
-        'LogicalExpression' :
-        'BinaryExpression';
+        'logicalExpression' :
+        'binaryExpression';
 
       return {
           type: type
@@ -478,14 +430,14 @@
     }
     , unaryExpression: function(operator, argument) {
       return {
-          type: 'UnaryExpression'
+          type: 'unaryExpression'
         , operator: operator
         , argument: argument
       };
     }
     , memberExpression: function(base, indexer, identifier) {
       return {
-          type: 'MemberExpression'
+          type: 'memberExpression'
         , indexer: indexer
         , identifier: identifier
         , base: base
@@ -494,7 +446,7 @@
 
     , indexExpression: function(base, index) {
       return {
-          type: 'IndexExpression'
+          type: 'indexExpression'
         , base: base
         , index: index
       };
@@ -502,25 +454,23 @@
 
     , callExpression: function(base, args) {
       return {
-          type: 'CallExpression'
+          type: 'callExpression'
         , base: base
         , 'arguments': args
       };
     }
 
     , tableCallExpression: function(base, args) {
-      var node = {
-          type: 'TableCallExpression'
+      return {
+          type: 'tableCallExpression'
         , base: base
         , argument: args
       };
-      if (!luastMode) node['arguments'] = args;
-      return node;
     }
 
     , stringCallExpression: function(base, argument) {
       return {
-          type: 'StringCallExpression'
+          type: 'stringCallExpression'
         , base: base
         , argument: argument
       };
@@ -528,7 +478,7 @@
 
     , comment: function(value, raw) {
       return {
-          type: 'Comment'
+          type: 'comment'
         , value: value
         , raw: raw
       };
@@ -539,14 +489,9 @@
 
   function finishNode(node) {
     // Pop a `Marker` off the location-array and attach its location data.
-    if (trackLocations) {
-      var location = locations.pop();
-      location.complete();
-      location.bless(node);
-    }
-    if (luastMode) {
-      node.type = luastTypeMap[node.type] || node.type;
-    }
+    var location = locations.pop();
+    location.complete();
+    location.bless(node);
     if (options.onCreateNode) options.onCreateNode(node);
     return node;
   }
@@ -1342,25 +1287,12 @@
     if (options.comments) {
       var node = ast.comment(content, input.slice(tokenStart, index));
 
-      if (luastMode) {
-        node.type = 'comment';
-        node.position = {
-            start: { line: lineComment, column: tokenStart - lineStartComment + 1, offset: tokenStart }
-          , end: { line: line, column: index - lineStart + 1, offset: index }
-        };
-      } else {
-        // `Marker`s depend on tokens available in the parser and as comments are
-        // intercepted in the lexer all location data is set manually.
-        if (options.locations) {
-          node.loc = {
-              start: { line: lineComment, column: tokenStart - lineStartComment }
-            , end: { line: line, column: index - lineStart }
-          };
-        }
-        if (options.ranges) {
-          node.range = [tokenStart, index];
-        }
-      }
+      // `Marker`s depend on tokens available in the parser and as comments are
+      // intercepted in the lexer all location data is set manually.
+      node.position = {
+          start: { line: lineComment, column: tokenStart - lineStartComment + 1, offset: tokenStart }
+        , end: { line: line, column: index - lineStart + 1, offset: index }
+      };
       if (options.onCreateNode) options.onCreateNode(node);
       comments.push(node);
     }
@@ -1538,11 +1470,7 @@
   // Store each block scope as a dictionary of identifier names.
   var scopes
     // The current scope index
-    , scopeDepth
-    // A list of all global identifier nodes.
-    , globals
-    // Bolt: A dictionary of all global identifier nodes for fast O(1) lookup
-    , globalsMap;
+    , scopeDepth;
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
@@ -1572,116 +1500,70 @@
   // Add identifier to the current scope
   function scopeIdentifier(node) {
     scopeIdentifierName(node.name);
-    attachScope(node, true);
-  }
-
-  // Attach scope information to node. If the node is global, store it in the
-  // globals array so we can return the information to the user.
-  function attachScope(node, isLocal) {
-    if (luastMode) return;
-    // Bolt: Use O(1) dictionary lookup instead of O(N) array search
-    if (!isLocal && !Object.prototype.hasOwnProperty.call(globalsMap, node.name)) {
-      globals.push(node);
-      globalsMap[node.name] = true;
-    }
-
-    node.isLocal = isLocal;
-  }
-
-  // Is the identifier name available in this scope.
-  function scopeHasName(name) {
-    return !!scopes[scopeDepth][name];
   }
 
   // Location tracking
   // -----------------
   //
-  // Locations are stored in FILO-array as a `Marker` object consisting of both
-  // `loc` and `range` data. Once a `Marker` is popped off the list an end
-  // location is added and the data is attached to a syntax node.
+  // Locations are stored in a FILO array of `Marker` objects. Once a `Marker`
+  // is popped off the list an end location is added and a unist `position` is
+  // attached to the syntax node.
 
-  var locations = []
-    , trackLocations;
+  var locations = [];
 
   function createLocationMarker() {
     return new Marker(token);
   }
 
   function Marker(token) {
-    if (options.locations) {
-      this.loc = {
-          start: {
-            line: token.line
-          , column: token.range[0] - token.lineStart
-        }
-        , end: {
-            line: 0
-          , column: 0
-        }
-      };
-    }
-    if (options.ranges) this.range = [token.range[0], 0];
+    this.loc = {
+        start: {
+          line: token.line
+        , column: token.range[0] - token.lineStart
+      }
+      , end: {
+          line: 0
+        , column: 0
+      }
+    };
+    this.range = [token.range[0], 0];
   }
 
   // Complete the location data stored in the `Marker` by adding the location
   // of the *previous token* as an end location.
   Marker.prototype.complete = function() {
-    if (options.locations) {
-      this.loc.end.line = previousToken.lastLine || previousToken.line;
-      this.loc.end.column = previousToken.range[1] - (previousToken.lastLineStart || previousToken.lineStart);
-    }
-    if (options.ranges) {
-      this.range[1] = previousToken.range[1];
-    }
+    this.loc.end.line = previousToken.lastLine || previousToken.line;
+    this.loc.end.column = previousToken.range[1] - (previousToken.lastLineStart || previousToken.lineStart);
+    this.range[1] = previousToken.range[1];
   };
 
+  // Attach a unist `position` to the node. Lines and columns are 1-based,
+  // offsets are 0-based.
   Marker.prototype.bless = function (node) {
-    if (luastMode) {
-      var loc = this.loc;
-      var range = this.range;
-      node.position = {
-        start: {
-            line: loc.start.line
-          , column: loc.start.column + 1
-          , offset: range[0]
-        }
-        , end: {
-            line: loc.end.line
-          , column: loc.end.column + 1
-          , offset: range[1]
-        }
-      };
-    } else {
-      if (this.loc) {
-        var loc = this.loc;
-        node.loc = {
-          start: {
-            line: loc.start.line,
-            column: loc.start.column
-          },
-          end: {
-            line: loc.end.line,
-            column: loc.end.column
-          }
-        };
+    var loc = this.loc;
+    var range = this.range;
+    node.position = {
+      start: {
+          line: loc.start.line
+        , column: loc.start.column + 1
+        , offset: range[0]
       }
-      if (this.range) {
-        node.range = [
-          this.range[0],
-          this.range[1]
-        ];
+      , end: {
+          line: loc.end.line
+        , column: loc.end.column + 1
+        , offset: range[1]
       }
-    }
+    };
   };
 
   // Create a new `Marker` and add it to the FILO-array.
   function markLocation() {
-    if (trackLocations) locations.push(createLocationMarker());
+    locations.push(createLocationMarker());
   }
 
   // Push an arbitrary `Marker` object onto the FILO-array.
   function pushLocation(marker) {
-    if (trackLocations) locations.push(marker);
+    locations.push(marker);
   }
 
   // Control flow tracking
@@ -1868,8 +1750,8 @@
     if (options.scope) destroyScope();
     if (EOF !== token.type) unexpected(token);
     // If the body is empty no previousToken exists when finishNode runs.
-    if (trackLocations && !body.length) previousToken = token;
-    return finishNode(ast.chunk(body));
+    if (!body.length) previousToken = token;
+    return finishNode(ast.root(body));
   }
 
   // A block contains a list of statements with an optional return statement
@@ -1923,7 +1805,7 @@
     // When a `;` is encounted, simply eat it without storing it.
     if (features.emptyStatement) {
       if (consume(';')) {
-        if (trackLocations) locations.pop();
+        locations.pop();
         return;
       }
     }
@@ -1957,7 +1839,7 @@
     }
 
     // Assignments memorizes the location and pushes it manually for wrapper nodes.
-    if (trackLocations) locations.pop();
+    locations.pop();
 
     return parseAssignmentOrCallStatement(flowContext);
   }
@@ -1972,7 +1854,6 @@
 
     if (options.scope) {
       scopeIdentifierName('::' + nameToken.value + '::');
-      attachScope(label, true);
     }
 
     expect('::');
@@ -2069,10 +1950,8 @@
 
     // IfClauses begin at the same location as the parent IfStatement.
     // It ends at the start of `end`, `else`, or `elseif`.
-    if (trackLocations) {
-      marker = locations[locations.length - 1];
-      locations.push(marker);
-    }
+    marker = locations[locations.length - 1];
+    locations.push(marker);
     condition = parseExpectedExpression(flowContext);
     expect('then');
     if (options.scope) createScope();
@@ -2082,7 +1961,7 @@
     if (options.scope) destroyScope();
     clauses.push(finishNode(ast.ifClause(condition, body)));
 
-    if (trackLocations) marker = createLocationMarker();
+    marker = createLocationMarker();
     while (consume('elseif')) {
       pushLocation(marker);
       condition = parseExpectedExpression(flowContext);
@@ -2093,15 +1972,13 @@
       flowContext.popScope();
       if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseifClause(condition, body)));
-      if (trackLocations) marker = createLocationMarker();
+      marker = createLocationMarker();
     }
 
     if (consume('else')) {
       // Include the `else` in the location of ElseClause.
-      if (trackLocations) {
-        marker = new Marker(previousToken);
-        locations.push(marker);
-      }
+      marker = new Marker(previousToken);
+      locations.push(marker);
       if (options.scope) createScope();
       flowContext.pushScope();
       body = parseBlock(flowContext);
@@ -2258,16 +2135,15 @@
 
     var targets = [];
 
-    if (trackLocations) startMarker = createLocationMarker();
+    startMarker = createLocationMarker();
 
     do {
-      if (trackLocations) marker = createLocationMarker();
+      marker = createLocationMarker();
 
       if (Identifier === token.type) {
         name = token.value;
         base = parseIdentifier();
         // Set the parent scope.
-        if (options.scope) attachScope(base, scopeHasName(name));
         lvalue = true;
       } else if ('(' === token.value) {
         next();
@@ -2401,11 +2277,10 @@
   function parseFunctionName() {
     var base, name, marker;
 
-    if (trackLocations) marker = createLocationMarker();
+    marker = createLocationMarker();
     base = parseIdentifier();
 
     if (options.scope) {
-      attachScope(base, scopeHasName(base.name));
       createScope();
     }
 
@@ -2554,7 +2429,7 @@
       // The left-hand side in binary operations.
         , expression, marker;
 
-      if (trackLocations) marker = createLocationMarker();
+      marker = createLocationMarker();
 
       // UnaryExpression
       if (isUnary(token)) {
@@ -2590,7 +2465,7 @@
         var right = parseSubExpression(precedence, flowContext);
         if (null == right) raiseUnexpectedToken('<expression>', token);
         // Push in the marker created before the loop to wrap its entirety.
-        if (trackLocations) locations.push(marker);
+        locations.push(marker);
         expression = finishNode(ast.binaryExpression(operator, expression, right));
 
       }
@@ -2646,14 +2521,12 @@
   function parsePrefixExpression(flowContext) {
     var base, name, marker;
 
-    if (trackLocations) marker = createLocationMarker();
+    marker = createLocationMarker();
 
     // The prefix
     if (Identifier === token.type) {
       name = token.value;
       base = parseIdentifier();
-      // Set the parent scope.
-      if (options.scope) attachScope(base, scopeHasName(name));
     } else if (consume('(')) {
       base = parseExpectedExpression(flowContext);
       expect(')');
@@ -2720,7 +2593,7 @@
       , type = token.type
       , marker;
 
-    if (trackLocations) marker = createLocationMarker();
+    marker = createLocationMarker();
 
     if (type === VarargLiteral && !flowContext.allowVararg) {
       raise(token, errors.cannotUseVararg, token.value);
@@ -2830,13 +2703,6 @@
         throw new Error("Input length exceeds maximum allowed length");
       }
 
-      luastMode = options.ast === 'luast';
-      if (luastMode) {
-        options.locations = true;
-        options.ranges = true;
-        options.comments = true;
-      }
-
       // Rewind the lexer
       index = 0;
       line = 1;
@@ -2845,8 +2711,6 @@
       // When tracking identifier scope, initialize with an empty scope.
       scopes = [Object.create ? Object.create(null) : {}];
       scopeDepth = 0;
-      globals = [];
-      globalsMap = Object.create ? Object.create(null) : {};
       locations = [];
 
       if (!Object.prototype.hasOwnProperty.call(versionFeatures, options.luaVersion)) {
@@ -2900,19 +2764,17 @@
       });
 
       length = input.length;
-      trackLocations = options.locations || options.ranges;
       // Initialize with a lookahead token.
       lookahead = lex();
 
-      var chunk = parseChunk();
-      if (options.comments) chunk.comments = comments;
-      if (options.scope && !luastMode) chunk.globals = globals;
+      var root = parseChunk();
+      if (options.comments) root.comments = comments;
 
       /* istanbul ignore if */
       if (locations.length > 0)
         throw new Error('Location tracking failed. This is most likely a bug in luaparse');
 
-      return chunk;
+      return root;
     } finally {
       parserActive = false;
     }

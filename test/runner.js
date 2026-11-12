@@ -18,50 +18,90 @@
       process.argv &&
       process.argv.indexOf('--console') >= 0
 
-  function makeLoader(readTextFile) {
-    function loadModule(id, filename) {
-      /*jshint evil:true */
-      var filedir = filename.replace(/[^/]+$/, '') || '.'
-      var loader = new Function(
-        'require',
-        'exports',
-        'module',
-        readTextFile(filename)
-      )
-      var module = {
-        id: id,
-        exports: {}
-      }
-      loader(
-        function (what) {
-          return loadModule(what, filedir + '/' + what + '.js')
-        },
-        module.exports,
-        module
-      )
-
-      return module.exports
+  // Static require calls only (no dynamic require paths).
+  var nodeModules = {
+    Spec: function () {
+      return require('./lib/spec')
+    },
+    Newton: function () {
+      return require('./lib/newton')
+    },
+    luaparse: function () {
+      return require('../luaparse')
+    },
+    assignments: function () {
+      return require('./spec/assignments')
+    },
+    break: function () {
+      return require('./spec/break')
+    },
+    comments: function () {
+      return require('./spec/comments')
+    },
+    conditional: function () {
+      return require('./spec/conditional')
+    },
+    do: function () {
+      return require('./spec/do')
+    },
+    escapesequences: function () {
+      return require('./spec/escapesequences')
+    },
+    expressions: function () {
+      return require('./spec/expressions')
+    },
+    for: function () {
+      return require('./spec/for')
+    },
+    functioncalls: function () {
+      return require('./spec/functioncalls')
+    },
+    functions: function () {
+      return require('./spec/functions')
+    },
+    labels: function () {
+      return require('./spec/labels')
+    },
+    literals: function () {
+      return require('./spec/literals')
+    },
+    local: function () {
+      return require('./spec/local')
+    },
+    misc: function () {
+      return require('./spec/misc')
+    },
+    operators: function () {
+      return require('./spec/operators')
+    },
+    repeat: function () {
+      return require('./spec/repeat')
+    },
+    return: function () {
+      return require('./spec/return')
+    },
+    scope: function () {
+      return require('./spec/scope')
+    },
+    statements: function () {
+      return require('./spec/statements')
+    },
+    tableconstructors: function () {
+      return require('./spec/tableconstructors')
+    },
+    while: function () {
+      return require('./spec/while')
     }
-
-    return loadModule
   }
 
   var load = function load(mod, path) {
     if (root[mod]) return root[mod]
-    if (isModule) return require(path)
+    if (isModule) return nodeModules[mod]()
     var filename = path.replace(/\.js$/, '') + '.js'
 
     if (isEngine) {
       root.load(filename)
       return root[mod]
-    }
-
-    // Duktape
-    if (typeof Duktape !== 'undefined' && typeof readFile === 'function') {
-      return (root[mod] = makeLoader(function (filename) {
-        /*global readFile, TextDecoder */
-        return new TextDecoder('utf-8').decode(readFile(filename))
-      })(mod, filename))
     }
 
     // QuickJS
@@ -162,196 +202,43 @@
   }
 
   Spec.Test.prototype.equalPrecedence = function (source, expected, options) {
-    function normalise(node) {
+    // Positions differ between the two spellings; compare tree structure only.
+    function stripPositions(node) {
       if (!node || typeof node !== 'object') return node
-      node.inParens = null
+      delete node.position
       for (var key in node)
-        if (node.hasOwnProperty(key)) {
-          normalise(node[key])
-        }
+        if (node.hasOwnProperty(key)) stripPositions(node[key])
       return node
     }
 
     return this.deepEqual(
-      normalise(luaparse.parse('a = ' + source, options)),
-      normalise(luaparse.parse('a = ' + expected, options)),
+      stripPositions(luaparse.parse('a = ' + source, options)),
+      stripPositions(luaparse.parse('a = ' + expected, options)),
       source + ' is equal to ' + expected
     )
   }
 
   // Create a test, and delegate to appropiate test function.
   function addTest(testName, tests) {
-    // Make a semi-deep copy of the tree, modified by the visitor function.
-    function rebuildTree(node, visit) {
-      if (!node) return
-
-      node = Object.assign({}, node)
-      visit(node)
-
-      function visitKey(key) {
-        if (!node[key]) return
-
-        if (Array.isArray(node[key])) {
-          node[key] = node[key].map(function (item) {
-            return rebuildTree(item, visit)
-          })
-        } else node[key] = rebuildTree(node[key], visit)
-      }
-
-      switch (node.type) {
-        case 'LocalStatement':
-        case 'AssignmentStatement':
-          visitKey('variables')
-          visitKey('init')
-          break
-        case 'UnaryExpression':
-          visitKey('argument')
-          break
-        case 'BinaryExpression':
-        case 'LogicalExpression':
-          visitKey('left')
-          visitKey('right')
-          break
-        case 'FunctionDeclaration':
-          visitKey('identifier')
-          visitKey('parameters')
-          visitKey('body')
-          break
-        case 'ForGenericStatement':
-          visitKey('variables')
-          visitKey('iterators')
-          visitKey('body')
-          break
-        case 'IfClause':
-        case 'ElseifClause':
-        case 'WhileStatement':
-        case 'RepeatStatement':
-          visitKey('condition')
-        /* fall through */
-        case 'Chunk':
-        case 'ElseClause':
-        case 'DoStatement':
-          visitKey('body')
-          visitKey('globals')
-          visitKey('comments')
-          break
-        case 'ForNumericStatement':
-          visitKey('variable')
-          visitKey('start')
-          visitKey('end')
-          visitKey('step')
-          visitKey('body')
-          break
-        case 'ReturnStatement':
-          visitKey('arguments')
-          break
-        case 'IfStatement':
-          visitKey('clauses')
-          break
-        case 'MemberExpression':
-          visitKey('base')
-          visitKey('identifier')
-          break
-        case 'IndexExpression':
-          visitKey('base')
-          visitKey('index')
-          break
-        case 'LabelStatement':
-          visitKey('label')
-          break
-        case 'CallStatement':
-          visitKey('expression')
-          break
-        case 'GotoStatement':
-          visitKey('label')
-          break
-        case 'TableConstructorExpression':
-          visitKey('fields')
-          break
-        case 'TableKey':
-        case 'TableKeyString':
-          visitKey('key')
-        /* fall through */
-        case 'TableValue':
-          visitKey('value')
-          break
-        case 'CallExpression':
-          visitKey('base')
-          visitKey('arguments')
-          break
-        case 'TableCallExpression':
-          visitKey('arguments')
-        /* fall through */
-        case 'StringCallExpression':
-          visitKey('base')
-          visitKey('argument')
-          break
-        case 'Identifier':
-        case 'NumericLiteral':
-        case 'BooleanLiteral':
-        case 'StringLiteral':
-        case 'NilLiteral':
-        case 'VarargLiteral':
-        case 'BreakStatement':
-        case 'Comment':
-          break
-        default:
-          throw new Error('Unhandled ' + node.type)
-      }
-
-      return node
-    }
-
     suite.addTest(testName, function () {
       var count = 0
       for (var i = 0; i < tests.length; ++i) {
         var expected = tests[i].result
         var opts = Object.assign({}, tests[i].options, {
           comments: true,
-          locations: true,
-          ranges: true,
           scope: true
         })
         if (typeof expected === 'string') {
           this.parseError(tests[i].source, expected, opts)
           count++
         } else {
-          count += 5
+          count += 2
           this.parses(tests[i].source, expected, opts)
-
-          opts.locations = false
-          expected = rebuildTree(expected, function (node) {
-            delete node.loc
-          })
-          this.parses(tests[i].source, expected, opts, '(no locations)')
-
-          opts.ranges = false
-          expected = rebuildTree(expected, function (node) {
-            delete node.range
-          })
-          this.parses(tests[i].source, expected, opts, '(no locations, ranges)')
 
           opts.comments = false
           expected = Object.assign({}, expected)
           delete expected.comments
-          this.parses(
-            tests[i].source,
-            expected,
-            opts,
-            '(no locations, ranges, comments)'
-          )
-
-          opts.scope = false
-          expected = rebuildTree(expected, function (node) {
-            if (node.type !== 'FunctionDeclaration') delete node.isLocal
-          })
-          delete expected.globals
-          this.parses(
-            tests[i].source,
-            expected,
-            opts,
-            '(no locations, ranges, comments, scopes)'
-          )
+          this.parses(tests[i].source, expected, opts, '(no comments)')
         }
       }
       this.done(count)
@@ -490,13 +377,21 @@
     this.deepEqual(
       parse.end('return'),
       {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
-            arguments: []
+            type: 'returnStatement',
+            arguments: [],
+            position: {
+              start: {line: 1, column: 1, offset: 0},
+              end: {line: 1, column: 7, offset: 6}
+            }
           }
         ],
+        position: {
+          start: {line: 1, column: 1, offset: 0},
+          end: {line: 1, column: 7, offset: 6}
+        },
         comments: []
       },
       'should support waiting on input'
@@ -509,8 +404,6 @@
 
     parse = luaparse.parse('do local a = 1 b = 1 end -- comment', {
       scope: true,
-      locations: true,
-      ranges: true,
       onCreateNode: function (node) {
         nodes.push(node)
       },
@@ -539,97 +432,91 @@
     this.deepEqual(
       nodes[0],
       {
-        type: 'Identifier',
+        type: 'identifier',
         name: 'a',
-        loc: {start: {line: 1, column: 9}, end: {line: 1, column: 10}},
-        range: [9, 10],
-        isLocal: true
+        position: {
+          start: {line: 1, column: 10, offset: 9},
+          end: {line: 1, column: 11, offset: 10}
+        }
       },
       'should invoke onCreateNode callback with syntax node parameter'
     )
 
     this.deepEqual(
-      luaparse.parse('#!/usr/bin/lua\nreturn', {locations: true, ranges: true}),
+      luaparse.parse('#!/usr/bin/lua\nreturn'),
       {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {start: {line: 2, column: 0}, end: {line: 2, column: 6}},
-            range: [15, 21]
+            position: {
+              start: {line: 2, column: 1, offset: 15},
+              end: {line: 2, column: 7, offset: 21}
+            }
           }
         ],
-        loc: {start: {line: 2, column: 0}, end: {line: 2, column: 6}},
-        range: [15, 21],
+        position: {
+          start: {line: 2, column: 1, offset: 15},
+          end: {line: 2, column: 7, offset: 21}
+        },
         comments: []
       },
       'should ignore shebangs'
     )
 
     parse = luaparse.parse({wait: true})
-    this.error(
-      function () {
-        return luaparse.parse('return 2')
-      },
-      'A parser session is already active'
+    this.error(function () {
+      return luaparse.parse('return 2')
+    }, 'A parser session is already active')
+    this.equal(
+      parse.end('return 1').body.length,
+      1,
+      'should finish active input'
     )
-    this.equal(parse.end('return 1').body.length, 1, 'should finish active input')
 
-    this.error(
-      function () {
-        return luaparse.parse('return 1', {
-          onCreateNode: function () {
-            luaparse.parse('return 2')
-          }
-        })
-      },
-      'A parser session is already active'
-    )
+    this.error(function () {
+      return luaparse.parse('return 1', {
+        onCreateNode: function () {
+          luaparse.parse('return 2')
+        }
+      })
+    }, 'A parser session is already active')
     this.equal(
       luaparse.parse('return 3').body.length,
       1,
       'should recover after callback errors'
     )
 
-    this.error(
-      function () {
-        return luaparse.parse(
-          'return ' + new Array(601).join('(') + '1' + new Array(601).join(')')
-        )
-      },
-      'Maximum expression nesting depth exceeded'
-    )
-    this.error(
-      function () {
-        return luaparse.parse(
-          'return ' + new Array(1001).join('1^') + '1'
-        )
-      },
-      'Maximum expression nesting depth exceeded'
-    )
-    this.error(
-      function () {
-        return luaparse.parse(
-          new Array(601).join('do ') + new Array(601).join('end ')
-        )
-      },
-      'Maximum block nesting depth exceeded'
-    )
+    this.error(function () {
+      return luaparse.parse(
+        'return ' + new Array(601).join('(') + '1' + new Array(601).join(')')
+      )
+    }, 'Maximum expression nesting depth exceeded')
+    this.error(function () {
+      return luaparse.parse('return ' + new Array(1001).join('1^') + '1')
+    }, 'Maximum expression nesting depth exceeded')
+    this.error(function () {
+      return luaparse.parse(
+        new Array(601).join('do ') + new Array(601).join('end ')
+      )
+    }, 'Maximum block nesting depth exceeded')
     this.equal(
-      luaparse.parse(new Array(100).join('do ') + new Array(100).join('end ')).body.length,
+      luaparse.parse(new Array(100).join('do ') + new Array(100).join('end '))
+        .body.length,
       1
     )
 
     parse = luaparse.parse({wait: true, maxInputLength: 8})
     parse.write('return')
-    this.error(
-      function () {
-        return parse.write(' 123')
-      },
-      'Input length exceeds maximum allowed length'
+    this.error(function () {
+      return parse.write(' 123')
+    }, 'Input length exceeds maximum allowed length')
+    this.equal(
+      parse.end().body.length,
+      1,
+      'should recover after a rejected write'
     )
-    this.equal(parse.end().body.length, 1, 'should recover after a rejected write')
 
     var labels = []
     for (var labelIndex = 0; labelIndex < 2000; labelIndex++)
@@ -661,8 +548,12 @@
       }
     ]
 
-    this.error(function() { return luaparse.parse([1, 2, 3], {}) }, "Expected input to be a string, but got object")
-    this.error(function() { return luaparse.parse(123, {}) }, "Expected input to be a string, but got number")
+    this.error(function () {
+      return luaparse.parse([1, 2, 3], {})
+    }, 'Expected input to be a string, but got object')
+    this.error(function () {
+      return luaparse.parse(123, {})
+    }, 'Expected input to be a string, but got number')
 
     /*jshint loopfunc:true */
     for (var i = 0; i < optionErrors.length; ++i) {
@@ -755,22 +646,33 @@
   })
 
   suite.addTest('EOL sequences', function () {
-    var options = {locations: true},
-      baseline = luaparse.parse('foo = 1\nbar = 1', options)
+    // Offsets legitimately differ when a two-character line break replaces a
+    // single newline; line/column tracking must stay equivalent.
+    function dropOffsets(node) {
+      if (!node || typeof node !== 'object') return node
+      if (node.position) {
+        delete node.position.start.offset
+        delete node.position.end.offset
+      }
+      for (var key in node) if (node.hasOwnProperty(key)) dropOffsets(node[key])
+      return node
+    }
+
+    var baseline = dropOffsets(luaparse.parse('foo = 1\nbar = 1'))
 
     this.deepEqual(
       baseline,
-      luaparse.parse('foo = 1\rbar = 1', options),
+      dropOffsets(luaparse.parse('foo = 1\rbar = 1')),
       'carriage return'
     )
     this.deepEqual(
       baseline,
-      luaparse.parse('foo = 1\n\rbar = 1', options),
+      dropOffsets(luaparse.parse('foo = 1\n\rbar = 1')),
       'newline followed by carriage return'
     )
     this.deepEqual(
       baseline,
-      luaparse.parse('foo = 1\r\nbar = 1', options),
+      dropOffsets(luaparse.parse('foo = 1\r\nbar = 1')),
       'carriage return followed by newline'
     )
     this.done(3)
@@ -863,11 +765,163 @@
     this.done(cases.length)
   })
 
+  // luast / unist conformance ----------------------------------------------
+  //
+  // Walks every spec fixture through the child-field registry from
+  // LUAST-SPEC.md and validates the unist invariants: known node types,
+  // 1-based positions with sane offsets, JSON round-trip stability, and a
+  // traversal that reaches every node exactly once.
+
+  var childFields = {
+    root: ['body'],
+    labelStatement: ['label'],
+    breakStatement: [],
+    gotoStatement: ['label'],
+    returnStatement: ['arguments'],
+    ifStatement: ['clauses'],
+    ifClause: ['condition', 'body'],
+    elseifClause: ['condition', 'body'],
+    elseClause: ['body'],
+    whileStatement: ['condition', 'body'],
+    doStatement: ['body'],
+    repeatStatement: ['condition', 'body'],
+    localStatement: ['variables', 'init'],
+    assignmentStatement: ['variables', 'init'],
+    callStatement: ['expression'],
+    functionDeclaration: ['identifier', 'parameters', 'body'],
+    forNumericStatement: ['variable', 'start', 'end', 'step', 'body'],
+    forGenericStatement: ['variables', 'iterators', 'body'],
+    identifier: [],
+    stringLiteral: [],
+    numericLiteral: [],
+    booleanLiteral: [],
+    nilLiteral: [],
+    varargLiteral: [],
+    binaryExpression: ['left', 'right'],
+    logicalExpression: ['left', 'right'],
+    unaryExpression: ['argument'],
+    memberExpression: ['base', 'identifier'],
+    indexExpression: ['base', 'index'],
+    callExpression: ['base', 'arguments'],
+    tableCallExpression: ['base', 'argument'],
+    stringCallExpression: ['base', 'argument'],
+    tableConstructor: ['fields'],
+    tableKey: ['key', 'value'],
+    tableKeyString: ['key', 'value'],
+    tableValue: ['value'],
+    comment: []
+  }
+
+  var arrayFields = {
+    body: true,
+    clauses: true,
+    variables: true,
+    init: true,
+    arguments: true,
+    parameters: true,
+    iterators: true,
+    fields: true
+  }
+
+  var conformanceEntries = []
+
+  function checkConformance(test, source, options) {
+    var tree = luaparse.parse(source, options)
+
+    // unist: trees must be JSON-stable
+    test.deepEqual(
+      JSON.parse(JSON.stringify(tree)),
+      tree,
+      'JSON round-trip: ' + escapeString(source)
+    )
+
+    var visited = 0
+
+    function fail(message) {
+      throw new Error(message + ' (source: ' + escapeString(source) + ')')
+    }
+
+    function visit(node) {
+      if (!node || typeof node !== 'object') return
+      var type = node.type
+      if (typeof type !== 'string' || !(type in childFields))
+        fail('unknown node type ' + type)
+      visited++
+
+      var position = node.position
+      if (!position || !position.start || !position.end)
+        fail('missing position on ' + type)
+      var start = position.start
+      var end = position.end
+      if (
+        start.line < 1 ||
+        start.column < 1 ||
+        end.line < 1 ||
+        end.column < 1 ||
+        start.offset < 0 ||
+        end.offset < start.offset
+      )
+        fail('invalid position on ' + type)
+
+      var fields = childFields[type]
+      for (var i = 0; i < fields.length; i++) {
+        var value = node[fields[i]]
+        if (value === null || value === undefined) continue
+        if (arrayFields[fields[i]]) {
+          if (!Array.isArray(value)) fail(type + '.' + fields[i] + ' not array')
+          for (var j = 0; j < value.length; j++) visit(value[j])
+        } else visit(value)
+      }
+    }
+
+    if (tree.type !== 'root' || !Array.isArray(tree.body))
+      fail('root shape invalid')
+    if (!Array.isArray(tree.comments)) fail('root.comments missing')
+    visit(tree)
+    for (var i = 0; i < tree.comments.length; i++) visit(tree.comments[i])
+
+    // The registry must reach every typed object exactly once: count them
+    // independently via a brute-force walk over all properties.
+    var total = 0
+    function count(value) {
+      if (Array.isArray(value)) {
+        for (var i = 0; i < value.length; i++) count(value[i])
+        return
+      }
+      if (!value || typeof value !== 'object') return
+      if (typeof value.type === 'string') total++
+      for (var key in value)
+        if (Object.prototype.hasOwnProperty.call(value, key)) count(value[key])
+    }
+    count(tree)
+    if (visited !== total)
+      fail('registry visited ' + visited + ' nodes, tree has ' + total)
+  }
+
+  function addConformanceTest() {
+    suite.addTest('luast conformance', function () {
+      var count = 0
+      for (var i = 0; i < conformanceEntries.length; i++) {
+        var entry = conformanceEntries[i]
+        // Error tests (string results) intentionally fail to parse.
+        if (typeof entry.result === 'string') continue
+        checkConformance(this, entry.source, entry.options)
+        count++
+      }
+      this.done(count)
+    })
+  }
+
   if (isLoader) {
     define(specs, function () {
       Spec.forEach(arguments, function (test) {
+        conformanceEntries.push.apply(
+          conformanceEntries,
+          Array.isArray(test.spec) ? test.spec : [test.spec]
+        )
         addTest(test.name, test.spec)
       })
+      addConformanceTest()
       suite.shuffle()
       return suite
     })
@@ -879,13 +933,20 @@
     var run = (root.run = function () {
       // Add all tests. In a browser the tests are expected to be loaded
       // therefore this function is exposed as a wrapper around the test suites
-      // `run()` so that it can run on load.
+      // `run()` so it can run on load.
       Spec.forEach(specs, function (spec) {
         var name = spec.replace(/^[\s\S]*\/([^\/]+)$/, '$1'),
           tests = load(name, spec)
 
+        var list = Array.isArray(tests.spec)
+          ? tests.spec
+          : Object.keys(tests.spec).map(function (key) {
+              return {source: key, options: tests.spec[key].options}
+            })
+        conformanceEntries.push.apply(conformanceEntries, list)
         addTest(tests.name, tests.spec)
       })
+      addConformanceTest()
       suite.shuffle()
       suite.run()
     })

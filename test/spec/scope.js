@@ -24,3306 +24,3189 @@
     {
       source: 'local foo = 1 do foo = 2 end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'foo',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [6, 9],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'NumericLiteral',
+                type: 'numericLiteral',
                 value: 1,
                 raw: '1',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   },
                   end: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   }
-                },
-                range: [12, 13]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               }
-            },
-            range: [0, 13]
+            }
           },
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'AssignmentStatement',
+                type: 'assignmentStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'foo',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       },
                       end: {
                         line: 1,
-                        column: 20
+                        column: 21,
+                        offset: 20
                       }
-                    },
-                    range: [17, 20],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [
                   {
-                    type: 'NumericLiteral',
+                    type: 'numericLiteral',
                     value: 2,
                     raw: '2',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 23
+                        column: 24,
+                        offset: 23
                       },
                       end: {
                         line: 1,
-                        column: 24
+                        column: 25,
+                        offset: 24
                       }
-                    },
-                    range: [23, 24]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   },
                   end: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   }
-                },
-                range: [17, 24]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 14
+                column: 15,
+                offset: 14
               },
               end: {
                 line: 1,
-                column: 28
+                column: 29,
+                offset: 28
               }
-            },
-            range: [14, 28]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 28
+            column: 29,
+            offset: 28
           }
-        },
-        range: [0, 28],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'do local foo = 1 end foo = 2',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'foo',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       }
-                    },
-                    range: [9, 12],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [
                   {
-                    type: 'NumericLiteral',
+                    type: 'numericLiteral',
                     value: 1,
                     raw: '1',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 15
+                        column: 16,
+                        offset: 15
                       },
                       end: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       }
-                    },
-                    range: [15, 16]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   }
-                },
-                range: [3, 16]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 20
+                column: 21,
+                offset: 20
               }
-            },
-            range: [0, 20]
+            }
           },
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'foo',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 21
+                    column: 22,
+                    offset: 21
                   },
                   end: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   }
-                },
-                range: [21, 24],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'NumericLiteral',
+                type: 'numericLiteral',
                 value: 2,
                 raw: '2',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 27
+                    column: 28,
+                    offset: 27
                   },
                   end: {
                     line: 1,
-                    column: 28
+                    column: 29,
+                    offset: 28
                   }
-                },
-                range: [27, 28]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 21
+                column: 22,
+                offset: 21
               },
               end: {
                 line: 1,
-                column: 28
+                column: 29,
+                offset: 28
               }
-            },
-            range: [21, 28]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 28
+            column: 29,
+            offset: 28
           }
-        },
-        range: [0, 28],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'foo',
-            loc: {
-              start: {
-                line: 1,
-                column: 21
-              },
-              end: {
-                line: 1,
-                column: 24
-              }
-            },
-            range: [21, 24],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'do local foo = 1 end do foo = 2 end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'foo',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 9
+                        column: 10,
+                        offset: 9
                       },
                       end: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       }
-                    },
-                    range: [9, 12],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [
                   {
-                    type: 'NumericLiteral',
+                    type: 'numericLiteral',
                     value: 1,
                     raw: '1',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 15
+                        column: 16,
+                        offset: 15
                       },
                       end: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       }
-                    },
-                    range: [15, 16]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   },
                   end: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   }
-                },
-                range: [3, 16]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 20
+                column: 21,
+                offset: 20
               }
-            },
-            range: [0, 20]
+            }
           },
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'AssignmentStatement',
+                type: 'assignmentStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'foo',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 24
+                        column: 25,
+                        offset: 24
                       },
                       end: {
                         line: 1,
-                        column: 27
+                        column: 28,
+                        offset: 27
                       }
-                    },
-                    range: [24, 27],
-                    isLocal: false
+                    }
                   }
                 ],
                 init: [
                   {
-                    type: 'NumericLiteral',
+                    type: 'numericLiteral',
                     value: 2,
                     raw: '2',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 30
+                        column: 31,
+                        offset: 30
                       },
                       end: {
                         line: 1,
-                        column: 31
+                        column: 32,
+                        offset: 31
                       }
-                    },
-                    range: [30, 31]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   },
                   end: {
                     line: 1,
-                    column: 31
+                    column: 32,
+                    offset: 31
                   }
-                },
-                range: [24, 31]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 21
+                column: 22,
+                offset: 21
               },
               end: {
                 line: 1,
-                column: 35
+                column: 36,
+                offset: 35
               }
-            },
-            range: [21, 35]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 35
+            column: 36,
+            offset: 35
           }
-        },
-        range: [0, 35],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'foo',
-            loc: {
-              start: {
-                line: 1,
-                column: 24
-              },
-              end: {
-                line: 1,
-                column: 27
-              }
-            },
-            range: [24, 27],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'local foo do foo = 1 do foo = 2 end end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'foo',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   }
-                },
-                range: [6, 9],
-                isLocal: true
+                }
               }
             ],
             init: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 9
+                column: 10,
+                offset: 9
               }
-            },
-            range: [0, 9]
+            }
           },
           {
-            type: 'DoStatement',
+            type: 'doStatement',
             body: [
               {
-                type: 'AssignmentStatement',
+                type: 'assignmentStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'foo',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       },
                       end: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       }
-                    },
-                    range: [13, 16],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [
                   {
-                    type: 'NumericLiteral',
+                    type: 'numericLiteral',
                     value: 1,
                     raw: '1',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 19
+                        column: 20,
+                        offset: 19
                       },
                       end: {
                         line: 1,
-                        column: 20
+                        column: 21,
+                        offset: 20
                       }
-                    },
-                    range: [19, 20]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   },
                   end: {
                     line: 1,
-                    column: 20
+                    column: 21,
+                    offset: 20
                   }
-                },
-                range: [13, 20]
+                }
               },
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [
                   {
-                    type: 'AssignmentStatement',
+                    type: 'assignmentStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'foo',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 24
+                            column: 25,
+                            offset: 24
                           },
                           end: {
                             line: 1,
-                            column: 27
+                            column: 28,
+                            offset: 27
                           }
-                        },
-                        range: [24, 27],
-                        isLocal: true
+                        }
                       }
                     ],
                     init: [
                       {
-                        type: 'NumericLiteral',
+                        type: 'numericLiteral',
                         value: 2,
                         raw: '2',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 30
+                            column: 31,
+                            offset: 30
                           },
                           end: {
                             line: 1,
-                            column: 31
+                            column: 32,
+                            offset: 31
                           }
-                        },
-                        range: [30, 31]
+                        }
                       }
                     ],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 24
+                        column: 25,
+                        offset: 24
                       },
                       end: {
                         line: 1,
-                        column: 31
+                        column: 32,
+                        offset: 31
                       }
-                    },
-                    range: [24, 31]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 21
+                    column: 22,
+                    offset: 21
                   },
                   end: {
                     line: 1,
-                    column: 35
+                    column: 36,
+                    offset: 35
                   }
-                },
-                range: [21, 35]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 10
+                column: 11,
+                offset: 10
               },
               end: {
                 line: 1,
-                column: 39
+                column: 40,
+                offset: 39
               }
-            },
-            range: [10, 39]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 39
+            column: 40,
+            offset: 39
           }
-        },
-        range: [0, 39],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'local function foo() end foo()',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'FunctionDeclaration',
+            type: 'functionDeclaration',
             identifier: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'foo',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 15
+                  column: 16,
+                  offset: 15
                 },
                 end: {
                   line: 1,
-                  column: 18
+                  column: 19,
+                  offset: 18
                 }
-              },
-              range: [15, 18],
-              isLocal: true
+              }
             },
-            isLocal: true,
+            local: true,
             parameters: [],
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 24
+                column: 25,
+                offset: 24
               }
-            },
-            range: [0, 24]
+            }
           },
           {
-            type: 'CallStatement',
+            type: 'callStatement',
             expression: {
-              type: 'CallExpression',
+              type: 'callExpression',
               base: {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'foo',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   },
                   end: {
                     line: 1,
-                    column: 28
+                    column: 29,
+                    offset: 28
                   }
-                },
-                range: [25, 28],
-                isLocal: true
+                }
               },
               arguments: [],
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 25
+                  column: 26,
+                  offset: 25
                 },
                 end: {
                   line: 1,
-                  column: 30
+                  column: 31,
+                  offset: 30
                 }
-              },
-              range: [25, 30]
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 25
+                column: 26,
+                offset: 25
               },
               end: {
                 line: 1,
-                column: 30
+                column: 31,
+                offset: 30
               }
-            },
-            range: [25, 30]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 30
+            column: 31,
+            offset: 30
           }
-        },
-        range: [0, 30],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'local a = { a }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'a',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         },
                         end: {
                           line: 1,
-                          column: 13
+                          column: 14,
+                          offset: 13
                         }
-                      },
-                      range: [12, 13],
-                      isLocal: false
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       },
                       end: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       }
-                    },
-                    range: [12, 13]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 15
+                    column: 16,
+                    offset: 15
                   }
-                },
-                range: [10, 15]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 15
+                column: 16,
+                offset: 15
               }
-            },
-            range: [0, 15]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 15
+            column: 16,
+            offset: 15
           }
-        },
-        range: [0, 15],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 12
-              },
-              end: {
-                line: 1,
-                column: 13
-              }
-            },
-            range: [12, 13],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'local b = { b, b.a, b[a], b:a() }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'b',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         },
                         end: {
                           line: 1,
-                          column: 13
+                          column: 14,
+                          offset: 13
                         }
-                      },
-                      range: [12, 13],
-                      isLocal: false
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 12
+                        column: 13,
+                        offset: 12
                       },
                       end: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       }
-                    },
-                    range: [12, 13]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'MemberExpression',
+                      type: 'memberExpression',
                       indexer: '.',
                       identifier: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 17
+                            column: 18,
+                            offset: 17
                           },
                           end: {
                             line: 1,
-                            column: 18
+                            column: 19,
+                            offset: 18
                           }
-                        },
-                        range: [17, 18]
+                        }
                       },
                       base: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 15
+                            column: 16,
+                            offset: 15
                           },
                           end: {
                             line: 1,
-                            column: 16
+                            column: 17,
+                            offset: 16
                           }
-                        },
-                        range: [15, 16],
-                        isLocal: false
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 15
+                          column: 16,
+                          offset: 15
                         },
                         end: {
                           line: 1,
-                          column: 18
+                          column: 19,
+                          offset: 18
                         }
-                      },
-                      range: [15, 18]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 15
+                        column: 16,
+                        offset: 15
                       },
                       end: {
                         line: 1,
-                        column: 18
+                        column: 19,
+                        offset: 18
                       }
-                    },
-                    range: [15, 18]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'IndexExpression',
+                      type: 'indexExpression',
                       base: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 20
+                            column: 21,
+                            offset: 20
                           },
                           end: {
                             line: 1,
-                            column: 21
+                            column: 22,
+                            offset: 21
                           }
-                        },
-                        range: [20, 21],
-                        isLocal: false
+                        }
                       },
                       index: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 22
+                            column: 23,
+                            offset: 22
                           },
                           end: {
                             line: 1,
-                            column: 23
+                            column: 24,
+                            offset: 23
                           }
-                        },
-                        range: [22, 23],
-                        isLocal: false
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 20
+                          column: 21,
+                          offset: 20
                         },
                         end: {
                           line: 1,
-                          column: 24
+                          column: 25,
+                          offset: 24
                         }
-                      },
-                      range: [20, 24]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 20
+                        column: 21,
+                        offset: 20
                       },
                       end: {
                         line: 1,
-                        column: 24
+                        column: 25,
+                        offset: 24
                       }
-                    },
-                    range: [20, 24]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'CallExpression',
+                      type: 'callExpression',
                       base: {
-                        type: 'MemberExpression',
+                        type: 'memberExpression',
                         indexer: ':',
                         identifier: {
-                          type: 'Identifier',
+                          type: 'identifier',
                           name: 'a',
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 28
+                              column: 29,
+                              offset: 28
                             },
                             end: {
                               line: 1,
-                              column: 29
+                              column: 30,
+                              offset: 29
                             }
-                          },
-                          range: [28, 29]
+                          }
                         },
                         base: {
-                          type: 'Identifier',
+                          type: 'identifier',
                           name: 'b',
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 26
+                              column: 27,
+                              offset: 26
                             },
                             end: {
                               line: 1,
-                              column: 27
+                              column: 28,
+                              offset: 27
                             }
-                          },
-                          range: [26, 27],
-                          isLocal: false
+                          }
                         },
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 26
+                            column: 27,
+                            offset: 26
                           },
                           end: {
                             line: 1,
-                            column: 29
+                            column: 30,
+                            offset: 29
                           }
-                        },
-                        range: [26, 29]
+                        }
                       },
                       arguments: [],
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 26
+                          column: 27,
+                          offset: 26
                         },
                         end: {
                           line: 1,
-                          column: 31
+                          column: 32,
+                          offset: 31
                         }
-                      },
-                      range: [26, 31]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 26
+                        column: 27,
+                        offset: 26
                       },
                       end: {
                         line: 1,
-                        column: 31
+                        column: 32,
+                        offset: 31
                       }
-                    },
-                    range: [26, 31]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 33
+                    column: 34,
+                    offset: 33
                   }
-                },
-                range: [10, 33]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 33
+                column: 34,
+                offset: 33
               }
-            },
-            range: [0, 33]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 33
+            column: 34,
+            offset: 33
           }
-        },
-        range: [0, 33],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'b',
-            loc: {
-              start: {
-                line: 1,
-                column: 12
-              },
-              end: {
-                line: 1,
-                column: 13
-              }
-            },
-            range: [12, 13],
-            isLocal: false
-          },
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 22
-              },
-              end: {
-                line: 1,
-                column: 23
-              }
-            },
-            range: [22, 23],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'local b = {} local a = { b, b.a, b[a], b:a() }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   }
-                },
-                range: [10, 12]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 12
+                column: 13,
+                offset: 12
               }
-            },
-            range: [0, 12]
+            }
           },
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 19
+                    column: 20,
+                    offset: 19
                   },
                   end: {
                     line: 1,
-                    column: 20
+                    column: 21,
+                    offset: 20
                   }
-                },
-                range: [19, 20],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'b',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 25
+                          column: 26,
+                          offset: 25
                         },
                         end: {
                           line: 1,
-                          column: 26
+                          column: 27,
+                          offset: 26
                         }
-                      },
-                      range: [25, 26],
-                      isLocal: true
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 25
+                        column: 26,
+                        offset: 25
                       },
                       end: {
                         line: 1,
-                        column: 26
+                        column: 27,
+                        offset: 26
                       }
-                    },
-                    range: [25, 26]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'MemberExpression',
+                      type: 'memberExpression',
                       indexer: '.',
                       identifier: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 30
+                            column: 31,
+                            offset: 30
                           },
                           end: {
                             line: 1,
-                            column: 31
+                            column: 32,
+                            offset: 31
                           }
-                        },
-                        range: [30, 31]
+                        }
                       },
                       base: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 28
+                            column: 29,
+                            offset: 28
                           },
                           end: {
                             line: 1,
-                            column: 29
+                            column: 30,
+                            offset: 29
                           }
-                        },
-                        range: [28, 29],
-                        isLocal: true
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 28
+                          column: 29,
+                          offset: 28
                         },
                         end: {
                           line: 1,
-                          column: 31
+                          column: 32,
+                          offset: 31
                         }
-                      },
-                      range: [28, 31]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 28
+                        column: 29,
+                        offset: 28
                       },
                       end: {
                         line: 1,
-                        column: 31
+                        column: 32,
+                        offset: 31
                       }
-                    },
-                    range: [28, 31]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'IndexExpression',
+                      type: 'indexExpression',
                       base: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 33
+                            column: 34,
+                            offset: 33
                           },
                           end: {
                             line: 1,
-                            column: 34
+                            column: 35,
+                            offset: 34
                           }
-                        },
-                        range: [33, 34],
-                        isLocal: true
+                        }
                       },
                       index: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'a',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 35
+                            column: 36,
+                            offset: 35
                           },
                           end: {
                             line: 1,
-                            column: 36
+                            column: 37,
+                            offset: 36
                           }
-                        },
-                        range: [35, 36],
-                        isLocal: false
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 33
+                          column: 34,
+                          offset: 33
                         },
                         end: {
                           line: 1,
-                          column: 37
+                          column: 38,
+                          offset: 37
                         }
-                      },
-                      range: [33, 37]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 33
+                        column: 34,
+                        offset: 33
                       },
                       end: {
                         line: 1,
-                        column: 37
+                        column: 38,
+                        offset: 37
                       }
-                    },
-                    range: [33, 37]
+                    }
                   },
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'CallExpression',
+                      type: 'callExpression',
                       base: {
-                        type: 'MemberExpression',
+                        type: 'memberExpression',
                         indexer: ':',
                         identifier: {
-                          type: 'Identifier',
+                          type: 'identifier',
                           name: 'a',
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 41
+                              column: 42,
+                              offset: 41
                             },
                             end: {
                               line: 1,
-                              column: 42
+                              column: 43,
+                              offset: 42
                             }
-                          },
-                          range: [41, 42]
+                          }
                         },
                         base: {
-                          type: 'Identifier',
+                          type: 'identifier',
                           name: 'b',
-                          loc: {
+                          position: {
                             start: {
                               line: 1,
-                              column: 39
+                              column: 40,
+                              offset: 39
                             },
                             end: {
                               line: 1,
-                              column: 40
+                              column: 41,
+                              offset: 40
                             }
-                          },
-                          range: [39, 40],
-                          isLocal: true
+                          }
                         },
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 39
+                            column: 40,
+                            offset: 39
                           },
                           end: {
                             line: 1,
-                            column: 42
+                            column: 43,
+                            offset: 42
                           }
-                        },
-                        range: [39, 42]
+                        }
                       },
                       arguments: [],
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 39
+                          column: 40,
+                          offset: 39
                         },
                         end: {
                           line: 1,
-                          column: 44
+                          column: 45,
+                          offset: 44
                         }
-                      },
-                      range: [39, 44]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 39
+                        column: 40,
+                        offset: 39
                       },
                       end: {
                         line: 1,
-                        column: 44
+                        column: 45,
+                        offset: 44
                       }
-                    },
-                    range: [39, 44]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   },
                   end: {
                     line: 1,
-                    column: 46
+                    column: 47,
+                    offset: 46
                   }
-                },
-                range: [23, 46]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               },
               end: {
                 line: 1,
-                column: 46
+                column: 47,
+                offset: 46
               }
-            },
-            range: [13, 46]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 46
+            column: 47,
+            offset: 46
           }
-        },
-        range: [0, 46],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 35
-              },
-              end: {
-                line: 1,
-                column: 36
-              }
-            },
-            range: [35, 36],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'local c local a = { b[c] }',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'c',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               }
             ],
             init: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               }
-            },
-            range: [0, 7]
+            }
           },
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 14
+                    column: 15,
+                    offset: 14
                   },
                   end: {
                     line: 1,
-                    column: 15
+                    column: 16,
+                    offset: 15
                   }
-                },
-                range: [14, 15],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [
                   {
-                    type: 'TableValue',
+                    type: 'tableValue',
                     value: {
-                      type: 'IndexExpression',
+                      type: 'indexExpression',
                       base: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 20
+                            column: 21,
+                            offset: 20
                           },
                           end: {
                             line: 1,
-                            column: 21
+                            column: 22,
+                            offset: 21
                           }
-                        },
-                        range: [20, 21],
-                        isLocal: false
+                        }
                       },
                       index: {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'c',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 22
+                            column: 23,
+                            offset: 22
                           },
                           end: {
                             line: 1,
-                            column: 23
+                            column: 24,
+                            offset: 23
                           }
-                        },
-                        range: [22, 23],
-                        isLocal: true
+                        }
                       },
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 20
+                          column: 21,
+                          offset: 20
                         },
                         end: {
                           line: 1,
-                          column: 24
+                          column: 25,
+                          offset: 24
                         }
-                      },
-                      range: [20, 24]
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 20
+                        column: 21,
+                        offset: 20
                       },
                       end: {
                         line: 1,
-                        column: 24
+                        column: 25,
+                        offset: 24
                       }
-                    },
-                    range: [20, 24]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   },
                   end: {
                     line: 1,
-                    column: 26
+                    column: 27,
+                    offset: 26
                   }
-                },
-                range: [18, 26]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 8
+                column: 9,
+                offset: 8
               },
               end: {
                 line: 1,
-                column: 26
+                column: 27,
+                offset: 26
               }
-            },
-            range: [8, 26]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 26
+            column: 27,
+            offset: 26
           }
-        },
-        range: [0, 26],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'b',
-            loc: {
-              start: {
-                line: 1,
-                column: 20
-              },
-              end: {
-                line: 1,
-                column: 21
-              }
-            },
-            range: [20, 21],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'local a = function() end a()',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'FunctionDeclaration',
+                type: 'functionDeclaration',
                 identifier: null,
-                isLocal: false,
+                local: false,
                 parameters: [],
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   }
-                },
-                range: [10, 24]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 24
+                column: 25,
+                offset: 24
               }
-            },
-            range: [0, 24]
+            }
           },
           {
-            type: 'CallStatement',
+            type: 'callStatement',
             expression: {
-              type: 'CallExpression',
+              type: 'callExpression',
               base: {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   },
                   end: {
                     line: 1,
-                    column: 26
+                    column: 27,
+                    offset: 26
                   }
-                },
-                range: [25, 26],
-                isLocal: true
+                }
               },
               arguments: [],
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 25
+                  column: 26,
+                  offset: 25
                 },
                 end: {
                   line: 1,
-                  column: 28
+                  column: 29,
+                  offset: 28
                 }
-              },
-              range: [25, 28]
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 25
+                column: 26,
+                offset: 25
               },
               end: {
                 line: 1,
-                column: 28
+                column: 29,
+                offset: 28
               }
-            },
-            range: [25, 28]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 28
+            column: 29,
+            offset: 28
           }
-        },
-        range: [0, 28],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'local a, b = 1, a',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [9, 10],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'NumericLiteral',
+                type: 'numericLiteral',
                 value: 1,
                 raw: '1',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   },
                   end: {
                     line: 1,
-                    column: 14
+                    column: 15,
+                    offset: 14
                   }
-                },
-                range: [13, 14]
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [16, 17],
-                isLocal: false
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 17
+                column: 18,
+                offset: 17
               }
-            },
-            range: [0, 17]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 17
+            column: 18,
+            offset: 17
           }
-        },
-        range: [0, 17],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 16
-              },
-              end: {
-                line: 1,
-                column: 17
-              }
-            },
-            range: [16, 17],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'local a, b = 1, function() b = 2 end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [9, 10],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'NumericLiteral',
+                type: 'numericLiteral',
                 value: 1,
                 raw: '1',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   },
                   end: {
                     line: 1,
-                    column: 14
+                    column: 15,
+                    offset: 14
                   }
-                },
-                range: [13, 14]
+                }
               },
               {
-                type: 'FunctionDeclaration',
+                type: 'functionDeclaration',
                 identifier: null,
-                isLocal: false,
+                local: false,
                 parameters: [],
                 body: [
                   {
-                    type: 'AssignmentStatement',
+                    type: 'assignmentStatement',
                     variables: [
                       {
-                        type: 'Identifier',
+                        type: 'identifier',
                         name: 'b',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 27
+                            column: 28,
+                            offset: 27
                           },
                           end: {
                             line: 1,
-                            column: 28
+                            column: 29,
+                            offset: 28
                           }
-                        },
-                        range: [27, 28],
-                        isLocal: false
+                        }
                       }
                     ],
                     init: [
                       {
-                        type: 'NumericLiteral',
+                        type: 'numericLiteral',
                         value: 2,
                         raw: '2',
-                        loc: {
+                        position: {
                           start: {
                             line: 1,
-                            column: 31
+                            column: 32,
+                            offset: 31
                           },
                           end: {
                             line: 1,
-                            column: 32
+                            column: 33,
+                            offset: 32
                           }
-                        },
-                        range: [31, 32]
+                        }
                       }
                     ],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 27
+                        column: 28,
+                        offset: 27
                       },
                       end: {
                         line: 1,
-                        column: 32
+                        column: 33,
+                        offset: 32
                       }
-                    },
-                    range: [27, 32]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   },
                   end: {
                     line: 1,
-                    column: 36
+                    column: 37,
+                    offset: 36
                   }
-                },
-                range: [16, 36]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 36
+                column: 37,
+                offset: 36
               }
-            },
-            range: [0, 36]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 36
+            column: 37,
+            offset: 36
           }
-        },
-        range: [0, 36],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'b',
-            loc: {
-              start: {
-                line: 1,
-                column: 27
-              },
-              end: {
-                line: 1,
-                column: 28
-              }
-            },
-            range: [27, 28],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'local a (a):b():c()',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               }
             ],
             init: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               }
-            },
-            range: [0, 7]
+            }
           },
           {
-            type: 'CallStatement',
+            type: 'callStatement',
             expression: {
-              type: 'CallExpression',
+              type: 'callExpression',
               base: {
-                type: 'MemberExpression',
+                type: 'memberExpression',
                 indexer: ':',
                 identifier: {
-                  type: 'Identifier',
+                  type: 'identifier',
                   name: 'c',
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 16
+                      column: 17,
+                      offset: 16
                     },
                     end: {
                       line: 1,
-                      column: 17
+                      column: 18,
+                      offset: 17
                     }
-                  },
-                  range: [16, 17]
+                  }
                 },
                 base: {
-                  type: 'CallExpression',
+                  type: 'callExpression',
                   base: {
-                    type: 'MemberExpression',
+                    type: 'memberExpression',
                     indexer: ':',
                     identifier: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'b',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 12
+                          column: 13,
+                          offset: 12
                         },
                         end: {
                           line: 1,
-                          column: 13
+                          column: 14,
+                          offset: 13
                         }
-                      },
-                      range: [12, 13]
+                      }
                     },
                     base: {
-                      type: 'Identifier',
+                      type: 'identifier',
                       name: 'a',
-                      loc: {
+                      position: {
                         start: {
                           line: 1,
-                          column: 9
+                          column: 10,
+                          offset: 9
                         },
                         end: {
                           line: 1,
-                          column: 10
+                          column: 11,
+                          offset: 10
                         }
-                      },
-                      range: [9, 10],
-                      isLocal: true
+                      }
                     },
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 8
+                        column: 9,
+                        offset: 8
                       },
                       end: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       }
-                    },
-                    range: [8, 13]
+                    }
                   },
                   arguments: [],
-                  loc: {
+                  position: {
                     start: {
                       line: 1,
-                      column: 8
+                      column: 9,
+                      offset: 8
                     },
                     end: {
                       line: 1,
-                      column: 15
+                      column: 16,
+                      offset: 15
                     }
-                  },
-                  range: [8, 15]
+                  }
                 },
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 8
+                    column: 9,
+                    offset: 8
                   },
                   end: {
                     line: 1,
-                    column: 17
+                    column: 18,
+                    offset: 17
                   }
-                },
-                range: [8, 17]
+                }
               },
               arguments: [],
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 8
+                  column: 9,
+                  offset: 8
                 },
                 end: {
                   line: 1,
-                  column: 19
+                  column: 20,
+                  offset: 19
                 }
-              },
-              range: [8, 19]
+              }
             },
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 8
+                column: 9,
+                offset: 8
               },
               end: {
                 line: 1,
-                column: 19
+                column: 20,
+                offset: 19
               }
-            },
-            range: [8, 19]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 19
+            column: 20,
+            offset: 19
           }
-        },
-        range: [0, 19],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'local a, b for i, a, b in c do end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [9, 10],
-                isLocal: true
+                }
               }
             ],
             init: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 10
+                column: 11,
+                offset: 10
               }
-            },
-            range: [0, 10]
+            }
           },
           {
-            type: 'ForGenericStatement',
+            type: 'forGenericStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'i',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 15
+                    column: 16,
+                    offset: 15
                   },
                   end: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   }
-                },
-                range: [15, 16],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   },
                   end: {
                     line: 1,
-                    column: 19
+                    column: 20,
+                    offset: 19
                   }
-                },
-                range: [18, 19],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 21
+                    column: 22,
+                    offset: 21
                   },
                   end: {
                     line: 1,
-                    column: 22
+                    column: 23,
+                    offset: 22
                   }
-                },
-                range: [21, 22],
-                isLocal: true
+                }
               }
             ],
             iterators: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'c',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 26
+                    column: 27,
+                    offset: 26
                   },
                   end: {
                     line: 1,
-                    column: 27
+                    column: 28,
+                    offset: 27
                   }
-                },
-                range: [26, 27],
-                isLocal: false
+                }
               }
             ],
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 11
+                column: 12,
+                offset: 11
               },
               end: {
                 line: 1,
-                column: 34
+                column: 35,
+                offset: 34
               }
-            },
-            range: [11, 34]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 34
+            column: 35,
+            offset: 34
           }
-        },
-        range: [0, 34],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'c',
-            loc: {
-              start: {
-                line: 1,
-                column: 26
-              },
-              end: {
-                line: 1,
-                column: 27
-              }
-            },
-            range: [26, 27],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'local a, b, c for i, a, b in c do end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 9
+                    column: 10,
+                    offset: 9
                   },
                   end: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   }
-                },
-                range: [9, 10],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'c',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   },
                   end: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   }
-                },
-                range: [12, 13],
-                isLocal: true
+                }
               }
             ],
             init: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               }
-            },
-            range: [0, 13]
+            }
           },
           {
-            type: 'ForGenericStatement',
+            type: 'forGenericStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'i',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   },
                   end: {
                     line: 1,
-                    column: 19
+                    column: 20,
+                    offset: 19
                   }
-                },
-                range: [18, 19],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 21
+                    column: 22,
+                    offset: 21
                   },
                   end: {
                     line: 1,
-                    column: 22
+                    column: 23,
+                    offset: 22
                   }
-                },
-                range: [21, 22],
-                isLocal: true
+                }
               },
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   },
                   end: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   }
-                },
-                range: [24, 25],
-                isLocal: true
+                }
               }
             ],
             iterators: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'c',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 29
+                    column: 30,
+                    offset: 29
                   },
                   end: {
                     line: 1,
-                    column: 30
+                    column: 31,
+                    offset: 30
                   }
-                },
-                range: [29, 30],
-                isLocal: true
+                }
               }
             ],
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 14
+                column: 15,
+                offset: 14
               },
               end: {
                 line: 1,
-                column: 37
+                column: 38,
+                offset: 37
               }
-            },
-            range: [14, 37]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 37
+            column: 38,
+            offset: 37
           }
-        },
-        range: [0, 37],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'local a = {} function a:b() return self end self = nil',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'TableConstructorExpression',
+                type: 'tableConstructor',
                 fields: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   }
-                },
-                range: [10, 12]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 12
+                column: 13,
+                offset: 12
               }
-            },
-            range: [0, 12]
+            }
           },
           {
-            type: 'FunctionDeclaration',
+            type: 'functionDeclaration',
             identifier: {
-              type: 'MemberExpression',
+              type: 'memberExpression',
               indexer: ':',
               identifier: {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   },
                   end: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   }
-                },
-                range: [24, 25]
+                }
               },
               base: {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 22
+                    column: 23,
+                    offset: 22
                   },
                   end: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   }
-                },
-                range: [22, 23],
-                isLocal: true
+                }
               },
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 22
+                  column: 23,
+                  offset: 22
                 },
                 end: {
                   line: 1,
-                  column: 25
+                  column: 26,
+                  offset: 25
                 }
-              },
-              range: [22, 25]
+              }
             },
-            isLocal: false,
+            local: false,
             parameters: [],
             body: [
               {
-                type: 'ReturnStatement',
+                type: 'returnStatement',
                 arguments: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'self',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 35
+                        column: 36,
+                        offset: 35
                       },
                       end: {
                         line: 1,
-                        column: 39
+                        column: 40,
+                        offset: 39
                       }
-                    },
-                    range: [35, 39],
-                    isLocal: true
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 28
+                    column: 29,
+                    offset: 28
                   },
                   end: {
                     line: 1,
-                    column: 39
+                    column: 40,
+                    offset: 39
                   }
-                },
-                range: [28, 39]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 13
+                column: 14,
+                offset: 13
               },
               end: {
                 line: 1,
-                column: 43
+                column: 44,
+                offset: 43
               }
-            },
-            range: [13, 43]
+            }
           },
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'self',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 44
+                    column: 45,
+                    offset: 44
                   },
                   end: {
                     line: 1,
-                    column: 48
+                    column: 49,
+                    offset: 48
                   }
-                },
-                range: [44, 48],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'NilLiteral',
+                type: 'nilLiteral',
                 value: null,
                 raw: 'nil',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 51
+                    column: 52,
+                    offset: 51
                   },
                   end: {
                     line: 1,
-                    column: 54
+                    column: 55,
+                    offset: 54
                   }
-                },
-                range: [51, 54]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 44
+                column: 45,
+                offset: 44
               },
               end: {
                 line: 1,
-                column: 54
+                column: 55,
+                offset: 54
               }
-            },
-            range: [44, 54]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 54
+            column: 55,
+            offset: 54
           }
-        },
-        range: [0, 54],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'self',
-            loc: {
-              start: {
-                line: 1,
-                column: 44
-              },
-              end: {
-                line: 1,
-                column: 48
-              }
-            },
-            range: [44, 48],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'repeat local a = true until a',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'a',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 28
+                  column: 29,
+                  offset: 28
                 },
                 end: {
                   line: 1,
-                  column: 29
+                  column: 30,
+                  offset: 29
                 }
-              },
-              range: [28, 29],
-              isLocal: true
+              }
             },
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       },
                       end: {
                         line: 1,
-                        column: 14
+                        column: 15,
+                        offset: 14
                       }
-                    },
-                    range: [13, 14],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [
                   {
-                    type: 'BooleanLiteral',
+                    type: 'booleanLiteral',
                     value: true,
                     raw: 'true',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 17
+                        column: 18,
+                        offset: 17
                       },
                       end: {
                         line: 1,
-                        column: 21
+                        column: 22,
+                        offset: 21
                       }
-                    },
-                    range: [17, 21]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 21
+                    column: 22,
+                    offset: 21
                   }
-                },
-                range: [7, 21]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 29
+                column: 30,
+                offset: 29
               }
-            },
-            range: [0, 29]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 29
+            column: 30,
+            offset: 29
           }
-        },
-        range: [0, 29],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'local a = function (b) end b = 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'LocalStatement',
+            type: 'localStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
-                },
-                range: [6, 7],
-                isLocal: true
+                }
               }
             ],
             init: [
               {
-                type: 'FunctionDeclaration',
+                type: 'functionDeclaration',
                 identifier: null,
-                isLocal: false,
+                local: false,
                 parameters: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'b',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 20
+                        column: 21,
+                        offset: 20
                       },
                       end: {
                         line: 1,
-                        column: 21
+                        column: 22,
+                        offset: 21
                       }
-                    },
-                    range: [20, 21],
-                    isLocal: true
+                    }
                   }
                 ],
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 10
+                    column: 11,
+                    offset: 10
                   },
                   end: {
                     line: 1,
-                    column: 26
+                    column: 27,
+                    offset: 26
                   }
-                },
-                range: [10, 26]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 26
+                column: 27,
+                offset: 26
               }
-            },
-            range: [0, 26]
+            }
           },
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'b',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 27
+                    column: 28,
+                    offset: 27
                   },
                   end: {
                     line: 1,
-                    column: 28
+                    column: 29,
+                    offset: 28
                   }
-                },
-                range: [27, 28],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'NumericLiteral',
+                type: 'numericLiteral',
                 value: 0,
                 raw: '0',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 31
+                    column: 32,
+                    offset: 31
                   },
                   end: {
                     line: 1,
-                    column: 32
+                    column: 33,
+                    offset: 32
                   }
-                },
-                range: [31, 32]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 27
+                column: 28,
+                offset: 27
               },
               end: {
                 line: 1,
-                column: 32
+                column: 33,
+                offset: 32
               }
-            },
-            range: [27, 32]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 32
+            column: 33,
+            offset: 32
           }
-        },
-        range: [0, 32],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'b',
-            loc: {
-              start: {
-                line: 1,
-                column: 27
-              },
-              end: {
-                line: 1,
-                column: 28
-              }
-            },
-            range: [27, 28],
-            isLocal: false
-          }
-        ]
+        }
       }
     },
     {
       source: 'for a = 1, 5 do end a = 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ForNumericStatement',
+            type: 'forNumericStatement',
             variable: {
-              type: 'Identifier',
+              type: 'identifier',
               name: 'a',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 4
+                  column: 5,
+                  offset: 4
                 },
                 end: {
                   line: 1,
-                  column: 5
+                  column: 6,
+                  offset: 5
                 }
-              },
-              range: [4, 5],
-              isLocal: true
+              }
             },
             start: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 1,
               raw: '1',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 8
+                  column: 9,
+                  offset: 8
                 },
                 end: {
                   line: 1,
-                  column: 9
+                  column: 10,
+                  offset: 9
                 }
-              },
-              range: [8, 9]
+              }
             },
             end: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 5,
               raw: '5',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 11
+                  column: 12,
+                  offset: 11
                 },
                 end: {
                   line: 1,
-                  column: 12
+                  column: 13,
+                  offset: 12
                 }
-              },
-              range: [11, 12]
+              }
             },
             step: null,
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 19
+                column: 20,
+                offset: 19
               }
-            },
-            range: [0, 19]
+            }
           },
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'a',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 20
+                    column: 21,
+                    offset: 20
                   },
                   end: {
                     line: 1,
-                    column: 21
+                    column: 22,
+                    offset: 21
                   }
-                },
-                range: [20, 21],
-                isLocal: false
+                }
               }
             ],
             init: [
               {
-                type: 'NumericLiteral',
+                type: 'numericLiteral',
                 value: 0,
                 raw: '0',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 24
+                    column: 25,
+                    offset: 24
                   },
                   end: {
                     line: 1,
-                    column: 25
+                    column: 26,
+                    offset: 25
                   }
-                },
-                range: [24, 25]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 20
+                column: 21,
+                offset: 20
               },
               end: {
                 line: 1,
-                column: 25
+                column: 26,
+                offset: 25
               }
-            },
-            range: [20, 25]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 25
+            column: 26,
+            offset: 25
           }
-        },
-        range: [0, 25],
-        comments: [],
-        globals: [
-          {
-            type: 'Identifier',
-            name: 'a',
-            loc: {
-              start: {
-                line: 1,
-                column: 20
-              },
-              end: {
-                line: 1,
-                column: 21
-              }
-            },
-            range: [20, 21],
-            isLocal: false
-          }
-        ]
+        }
       }
     }
   ]

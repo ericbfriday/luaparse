@@ -1,6 +1,8 @@
 import {describe, it, expect} from 'vitest'
+// The adapter exists to convert trees from the ORIGINAL luaparse package
+// (fstirlitz/luaparse), which still emits the legacy PascalCase AST.
 // @ts-expect-error -- luaparse is CJS without type declarations
-import * as luaparse from '@friday-friday/luaparse'
+import * as luaparse from 'luaparse'
 import {visit} from '@friday-friday/luast-util-visit'
 import {position as getPosition} from 'unist-util-position'
 import type {Root, LuastNode} from '@friday-friday/luast'

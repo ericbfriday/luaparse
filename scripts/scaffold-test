@@ -66,8 +66,6 @@ function scaffoldTest() {
   var output = []
   var defaultOptions = {
     comments: true,
-    locations: true,
-    ranges: true,
     scope: true
   }
   var options = defaultOptions

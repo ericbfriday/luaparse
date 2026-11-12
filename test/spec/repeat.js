@@ -32,105 +32,109 @@
     {
       source: 'repeat until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 13
+                  column: 14,
+                  offset: 13
                 },
                 end: {
                   line: 1,
-                  column: 14
+                  column: 15,
+                  offset: 14
                 }
-              },
-              range: [13, 14]
+              }
             },
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 14
+                column: 15,
+                offset: 14
               }
-            },
-            range: [0, 14]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 14
+            column: 15,
+            offset: 14
           }
-        },
-        range: [0, 14],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'repeat until false',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'BooleanLiteral',
+              type: 'booleanLiteral',
               value: false,
               raw: 'false',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 13
+                  column: 14,
+                  offset: 13
                 },
                 end: {
                   line: 1,
-                  column: 18
+                  column: 19,
+                  offset: 18
                 }
-              },
-              range: [13, 18]
+              }
             },
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 18
+                column: 19,
+                offset: 18
               }
-            },
-            range: [0, 18]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 18
+            column: 19,
+            offset: 18
           }
-        },
-        range: [0, 18],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -152,325 +156,336 @@
     {
       source: 'repeat local a until 1',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 1,
               raw: '1',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 21
+                  column: 22,
+                  offset: 21
                 },
                 end: {
                   line: 1,
-                  column: 22
+                  column: 23,
+                  offset: 22
                 }
-              },
-              range: [21, 22]
+              }
             },
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       },
                       end: {
                         line: 1,
-                        column: 14
+                        column: 15,
+                        offset: 14
                       }
-                    },
-                    range: [13, 14],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 14
+                    column: 15,
+                    offset: 14
                   }
-                },
-                range: [7, 14]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 22
+                column: 23,
+                offset: 22
               }
-            },
-            range: [0, 22]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 22
+            column: 23,
+            offset: 22
           }
-        },
-        range: [0, 22],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'repeat local a local b until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 29
+                  column: 30,
+                  offset: 29
                 },
                 end: {
                   line: 1,
-                  column: 30
+                  column: 31,
+                  offset: 30
                 }
-              },
-              range: [29, 30]
+              }
             },
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       },
                       end: {
                         line: 1,
-                        column: 14
+                        column: 15,
+                        offset: 14
                       }
-                    },
-                    range: [13, 14],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 14
+                    column: 15,
+                    offset: 14
                   }
-                },
-                range: [7, 14]
+                }
               },
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'b',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 21
+                        column: 22,
+                        offset: 21
                       },
                       end: {
                         line: 1,
-                        column: 22
+                        column: 23,
+                        offset: 22
                       }
-                    },
-                    range: [21, 22],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 15
+                    column: 16,
+                    offset: 15
                   },
                   end: {
                     line: 1,
-                    column: 22
+                    column: 23,
+                    offset: 22
                   }
-                },
-                range: [15, 22]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 30
+                column: 31,
+                offset: 30
               }
-            },
-            range: [0, 30]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 30
+            column: 31,
+            offset: 30
           }
-        },
-        range: [0, 30],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'repeat local a; local b; until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 31
+                  column: 32,
+                  offset: 31
                 },
                 end: {
                   line: 1,
-                  column: 32
+                  column: 33,
+                  offset: 32
                 }
-              },
-              range: [31, 32]
+              }
             },
             body: [
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'a',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 13
+                        column: 14,
+                        offset: 13
                       },
                       end: {
                         line: 1,
-                        column: 14
+                        column: 15,
+                        offset: 14
                       }
-                    },
-                    range: [13, 14],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 14
+                    column: 15,
+                    offset: 14
                   }
-                },
-                range: [7, 14]
+                }
               },
               {
-                type: 'LocalStatement',
+                type: 'localStatement',
                 variables: [
                   {
-                    type: 'Identifier',
+                    type: 'identifier',
                     name: 'b',
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 22
+                        column: 23,
+                        offset: 22
                       },
                       end: {
                         line: 1,
-                        column: 23
+                        column: 24,
+                        offset: 23
                       }
-                    },
-                    range: [22, 23],
-                    isLocal: true
+                    }
                   }
                 ],
                 init: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 16
+                    column: 17,
+                    offset: 16
                   },
                   end: {
                     line: 1,
-                    column: 23
+                    column: 24,
+                    offset: 23
                   }
-                },
-                range: [16, 23]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 32
+                column: 33,
+                offset: 32
               }
-            },
-            range: [0, 32]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 32
+            column: 33,
+            offset: 32
           }
-        },
-        range: [0, 32],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -488,69 +503,72 @@
     {
       source: 'repeat return until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 20
+                  column: 21,
+                  offset: 20
                 },
                 end: {
                   line: 1,
-                  column: 21
+                  column: 22,
+                  offset: 21
                 }
-              },
-              range: [20, 21]
+              }
             },
             body: [
               {
-                type: 'ReturnStatement',
+                type: 'returnStatement',
                 arguments: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   }
-                },
-                range: [7, 13]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 21
+                column: 22,
+                offset: 21
               }
-            },
-            range: [0, 21]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 21
+            column: 22,
+            offset: 21
           }
-        },
-        range: [0, 21],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -560,68 +578,71 @@
     {
       source: 'repeat break until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 19
+                  column: 20,
+                  offset: 19
                 },
                 end: {
                   line: 1,
-                  column: 20
+                  column: 21,
+                  offset: 20
                 }
-              },
-              range: [19, 20]
+              }
             },
             body: [
               {
-                type: 'BreakStatement',
-                loc: {
+                type: 'breakStatement',
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   }
-                },
-                range: [7, 12]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 20
+                column: 21,
+                offset: 20
               }
-            },
-            range: [0, 20]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 20
+            column: 21,
+            offset: 20
           }
-        },
-        range: [0, 20],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -631,382 +652,391 @@
     {
       source: 'repeat do end until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 20
+                  column: 21,
+                  offset: 20
                 },
                 end: {
                   line: 1,
-                  column: 21
+                  column: 22,
+                  offset: 21
                 }
-              },
-              range: [20, 21]
+              }
             },
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   }
-                },
-                range: [7, 13]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 21
+                column: 22,
+                offset: 21
               }
-            },
-            range: [0, 21]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 21
+            column: 22,
+            offset: 21
           }
-        },
-        range: [0, 21],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'repeat do return end until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 27
+                  column: 28,
+                  offset: 27
                 },
                 end: {
                   line: 1,
-                  column: 28
+                  column: 29,
+                  offset: 28
                 }
-              },
-              range: [27, 28]
+              }
             },
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [
                   {
-                    type: 'ReturnStatement',
+                    type: 'returnStatement',
                     arguments: [],
-                    loc: {
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 16
+                        column: 17,
+                        offset: 16
                       }
-                    },
-                    range: [10, 16]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 20
+                    column: 21,
+                    offset: 20
                   }
-                },
-                range: [7, 20]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 28
+                column: 29,
+                offset: 28
               }
-            },
-            range: [0, 28]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 28
+            column: 29,
+            offset: 28
           }
-        },
-        range: [0, 28],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'repeat do break end until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 26
+                  column: 27,
+                  offset: 26
                 },
                 end: {
                   line: 1,
-                  column: 27
+                  column: 28,
+                  offset: 27
                 }
-              },
-              range: [26, 27]
+              }
             },
             body: [
               {
-                type: 'DoStatement',
+                type: 'doStatement',
                 body: [
                   {
-                    type: 'BreakStatement',
-                    loc: {
+                    type: 'breakStatement',
+                    position: {
                       start: {
                         line: 1,
-                        column: 10
+                        column: 11,
+                        offset: 10
                       },
                       end: {
                         line: 1,
-                        column: 15
+                        column: 16,
+                        offset: 15
                       }
-                    },
-                    range: [10, 15]
+                    }
                   }
                 ],
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 19
+                    column: 20,
+                    offset: 19
                   }
-                },
-                range: [7, 19]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 27
+                column: 28,
+                offset: 27
               }
-            },
-            range: [0, 27]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 27
+            column: 28,
+            offset: 27
           }
-        },
-        range: [0, 27],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
       source: 'repeat ; until 1',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 1,
               raw: '1',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 15
+                  column: 16,
+                  offset: 15
                 },
                 end: {
                   line: 1,
-                  column: 16
+                  column: 17,
+                  offset: 16
                 }
-              },
-              range: [15, 16]
+              }
             },
             body: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 16
+                column: 17,
+                offset: 16
               }
-            },
-            range: [0, 16]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 16
+            column: 17,
+            offset: 16
           }
-        },
-        range: [0, 16],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: 'repeat break break until 0',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'RepeatStatement',
+            type: 'repeatStatement',
             condition: {
-              type: 'NumericLiteral',
+              type: 'numericLiteral',
               value: 0,
               raw: '0',
-              loc: {
+              position: {
                 start: {
                   line: 1,
-                  column: 25
+                  column: 26,
+                  offset: 25
                 },
                 end: {
                   line: 1,
-                  column: 26
+                  column: 27,
+                  offset: 26
                 }
-              },
-              range: [25, 26]
+              }
             },
             body: [
               {
-                type: 'BreakStatement',
-                loc: {
+                type: 'breakStatement',
+                position: {
                   start: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   },
                   end: {
                     line: 1,
-                    column: 12
+                    column: 13,
+                    offset: 12
                   }
-                },
-                range: [7, 12]
+                }
               },
               {
-                type: 'BreakStatement',
-                loc: {
+                type: 'breakStatement',
+                position: {
                   start: {
                     line: 1,
-                    column: 13
+                    column: 14,
+                    offset: 13
                   },
                   end: {
                     line: 1,
-                    column: 18
+                    column: 19,
+                    offset: 18
                   }
-                },
-                range: [13, 18]
+                }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 26
+                column: 27,
+                offset: 26
               }
-            },
-            range: [0, 26]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 26
+            column: 27,
+            offset: 26
           }
-        },
-        range: [0, 26],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     }

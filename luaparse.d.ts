@@ -4,8 +4,6 @@ export interface ParseOptions {
   wait?: boolean
   comments?: boolean
   scope?: boolean
-  locations?: boolean
-  ranges?: boolean
   onCreateNode?: ((node: AstNode) => void) | null
   onCreateScope?: (() => void) | null
   onDestroyScope?: (() => void) | null
@@ -13,25 +11,16 @@ export interface ParseOptions {
   luaVersion?: '5.1' | '5.2' | '5.3' | 'LuaJIT'
   extendedIdentifiers?: boolean
   encodingMode?: 'none' | 'x-user-defined' | 'pseudo-latin1'
-  ast?: 'legacy' | 'luast'
   maxInputLength?: number
 }
 
 export interface AstNode {
   type: string
+  position?: {
+    start: {line: number; column: number; offset: number}
+    end: {line: number; column: number; offset: number}
+  }
   [key: string]: unknown
-}
-
-export interface LocationInfo {
-  start: {line: number; column: number}
-  end: {line: number; column: number}
-}
-
-export interface ChunkNode extends AstNode {
-  type: 'Chunk'
-  body: AstNode[]
-  comments?: AstNode[]
-  globals?: AstNode[]
 }
 
 export interface TokenType {
@@ -54,21 +43,22 @@ export interface Token {
   range: [number, number]
 }
 
+export const version: string
 export const defaultOptions: ParseOptions
 export const tokenTypes: TokenType
 export const ast: Record<string, (...args: unknown[]) => AstNode>
+export const errors: Record<string, string>
+export const SyntaxError: new (message: string) => Error
 
-export function parse(
-  input: string,
-  options: ParseOptions & {ast: 'luast'}
-): Root
-export function parse(options: ParseOptions & {wait: true}): {
-  write(input: string): void
-  end(input?: string): AstNode
+export interface StreamSession {
+  write(input: string): StreamSession
+  end(input?: string): Root
   lex(): Token
 }
-export function parse(input: string, options?: ParseOptions): AstNode
 
-export function write(input: string): void
-export function end(input?: string): AstNode
-export function lex(): Token
+export function parse(input: string, options?: ParseOptions): Root
+export function parse(options: ParseOptions & {wait: true}): StreamSession
+
+export const write: (input: string) => StreamSession
+export const end: (input?: string) => Root
+export const lex: () => Token

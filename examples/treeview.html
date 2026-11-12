@@ -98,7 +98,7 @@
           }
 
           tree = new YAHOO.widget.TreeView('tree')
-          tree.buildTreeFromObject(convertAstToTree('Chunk', ast))
+          tree.buildTreeFromObject(convertAstToTree('root', ast))
           tree.draw()
 
           document.getElementById('collapse').onclick = function () {

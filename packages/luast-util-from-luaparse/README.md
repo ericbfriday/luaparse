@@ -1,14 +1,19 @@
 # luast-util-from-luaparse
 
-Convert legacy [luaparse][] AST to [luast][] format.
+> **Deprecated.** [`@friday-friday/luaparse`][fork] now emits [luast][] trees
+> natively — no conversion step is needed. This package remains only for
+> converting trees produced by the **original** [luaparse][] package
+> (`fstirlitz/luaparse`).
+
+Convert original-luaparse ASTs to [luast][] format.
 
 ## What is this?
 
-This package converts the PascalCase AST emitted by luaparse's legacy mode
-(e.g. `Chunk`, `LocalStatement`, `Identifier`) into the camelCase,
-[unist][]-compliant luast format (e.g. `root`, `localStatement`,
-`identifier`). It also converts position data to the unist `position` format
-(1-indexed columns).
+This package converts the PascalCase AST emitted by the original
+[fstirlitz/luaparse][] parser (e.g. `Chunk`, `LocalStatement`, `Identifier`)
+into the camelCase, [unist][]-compliant luast format (e.g. `root`,
+`localStatement`, `identifier`). It also converts position data to the unist
+`position` format (1-based columns).
 
 ## Install
 
@@ -19,10 +24,10 @@ npm install @friday-friday/luast-util-from-luaparse
 ## Use
 
 ```js
-import luaparse from '@friday-friday/luaparse'
+import luaparse from 'luaparse' // the ORIGINAL package
 import {fromLuaparse} from '@friday-friday/luast-util-from-luaparse'
 
-// Parse in legacy mode
+// Original luaparse emits the legacy AST
 const legacy = luaparse.parse('local x = 1', {
   locations: true,
   ranges: true
@@ -34,6 +39,14 @@ const tree = fromLuaparse(legacy)
 // tree.body[0].type === 'localStatement'
 ```
 
+Starting a new project? Skip the conversion entirely:
+
+```js
+import luaparse from '@friday-friday/luaparse'
+
+const tree = luaparse.parse('local x = 1') // already luast
+```
+
 ## API
 
 ### `fromLuaparse(legacy)`
@@ -41,7 +54,7 @@ const tree = fromLuaparse(legacy)
 Convert a legacy luaparse AST node (typically a `Chunk`) into a luast `Root`.
 
 **Parameters:**
-- `legacy` — the legacy AST object from `luaparse.parse()`
+- `legacy` — the legacy AST object from the original `luaparse.parse()`
 
 **Returns:** a luast `Root` node
 
@@ -49,12 +62,14 @@ Convert a legacy luaparse AST node (typically a `Chunk`) into a luast `Root`.
 
 - [`@friday-friday/luast`](../luast) — tree specification and types
 - [`@friday-friday/luast-util-visit`](../luast-util-visit) — tree visitor
-- [`@friday-friday/luaparse`](../../) — Lua parser
+- [`@friday-friday/luaparse`](../../) — Lua parser with native luast emission
 
 ## License
 
 [MIT](./LICENSE)
 
-[luaparse]: ../../
+[fork]: ../../
+[luaparse]: https://github.com/fstirlitz/luaparse
+[fstirlitz/luaparse]: https://github.com/fstirlitz/luaparse
 [luast]: ../luast
 [unist]: https://github.com/syntax-tree/unist

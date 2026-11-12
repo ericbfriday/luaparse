@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@friday-friday/luaparse": "^0.3.0",
+    "luaparse": "^0.3.1",
     "prettier": "^3.0.0",
     "typescript": "^5.4.0",
     "vitest": "^3.0.0",

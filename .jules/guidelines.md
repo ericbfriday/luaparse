@@ -40,11 +40,11 @@
    failed, close it first before retrying.
 
 5. **Never bundle unrelated files.** A PR fixing one function in
-   `luaparse.js` should not also touch `.changeset/`, `FUTURE-README.md`,
-   `LUAST-SPEC.md`, `MIGRATION-PLAN.md`, `PORT-ANALYSIS.md`, package READMEs,
-   or leave scratch/PoC scripts (e.g. `poc_*.js`, `*_test.js`) in the repo
-   root. If your diff touches more than the file(s) your change is actually
-   about, split it or drop the extra hunks before opening the PR.
+   `luaparse.js` should not also touch `.changeset/`, `LUAST-SPEC.md`,
+   package READMEs, or leave scratch/PoC scripts (e.g. `poc_*.js`,
+   `*_test.js`) in the repo root. If your diff touches more than the file(s)
+   your change is actually about, split it or drop the extra hunks before
+   opening the PR.
 
 ## Agent-Specific Rules
 

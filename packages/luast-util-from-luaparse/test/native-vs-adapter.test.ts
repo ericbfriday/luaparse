@@ -1,18 +1,21 @@
 import {describe, it, expect} from 'vitest'
-// @ts-expect-error -- luaparse is CJS without type declarations
-import * as luaparse from '@friday-friday/luaparse'
+// Native luast emission comes from our fork; the legacy trees fed to the
+// adapter come from the ORIGINAL luaparse package.
+// @ts-expect-error -- CJS without type declarations
+import * as nativeLuaparse from '@friday-friday/luaparse'
+// @ts-expect-error -- CJS without type declarations
+import * as originalLuaparse from 'luaparse'
 import type {Root} from '@friday-friday/luast'
 import {fromLuaparse} from '../src/index.js'
 
 function parseNative(code: string, version = '5.3'): Root {
-  return luaparse.parse(code, {
-    ast: 'luast',
+  return nativeLuaparse.parse(code, {
     luaVersion: version
   }) as Root
 }
 
 function parseViaAdapter(code: string, version = '5.3'): Root {
-  const legacy = luaparse.parse(code, {
+  const legacy = originalLuaparse.parse(code, {
     locations: true,
     ranges: true,
     comments: true,

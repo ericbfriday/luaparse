@@ -24,37 +24,38 @@
     {
       source: 'return',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 6
+                column: 7,
+                offset: 6
               }
-            },
-            range: [0, 6]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 6
+            column: 7,
+            offset: 6
           }
-        },
-        range: [0, 6],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -64,37 +65,38 @@
     {
       source: 'return;',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               }
-            },
-            range: [0, 7]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 7
+            column: 8,
+            offset: 7
           }
-        },
-        range: [0, 7],
-        comments: [],
-        globals: []
+        }
       }
     },
     {
@@ -104,43 +106,40 @@
     {
       source: 'return;',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'ReturnStatement',
+            type: 'returnStatement',
             arguments: [],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               }
-            },
-            range: [0, 7]
+            }
           }
         ],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 7
+            column: 8,
+            offset: 7
           }
-        },
-        range: [0, 7],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
@@ -148,37 +147,29 @@
       source: 'return;;',
       result: "[1:7] unexpected symbol ';' near '<eof>'",
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     },
     {
       source: ';',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [],
-        loc: {
+        comments: [],
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 1
+            column: 2,
+            offset: 1
           }
-        },
-        range: [0, 1],
-        comments: [],
-        globals: []
+        }
       },
       options: {
-        comments: true,
-        locations: true,
-        ranges: true,
-        scope: true,
         luaVersion: '5.2'
       }
     }

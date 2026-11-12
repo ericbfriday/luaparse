@@ -12,7 +12,6 @@ export default function luaParse(
   options?: Options
 ) {
   const settings = {
-    ast: 'luast' as const,
     luaVersion: options?.luaVersion ?? '5.1',
     encodingMode: options?.encodingMode ?? 'none',
     maxInputLength: options?.maxInputLength ?? 0

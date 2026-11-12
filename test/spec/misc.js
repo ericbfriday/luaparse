@@ -2,377 +2,372 @@
   'use strict'
 
   var freeExports = typeof exports === 'object' && exports,
-    // While CommonJS defines `module` as an object, component define it as a
-    // function
     freeModule =
-      (typeof module === 'object' || typeof module === 'function') &&
+      typeof module === 'object' &&
       module &&
       module.exports === freeExports &&
-      module
-
-  // Detect free variable `global`, from Node.js or Browserified code, and use
-  // it as `root`
-  var freeGlobal = typeof global === 'object' && global
+      module,
+    freeGlobal = typeof global === 'object' && global
   if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)
     root = freeGlobal
 
-  // Some AMD build optimizers, like r.js, check for specific condition
-  // patterns like the following:
-  if (typeof define === 'function' && define.amd) {
-    define(['exports'], factory)
-  }
-  // check for `exports` after `define` in case a build optimizer adds an
-  // `exports` object
+  if (typeof define === 'function' && define.amd) define(['exports'], factory)
   else if (freeExports && !freeExports.nodeType) {
-    // in Node.js or RingoJS v0.8.0+
     if (freeModule) factory(freeModule.exports)
-    // in RingoJS v0.7.0-
     else factory(freeExports)
-  }
-  // in a browser or Rhino
-  else {
-    factory((root[name] = {}))
-  }
+  } else factory((root[name] = {}))
 })(this, 'misc', function (exports) {
+  'use strict'
+
   exports.name = 'misc'
-  exports.options = {}
-  exports.spec = {
-    'function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end do while a do end repeat until 0 end for a = 1, 1 do end a = function() end':
-      {
-        options: {luaVersion: '5.2'},
-        name: 'should not scope by default',
-        result: {
-          type: 'Chunk',
-          body: [
-            {
-              type: 'FunctionDeclaration',
-              identifier: {
-                type: 'MemberExpression',
-                indexer: ':',
-                identifier: {
-                  type: 'Identifier',
-                  name: 'baz'
-                },
-                base: {
-                  type: 'MemberExpression',
-                  indexer: '.',
-                  identifier: {
-                    type: 'Identifier',
-                    name: 'bar'
-                  },
-                  base: {
-                    type: 'Identifier',
-                    name: 'foo'
-                  }
-                }
-              },
-              isLocal: false,
-              parameters: [
-                {
-                  type: 'Identifier',
-                  name: 'a'
-                }
-              ],
-              body: [
-                {
-                  type: 'GotoStatement',
-                  label: {
-                    type: 'Identifier',
-                    name: 'foo'
-                  }
-                }
-              ]
-            },
-            {
-              type: 'FunctionDeclaration',
-              identifier: {
-                type: 'Identifier',
-                name: 'a'
-              },
-              isLocal: true,
-              parameters: [],
-              body: [
-                {
-                  type: 'LocalStatement',
-                  variables: [
-                    {
-                      type: 'Identifier',
-                      name: 'a'
-                    },
-                    {
-                      type: 'Identifier',
-                      name: 'b'
-                    }
-                  ],
-                  init: []
-                },
-                {
-                  type: 'LabelStatement',
-                  label: {
-                    type: 'Identifier',
-                    name: 'c'
-                  }
-                },
-                {
-                  type: 'ForGenericStatement',
-                  variables: [
-                    {
-                      type: 'Identifier',
-                      name: 'a'
-                    },
-                    {
-                      type: 'Identifier',
-                      name: 'b'
-                    }
-                  ],
-                  iterators: [
-                    {
-                      type: 'CallExpression',
-                      base: {
-                        type: 'MemberExpression',
-                        indexer: ':',
-                        identifier: {
-                          type: 'Identifier',
-                          name: 'e'
-                        },
-                        base: {
-                          type: 'MemberExpression',
-                          indexer: '.',
-                          identifier: {
-                            type: 'Identifier',
-                            name: 'd'
-                          },
-                          base: {
-                            type: 'Identifier',
-                            name: 'c'
-                          }
-                        }
-                      },
-                      arguments: []
-                    }
-                  ],
-                  body: []
-                }
-              ]
-            },
-            {
-              type: 'DoStatement',
-              body: [
-                {
-                  type: 'WhileStatement',
-                  condition: {
-                    type: 'Identifier',
-                    name: 'a'
-                  },
-                  body: []
-                },
-                {
-                  type: 'RepeatStatement',
-                  condition: {
-                    type: 'NumericLiteral',
-                    value: 0,
-                    raw: '0'
-                  },
-                  body: []
-                }
-              ]
-            },
-            {
-              type: 'ForNumericStatement',
-              variable: {
-                type: 'Identifier',
-                name: 'a'
-              },
-              start: {
-                type: 'NumericLiteral',
-                value: 1,
-                raw: '1'
-              },
-              end: {
-                type: 'NumericLiteral',
-                value: 1,
-                raw: '1'
-              },
-              step: null,
-              body: []
-            },
-            {
-              type: 'AssignmentStatement',
-              variables: [
-                {
-                  type: 'Identifier',
-                  name: 'a'
-                }
-              ],
-              init: [
-                {
-                  type: 'FunctionDeclaration',
-                  identifier: null,
-                  isLocal: false,
-                  parameters: [],
-                  body: []
-                }
-              ]
-            }
-          ],
-          comments: []
-        }
-      },
-    '--comment\nif 1 then elseif 2 then else end': {
-      options: {},
-      name: 'should not track locations or ranges by default',
+  exports.spec = [
+    {
+      source:
+        'function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end do while a do end repeat until 0 end for a = 1, 1 do end a = function() end',
+      options: {luaVersion: '5.2'},
+      result: "[1:24] no visible label 'foo' for <goto>"
+    },
+    {
+      source: '--comment\nif 1 then elseif 2 then else end',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'IfStatement',
+            type: 'ifStatement',
             clauses: [
               {
-                type: 'IfClause',
+                type: 'ifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 1,
-                  raw: '1'
+                  raw: '1',
+                  position: {
+                    start: {
+                      line: 2,
+                      column: 4,
+                      offset: 13
+                    },
+                    end: {
+                      line: 2,
+                      column: 5,
+                      offset: 14
+                    }
+                  }
                 },
-                body: []
+                body: [],
+                position: {
+                  start: {
+                    line: 2,
+                    column: 1,
+                    offset: 10
+                  },
+                  end: {
+                    line: 2,
+                    column: 10,
+                    offset: 19
+                  }
+                }
               },
               {
-                type: 'ElseifClause',
+                type: 'elseifClause',
                 condition: {
-                  type: 'NumericLiteral',
+                  type: 'numericLiteral',
                   value: 2,
-                  raw: '2'
+                  raw: '2',
+                  position: {
+                    start: {
+                      line: 2,
+                      column: 18,
+                      offset: 27
+                    },
+                    end: {
+                      line: 2,
+                      column: 19,
+                      offset: 28
+                    }
+                  }
                 },
-                body: []
+                body: [],
+                position: {
+                  start: {
+                    line: 2,
+                    column: 11,
+                    offset: 20
+                  },
+                  end: {
+                    line: 2,
+                    column: 24,
+                    offset: 33
+                  }
+                }
               },
               {
-                type: 'ElseClause',
-                body: []
+                type: 'elseClause',
+                body: [],
+                position: {
+                  start: {
+                    line: 2,
+                    column: 25,
+                    offset: 34
+                  },
+                  end: {
+                    line: 2,
+                    column: 29,
+                    offset: 38
+                  }
+                }
               }
-            ]
+            ],
+            position: {
+              start: {
+                line: 2,
+                column: 1,
+                offset: 10
+              },
+              end: {
+                line: 2,
+                column: 33,
+                offset: 42
+              }
+            }
           }
         ],
+        position: {
+          start: {
+            line: 2,
+            column: 1,
+            offset: 10
+          },
+          end: {
+            line: 2,
+            column: 33,
+            offset: 42
+          }
+        },
         comments: [
           {
-            type: 'Comment',
+            type: 'comment',
             value: 'comment',
-            raw: '--comment'
+            raw: '--comment',
+            position: {
+              start: {
+                line: 1,
+                column: 1,
+                offset: 0
+              },
+              end: {
+                line: 1,
+                column: 10,
+                offset: 9
+              }
+            }
           }
         ]
       }
     },
-    'foo = 1': {
-      options: {locations: true},
-      name: 'should be able to track only locations',
+    {
+      source: 'foo = 1',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'foo',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 0
+                    column: 1,
+                    offset: 0
                   },
                   end: {
                     line: 1,
-                    column: 3
+                    column: 4,
+                    offset: 3
                   }
                 }
               }
             ],
             init: [
               {
-                type: 'NumericLiteral',
+                type: 'numericLiteral',
                 value: 1,
                 raw: '1',
-                loc: {
+                position: {
                   start: {
                     line: 1,
-                    column: 6
+                    column: 7,
+                    offset: 6
                   },
                   end: {
                     line: 1,
-                    column: 7
+                    column: 8,
+                    offset: 7
                   }
                 }
               }
             ],
-            loc: {
+            position: {
               start: {
                 line: 1,
-                column: 0
+                column: 1,
+                offset: 0
               },
               end: {
                 line: 1,
-                column: 7
+                column: 8,
+                offset: 7
               }
             }
           }
         ],
-        loc: {
+        position: {
           start: {
             line: 1,
-            column: 0
+            column: 1,
+            offset: 0
           },
           end: {
             line: 1,
-            column: 7
+            column: 8,
+            offset: 7
           }
         },
         comments: []
       }
     },
-    'foo = 2': {
-      options: {ranges: true},
-      name: 'should be able to track only ranges',
+    {
+      source: 'foo = 2',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [
           {
-            type: 'AssignmentStatement',
+            type: 'assignmentStatement',
             variables: [
               {
-                type: 'Identifier',
+                type: 'identifier',
                 name: 'foo',
-                range: [0, 3]
+                position: {
+                  start: {
+                    line: 1,
+                    column: 1,
+                    offset: 0
+                  },
+                  end: {
+                    line: 1,
+                    column: 4,
+                    offset: 3
+                  }
+                }
               }
             ],
             init: [
               {
-                type: 'NumericLiteral',
+                type: 'numericLiteral',
                 value: 2,
                 raw: '2',
-                range: [6, 7]
+                position: {
+                  start: {
+                    line: 1,
+                    column: 7,
+                    offset: 6
+                  },
+                  end: {
+                    line: 1,
+                    column: 8,
+                    offset: 7
+                  }
+                }
               }
             ],
-            range: [0, 7]
+            position: {
+              start: {
+                line: 1,
+                column: 1,
+                offset: 0
+              },
+              end: {
+                line: 1,
+                column: 8,
+                offset: 7
+              }
+            }
           }
         ],
-        range: [0, 7],
+        position: {
+          start: {
+            line: 1,
+            column: 1,
+            offset: 0
+          },
+          end: {
+            line: 1,
+            column: 8,
+            offset: 7
+          }
+        },
         comments: []
       }
     },
-    '': {
-      name: 'should produce empty tree on empty input',
-      options: {},
+    {
+      source: '',
       result: {
-        type: 'Chunk',
+        type: 'root',
         body: [],
+        position: {
+          start: {
+            line: 1,
+            column: 1,
+            offset: 0
+          },
+          end: {
+            line: 1,
+            column: 1,
+            offset: 0
+          }
+        },
         comments: []
       }
     },
-    '--comment': {
-      name: 'should ignore comments if told to',
-      options: {comments: false},
+    {
+      source: '--comment',
       result: {
-        type: 'Chunk',
-        body: []
+        type: 'root',
+        body: [],
+        position: {
+          start: {
+            line: 1,
+            column: 10,
+            offset: 9
+          },
+          end: {
+            line: 1,
+            column: 10,
+            offset: 9
+          }
+        },
+        comments: [
+          {
+            type: 'comment',
+            value: 'comment',
+            raw: '--comment',
+            position: {
+              start: {
+                line: 1,
+                column: 1,
+                offset: 0
+              },
+              end: {
+                line: 1,
+                column: 10,
+                offset: 9
+              }
+            }
+          }
+        ]
       }
     }
-  }
+  ]
 })

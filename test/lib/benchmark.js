@@ -273,24 +273,9 @@
      * @memberOf Benchmark.support
      * @type Boolean
      */
-    try {
-      // Safari 2.x removes commas in object literals
-      // from Function#toString results
-      // http://webk.it/11609
-      // Firefox 3.6 and Opera 9.25 strip grouping
-      // parentheses from Function#toString results
-      // http://bugzil.la/559438
-      support.decompilation =
-        Function(
-          'return (' +
-            function (x) {
-              return {x: '' + (1 + x) + '', y: 0}
-            } +
-            ')'
-        )()(0).x === '1'
-    } catch (e) {
-      support.decompilation = false
-    }
+    // Decompile-based formatting is not needed for our benchmarks; disable
+    // unconditionally to keep dynamic code evaluation out of the test suite.
+    support.decompilation = false
 
     /**
      * Detect ES5+ property descriptor API.

@@ -1,15 +1,19 @@
 import {describe, it, expect} from 'vitest'
 // @ts-expect-error -- luaparse is CJS without type declarations
 import * as luaparse from '@friday-friday/luaparse'
+// The original luaparse still annotates its AST with scope info; we use it
+// to cross-validate our scope analysis.
+// @ts-expect-error -- luaparse is CJS without type declarations
+import * as originalLuaparse from 'luaparse'
 import type {Root, Identifier} from '@friday-friday/luast'
 import {analyzeScope} from '../src/index.js'
 
 function parseTree(code: string): Root {
-  return luaparse.parse(code, {ast: 'luast', luaVersion: '5.3'}) as Root
+  return luaparse.parse(code, {luaVersion: '5.3'}) as Root
 }
 
 function parseLegacy(code: string): Record<string, unknown> {
-  return luaparse.parse(code, {
+  return originalLuaparse.parse(code, {
     scope: true,
     luaVersion: '5.3'
   }) as Record<string, unknown>

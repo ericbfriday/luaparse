@@ -7,7 +7,7 @@ luaparse - Lua parser
 .B luaparse
 [-v|--version] [-h|--help] [-b|--beautify] [-q|--quiet] [--verbose]
 .RS
-[--[no]-comments] [--[no]-scope] [--[no]-locations] [--[no]-ranges]
+[--[no]-comments]
 .br
 [-c|--code
 .I snippet
@@ -49,15 +49,6 @@ output an indented AST
 .IP "--[no]-comments"
 store comments while parsing. defaults to true
 .B
-.IP "--[no]-scope"
-store variable scope tracking while parsing. defaults to false
-.B
-.IP "--[no]-locations"
-store location information on each syntax nodes. defaults to false
-.B
-.IP "--[no]-ranges"
-store the start and end character locations on each syntax node. defaults to false
-.B
 .IP "-q, --quiet"
 suppress output
 .B
@@ -72,11 +63,11 @@ Output the AST of both code snippets separated by a newline.
 .IP "luaparse foo.lua"
 Output the AST of the Lua code in the file.
 .B
-.IP "luaparse --scope -b -c 'locale foo = 1'"
-Output the indented AST of the code snippet and track variable scopes.
+.IP "luaparse --no-comments -b -c 'local foo = 1'"
+Output the indented AST of the code snippet without collecting comments.
 .SH BUGS
 
-luaparse's bug tracker is located at <https://github.com/fstirlitz/luaparse/issues>
+luaparse's bug tracker is located at <https://github.com/ericbfriday/luaparse/issues>
 .SH DOCUMENTATION
 
 See the website for documentation <https://fstirlitz.github.io/luaparse/>

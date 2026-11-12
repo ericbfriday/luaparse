@@ -1,7 +1,7 @@
 {
   "name": "@friday-friday/luast-util-from-luaparse",
   "version": "0.3.0",
-  "description": "Convert legacy luaparse AST to luast format",
+  "description": "DEPRECATED: convert original luaparse ASTs to luast. @friday-friday/luaparse now emits luast natively",
   "homepage": "https://github.com/ericbfriday/luaparse#readme",
   "bugs": "https://github.com/ericbfriday/luaparse/issues",
   "author": "Eric Friday <ericfriday@gmail.com>",
@@ -54,6 +54,7 @@
   "devDependencies": {
     "@friday-friday/luaparse": "^0.3.0",
     "@friday-friday/luast-util-visit": "^0.3.0",
+    "luaparse": "^0.3.1",
     "prettier": "^3.0.0",
     "typescript": "^5.4.0",
     "unist-util-position": "^5.0.0",

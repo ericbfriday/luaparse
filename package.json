@@ -1,6 +1,6 @@
 {
   "name": "@friday-friday/luaparse",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A Lua parser in JavaScript with unist-compatible AST output",
   "keywords": [
     "ast",
@@ -72,7 +72,7 @@
     "bench:luast": "node benchmarks/luast-emission.js"
   },
   "dependencies": {
-    "@friday-friday/luast": "^0.3.0"
+    "@friday-friday/luast": "^0.4.0"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",

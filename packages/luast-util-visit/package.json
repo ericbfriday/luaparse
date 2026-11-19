@@ -1,6 +1,6 @@
 {
   "name": "@friday-friday/luast-util-visit",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Tree visitor for luast (named-field aware) — walk Lua ASTs using the child-field registry",
   "homepage": "https://github.com/ericbfriday/luaparse#readme",
   "bugs": "https://github.com/ericbfriday/luaparse/issues",
@@ -50,7 +50,7 @@
     "test": "npm run build && npm run format && npm run test-api"
   },
   "dependencies": {
-    "@friday-friday/luast": "^0.3.0"
+    "@friday-friday/luast": "^0.4.0"
   },
   "devDependencies": {
     "prettier": "^3.0.0",
@@ -73,7 +73,9 @@
         "error",
         {
           "selector": "variable",
-          "format": ["strictCamelCase"],
+          "format": [
+            "strictCamelCase"
+          ],
           "filter": {
             "regex": "^(SKIP|REMOVE|EXIT)$",
             "match": false
